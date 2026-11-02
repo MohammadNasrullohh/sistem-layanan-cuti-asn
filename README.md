@@ -1,5 +1,5 @@
-# LawetHub — Sistem Informasi Layanan Cuti ASN Terpadu
-### Pemerintah Kabupaten Kebumen • Berdasarkan Peraturan BKN Nomor 7 Tahun 2021
+# Modul Layanan Cuti ASN — LawetHub Kebumen
+### Sub-sistem Terintegrasi untuk Core LawetHub • Berdasarkan Peraturan BKN Nomor 7 Tahun 2021
 
 [![React 19](https://img.shields.io/badge/React-19.3.1-blue.svg)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8.3.5-646CFF.svg)](https://vitejs.dev/)
@@ -10,9 +10,15 @@
 
 ---
 
+> [!IMPORTANT]
+> **Batasan Lingkup & Penyelarasan Sistem (System Boundary):**
+> Server utama **LawetHub** (*Centralized Civil Servant Super-App* Kabupaten Kebumen yang mengelola SSO, Lawetfiles, Lawetree, dan Lawetverse) sudah aktif di server Pemkab. Repositori ini khusus membangun **Modul Layanan Cuti ASN** (*Leave Management Sub-system / Pluggable Microservice*) yang dipanggil langsung dari node **`Dashboard Lawet Hub` &rarr; `Menu Layanan Cuti`** sebagaimana dimodelkan pada `Sistem Informasi Layanan Cuti.drawio` Halaman 2.
+
+---
+
 ## 📌 Ringkasan Eksekutif
 
-**LawetHub Layanan Cuti ASN** adalah sistem digital mandiri terpadu untuk pengajuan, validasi kepatuhan, verifikasi berjenjang, dan penerbitan izin cuti bagi **Pegawai Negeri Sipil (PNS)** dan **Pegawai Pemerintah dengan Perjanjian Kerja (PPPK)** di lingkungan Pemerintah Kabupaten Kebumen.
+**Modul Layanan Cuti ASN LawetHub** adalah sub-sistem digital mandiri terpadu untuk pengajuan, validasi kepatuhan, verifikasi berjenjang, dan penerbitan izin cuti bagi **Pegawai Negeri Sipil (PNS)** dan **Pegawai Pemerintah dengan Perjanjian Kerja (PPPK)** di lingkungan Pemerintah Kabupaten Kebumen.
 
 Sistem dirancang mengacu pada:
 1. **Peraturan Badan Kepegawaian Negara (BKN) Nomor 7 Tahun 2021** tentang Tata Cara Pemberian Cuti PNS.
@@ -25,39 +31,39 @@ Sistem dirancang mengacu pada:
 
 ---
 
-## 🏛️ Arsitektur Sistem (System Architecture)
+## 🏛️ Arsitektur Hub-and-Spoke (Relasi Host LawetHub & Modul Cuti)
 
 ```mermaid
 flowchart TB
-    subgraph KANAL_AKSES["Kanal Akses Pengguna"]
-        WA["WhatsApp Client (LawetBot WA)"]
-        WEB["Web Portal LawetHub (Desktop & Mobile)"]
+    subgraph LAWETHUB_HOST["Server Utama LawetHub (Sudah Eksis di Server)"]
+        CORE_DASHBOARD["Dashboard Lawet Hub\n(SSO & Central Navigation)"]
+        LAWETFILES["Modul Lawetfiles\n(Penyimpanan Dokumen Terpusat)"]
+        LAWETVERSE["Modul Lawetverse\n(Master ASN & Sinkronisasi Kepegawaian)"]
     end
 
-    subgraph LAWETHUB_GATEWAY["LawetHub Central Gateway & API"]
-        ROUTER["API Router & Middleware"]
-        AUTH["Central Auth & Multi-Role Context\n(Pegawai, Atasan, PPK, Admin)"]
-        BKN_ENGINE["Mesin Validasi Regulasi BKN\n(Peraturan BKN No. 7/2021)"]
-        SALARY_CALC["Matriks Penghasilan Saat Cuti\n(Gaji Pokok, Tunj. Jabatan, TPP)"]
+    subgraph MODUL_CUTI["Modul Layanan Cuti ASN (Repositori Ini)"]
+        KANAL_WEB["Portal Web Cuti ASN\n(/cuti atau cuti.lawethub)"]
+        KANAL_WA["LawetBot WhatsApp Gateway\n(Simulasi Chatbot Cuti)"]
+        
+        subgraph ENGINE_CUTI["Mesin Domain & Logika Cuti"]
+            BKN_RULES["Engine Peraturan BKN No. 7/2021\n(7 Cuti PNS vs 4 Cuti PPPK)"]
+            SALARY_MATRIX["Matriks Penghasilan Saat Cuti\n(Hal. 24 Buku Saku BKN)"]
+            APPROVAL_ENGINE["Mesin Approval 2-Tahap\n(Atasan Langsung -> PPK)"]
+            DEDUCTION["FIFO Quota Deduction\n(N-2 -> N-1 -> N)"]
+            FORM_BKN["Dokumen Resmi Anak Lampiran II\n(Bagian I-VII Romawi + QR TTE)"]
+        end
+        
+        DB_CUTI[("Database Transaksi Cuti\n(lawethub_cuti.db)")]
     end
 
-    subgraph WORKFLOW_ENGINE["Mesin Approval Berjenjang"]
-        TAHAP1["1. Pengajuan Pemohon\n(Validasi Kuota, Hari Kerja, Syarat Masa Kerja)"]
-        TAHAP2["2. Pertimbangan Atasan Langsung\n(Disetujui / Perubahan / Ditangguhkan / Ditolak)"]
-        TAHAP3["3. Keputusan PPK (Pejabat Pembina Kepegawaian)\n(Penetapan Resmi & Penerbitan No. SK Cuti)"]
-        TAHAP4["4. Ekspor Legal Form BKN\n(Anak Lampiran II BKN 7/2021 + QR Code TTE)"]
-    end
-
-    subgraph STORAGE_LAYER["Data & Persistence Layer"]
-        DB[("SQLite Database Engine\n(node:sqlite persistent)")]
-        DOCS["Dokumen Lampiran & TTE\n(Surat Dokter, Tiket Haji, Berkas Pendukung)"]
-    end
-
-    WA -->|Webhook / API| ROUTER
-    WEB -->|RESTful HTTP| ROUTER
-    ROUTER --> AUTH
-    AUTH --> BKN_ENGINE
-    BKN_ENGINE --> SALARY_CALC
+    CORE_DASHBOARD -->|1. Delegasi Akses Pegawai / Reverse Proxy| KANAL_WEB
+    CORE_DASHBOARD -.->|2. Notifikasi WhatsApp| KANAL_WA
+    KANAL_WEB --> ENGINE_CUTI
+    KANAL_WA --> ENGINE_CUTI
+    ENGINE_CUTI <--> DB_CUTI
+    ENGINE_CUTI -->|Simpan Berkas SK & Surat Dokter| LAWETFILES
+    ENGINE_CUTI -.->|Sinkronisasi Data Pegawai| LAWETVERSE
+```
     SALARY_CALC --> WORKFLOW_ENGINE
     WORKFLOW_ENGINE --> TAHAP1 --> TAHAP2 --> TAHAP3 --> TAHAP4
     WORKFLOW_ENGINE <--> DB

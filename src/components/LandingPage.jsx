@@ -50,14 +50,14 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15]">
-              Sistem Informasi Layanan Cuti ASN <br className="hidden sm:inline" />
+              Layanan Cuti ASN Terpadu <br className="hidden sm:inline" />
               <span className="text-amber-200 underline decoration-amber-300/40 underline-offset-8">
-                LawetHub
+                Modul LawetHub
               </span> Kabupaten Kebumen
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-orange-100 font-normal leading-relaxed max-w-3xl">
-              Portal digital mandiri terpadu untuk pengajuan, verifikasi, dan penerbitan izin cuti bagi Pegawai Negeri Sipil (PNS) dan Pegawai Pemerintah dengan Perjanjian Kerja (PPPK). Terintegrasi dengan validasi regulasi otomatis BKN dan WhatsApp bot.
+              Sub-sistem mandiri pengajuan, validasi regulasi BKN, pertimbangan atasan langsung, dan penetapan SK cuti oleh PPK. Terpasang langsung sebagai modul resmi di dalam portal terpusat Dashboard LawetHub Kabupaten Kebumen.
             </p>
 
             {/* Quick Action CTA Buttons */}

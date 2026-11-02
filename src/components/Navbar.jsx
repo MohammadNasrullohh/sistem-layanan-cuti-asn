@@ -9,16 +9,17 @@ import {
   MessageSquare, 
   ChevronDown, 
   Clock, 
-  Home,
-  LayoutDashboard,
-  CalendarDays,
-  Menu,
-  X,
-  PlusCircle,
-  ShieldCheck,
-  Check,
-  FileSpreadsheet,
-  LogOut
+  Home, 
+  LayoutDashboard, 
+  CalendarDays, 
+  Menu, 
+  X, 
+  PlusCircle, 
+  ShieldCheck, 
+  Check, 
+  FileSpreadsheet, 
+  LogOut,
+  ArrowLeft
 } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendingApprovalCount = 0 }) {
@@ -50,24 +51,36 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-16 gap-3">
           
-          {/* Logo & Brand */}
-          <div 
-            className="flex items-center gap-2.5 cursor-pointer shrink-0" 
-            onClick={() => setActiveTab('beranda')}
-          >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-500/20 shrink-0">
-              <Building2 className="w-4.5 h-4.5" />
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5 leading-none">
-                <span className="font-extrabold text-base text-slate-900 tracking-tight">LawetHub</span>
-                <span className="text-[9px] uppercase font-bold tracking-wide px-1.5 py-0.5 rounded-md bg-orange-100 text-orange-700">
-                  Cuti ASN
+          {/* Parent Hub Connector & Brand */}
+          <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
+            <button
+              onClick={() => setActiveTab('beranda')}
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-orange-600 transition-colors pr-2.5 sm:pr-3.5 border-r border-slate-200 select-none cursor-pointer"
+              title="Kembali ke Dashboard Utama LawetHub"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-slate-400" />
+              <span className="hidden sm:inline">Dashboard</span>
+              <span>LawetHub</span>
+            </button>
+
+            <div 
+              className="flex items-center gap-2 cursor-pointer shrink-0" 
+              onClick={() => setActiveTab('beranda')}
+            >
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-500/20 shrink-0">
+                <Building2 className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5 leading-none">
+                  <span className="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight">Layanan Cuti</span>
+                  <span className="text-[9px] uppercase font-bold tracking-wide px-1.5 py-0.5 rounded-md bg-orange-100 text-orange-700">
+                    Modul ASN
+                  </span>
+                </div>
+                <span className="text-[10px] text-slate-400 mt-0.5 hidden sm:inline leading-none font-medium">
+                  Peraturan BKN No. 7/2021
                 </span>
               </div>
-              <span className="text-[10px] text-slate-400 mt-0.5 hidden sm:inline leading-none font-medium">
-                Peraturan BKN No. 7/2021
-              </span>
             </div>
           </div>
 
