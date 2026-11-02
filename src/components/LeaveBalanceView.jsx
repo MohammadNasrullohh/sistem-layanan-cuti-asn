@@ -154,49 +154,88 @@ export default function LeaveBalanceView({ setActiveTab }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           
           {/* Tahun N (2026) */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200/70 space-y-2">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200/90 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-orange-800">Tahun N (2026)</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-200/70 text-orange-800 font-bold">
+              <span className="text-xs font-black uppercase tracking-wider text-orange-900">Tahun N (2026)</span>
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-orange-200/90 text-orange-900 font-extrabold border border-orange-300">
                 Tahun Berjalan
               </span>
             </div>
-            <div className="text-3xl font-extrabold text-slate-900">
-              {currentUser.sisa_cuti_n || 12} <span className="text-xs font-normal text-slate-500">hari</span>
+            
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl font-black text-slate-900">
+                {currentUser.sisa_cuti_n || 12}
+              </div>
+              <span className="text-xs font-semibold text-slate-500">/ 12 Hari Kerja</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+
+            {/* Progress track */}
+            <div className="w-full bg-orange-200/70 rounded-full h-2 overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-orange-500 to-amber-500 h-2 rounded-full"
+                style={{ width: `${Math.min(100, ((currentUser.sisa_cuti_n || 12) / 12) * 100)}%` }}
+              />
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed pt-1">
               Hak tahun berjalan penuh bagi pegawai yang telah bekerja min. 1 tahun secara terus menerus (Hal. 5).
             </p>
           </div>
 
           {/* Tahun N-1 (2025) */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-800">Tahun N-1 (2025)</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-bold">
+              <span className="text-xs font-black uppercase tracking-wider text-slate-800">Tahun N-1 (2025)</span>
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-700 font-extrabold border border-slate-300">
                 Maksimal 6 Hari
               </span>
             </div>
-            <div className="text-3xl font-extrabold text-slate-900">
-              {currentUser.sisa_cuti_n1 || 0} <span className="text-xs font-normal text-slate-500">hari</span>
+
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl font-black text-slate-900">
+                {currentUser.sisa_cuti_n1 || 0}
+              </div>
+              <span className="text-xs font-semibold text-slate-500">/ 6 Hari Maks</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+
+            {/* Progress track */}
+            <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+              <div 
+                className="bg-slate-600 h-2 rounded-full"
+                style={{ width: `${Math.min(100, ((currentUser.sisa_cuti_n1 || 0) / 6) * 100)}%` }}
+              />
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed pt-1">
               Sisa hak cuti tahunan yang tidak digunakan dalam tahun 2025 dapat digunakan pada 2026 paling banyak 6 hari kerja (Hal. 6).
             </p>
           </div>
 
           {/* Tahun N-2 (2024) */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-800">Tahun N-2 (2024)</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-bold">
+              <span className="text-xs font-black uppercase tracking-wider text-slate-800">Tahun N-2 (2024)</span>
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-extrabold border border-blue-200">
                 Khusus Ditangguhkan
               </span>
             </div>
-            <div className="text-3xl font-extrabold text-slate-900">
-              {currentUser.sisa_cuti_n2 || 0} <span className="text-xs font-normal text-slate-500">hari</span>
+
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl font-black text-slate-900">
+                {currentUser.sisa_cuti_n2 || 0}
+              </div>
+              <span className="text-xs font-semibold text-slate-500">/ Ditangguhkan PPK</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+
+            {/* Progress track */}
+            <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+              <div 
+                className="bg-blue-600 h-2 rounded-full"
+                style={{ width: `${Math.min(100, ((currentUser.sisa_cuti_n2 || 0) / 12) * 100)}%` }}
+              />
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed pt-1">
               Hanya berlaku jika cuti ditangguhkan oleh PPK karena kepentingan dinas mendesak (s.d. 24 hari kerja total) (Hal. 6).
             </p>
           </div>

@@ -14,7 +14,17 @@ import {
   FileCheck2,
   Printer,
   Sparkles,
-  Info
+  Info,
+  HeartPulse,
+  Baby,
+  Briefcase,
+  Users,
+  ShieldAlert,
+  Check,
+  Building,
+  User,
+  ArrowUpRight,
+  ChevronRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -357,37 +367,57 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
             {/* LEFT COLUMN: FORM SECTIONS (8 cols) */}
             <div className="lg:col-span-8 bg-white rounded-3xl p-6 md:p-8 border border-slate-200/90 shadow-2xs space-y-8">
           
-          {/* Bagian I: Data Pemohon (Readonly Information per BKN standard) */}
+          {/* Bagian I: Data Pemohon (Executive Identity Pass Card) */}
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center text-xs font-extrabold">I</span>
+              <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                <span className="w-6 h-6 rounded-lg bg-orange-600 text-white flex items-center justify-center text-xs font-black shadow-xs">I</span>
                 <span>Data Pegawai Pemohon</span>
               </h2>
-              <span className="text-xs text-slate-400">Terisi Otomatis dari Profil</span>
+              <span className="text-[11px] font-semibold text-slate-400">Terisi Otomatis dari Profil LawetHub</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <div className="text-slate-400">Nama Lengkap:</div>
-                <div className="font-bold text-slate-800 text-sm mt-0.5">{currentUser.nama}</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <div className="text-slate-400">NIP & Golongan:</div>
-                <div className="font-bold text-slate-800 text-sm mt-0.5">
-                  {currentUser.nip} • {currentUser.pangkat_golongan || 'Golongan IX'}
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <img
+                  src={currentUser.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120'}
+                  alt={currentUser.nama}
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover ring-2 ring-orange-500/30 shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-extrabold text-sm sm:text-base text-slate-900 truncate">
+                      {currentUser.nama}
+                    </span>
+                    <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md ${
+                      currentUser.jenis_asn === 'PNS' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'
+                    }`}>
+                      {currentUser.jenis_asn}
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-200/80 text-slate-700">
+                      {currentUser.pangkat_golongan || 'Golongan IX'}
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5 truncate">
+                    NIP: <span className="font-semibold text-slate-800">{currentUser.nip}</span>
+                  </div>
                 </div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <div className="text-slate-400">Jabatan & Jenis ASN:</div>
-                <div className="font-semibold text-slate-800 mt-0.5">
-                  {currentUser.jabatan} ({currentUser.jenis_asn})
+
+              <div className="w-full md:w-auto grid grid-cols-2 md:flex md:items-center gap-2.5 pt-3 md:pt-0 border-t md:border-t-0 border-slate-200 text-xs text-slate-600">
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
+                  <div className="text-[10px] uppercase font-bold text-slate-400">Jabatan:</div>
+                  <div className="font-bold text-slate-800 text-xs truncate max-w-[170px]">{currentUser.jabatan}</div>
                 </div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                <div className="text-slate-400">Unit Kerja & Masa Kerja:</div>
-                <div className="font-semibold text-slate-800 mt-0.5">
-                  {currentUser.unit_kerja} • {currentUser.masa_kerja_tahun} Thn {currentUser.masa_kerja_bulan} Bln
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
+                  <div className="text-[10px] uppercase font-bold text-slate-400">Unit Kerja:</div>
+                  <div className="font-bold text-slate-800 text-xs truncate max-w-[170px]">{currentUser.unit_kerja}</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs col-span-2 md:col-span-1">
+                  <div className="text-[10px] uppercase font-bold text-slate-400">Masa Kerja:</div>
+                  <div className="font-bold text-orange-600 text-xs">
+                    {currentUser.masa_kerja_tahun} Thn {currentUser.masa_kerja_bulan} Bln
+                  </div>
                 </div>
               </div>
             </div>
@@ -396,53 +426,146 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           {/* Bagian II: Jenis Cuti Yang Diambil */}
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center text-xs font-extrabold">II</span>
+              <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                <span className="w-6 h-6 rounded-lg bg-orange-600 text-white flex items-center justify-center text-xs font-black shadow-xs">II</span>
                 <span>Jenis Cuti Yang Diambil</span>
               </h2>
-              <span className="text-xs text-orange-600 font-semibold">Pilih salah satu</span>
+              <span className="text-xs font-bold text-orange-600">Pilih salah satu (7 Kategori BKN)</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
               {[
-                { id: 'cuti_tahunan', name: 'Cuti Tahunan', tag: '12 Hari Kerja', desc: 'Min 1 thn masa kerja' },
-                { id: 'cuti_besar', name: 'Cuti Besar', tag: 'Maks. 3 Bulan', desc: 'Min 5 thn masa kerja (PNS)' },
-                { id: 'cuti_sakit', name: 'Cuti Sakit', tag: 'Surat Dokter', desc: 'PNS & PPPK berhak' },
-                { id: 'cuti_melahirkan', name: 'Cuti Melahirkan', tag: 'Maks. 3 Bulan', desc: 'Anak ke-1 s.d ke-3' },
-                { id: 'cuti_alasan_penting', name: 'Cuti Alasan Penting', tag: 'Maks. 1 Bulan', desc: 'Keluarga, Nikah, Musibah' },
-                { id: 'cuti_bersama', name: 'Cuti Bersama', tag: 'Keppres', desc: 'Tidak potong tahunan' },
-                { id: 'cltn', name: 'CLTN', tag: 'Maks. 3 Tahun', desc: 'Di Luar Tanggungan Negara' }
-              ].map((item) => (
-                <label
-                  key={item.id}
-                  className={`relative p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
-                    jenisCuti === item.id
-                      ? 'border-orange-500 bg-orange-50/60 ring-2 ring-orange-500/20'
-                      : 'border-slate-200 hover:border-slate-300 bg-white'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="font-bold text-xs text-slate-800">{item.name}</span>
-                    <input
-                      type="radio"
-                      name="jenis_cuti"
-                      value={item.id}
-                      checked={jenisCuti === item.id}
-                      onChange={() => {
-                        setJenisCuti(item.id);
-                        setKategoriDetail('');
-                      }}
-                      className="text-orange-600 focus:ring-orange-500"
-                    />
-                  </div>
-                  <div className="mt-2 flex items-center justify-between text-[11px]">
-                    <span className="text-slate-400">{item.desc}</span>
-                    <span className="font-semibold text-orange-700 bg-orange-100/70 px-1.5 py-0.5 rounded">
-                      {item.tag}
-                    </span>
-                  </div>
-                </label>
-              ))}
+                { 
+                  id: 'cuti_tahunan', 
+                  name: 'Cuti Tahunan', 
+                  icon: Calendar,
+                  tag: '12 Hari Kerja', 
+                  tagColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                  desc: 'Min. 1 tahun masa kerja ASN',
+                  lawRef: 'Hal. 5 BKN 2024'
+                },
+                { 
+                  id: 'cuti_besar', 
+                  name: 'Cuti Besar', 
+                  icon: Briefcase,
+                  tag: 'Maks. 3 Bulan', 
+                  tagColor: 'bg-purple-100 text-purple-800 border-purple-200',
+                  desc: 'Min. 5 tahun kerja (PNS)',
+                  lawRef: 'Hal. 8 BKN 2024'
+                },
+                { 
+                  id: 'cuti_sakit', 
+                  name: 'Cuti Sakit', 
+                  icon: HeartPulse,
+                  tag: 'Surat Dokter', 
+                  tagColor: 'bg-rose-100 text-rose-800 border-rose-200',
+                  desc: 'PNS & PPPK berhak penuh',
+                  lawRef: 'Hal. 10 BKN 2024'
+                },
+                { 
+                  id: 'cuti_melahirkan', 
+                  name: 'Cuti Melahirkan', 
+                  icon: Baby,
+                  tag: 'Maks. 3 Bulan', 
+                  tagColor: 'bg-pink-100 text-pink-800 border-pink-200',
+                  desc: 'Kelahiran anak ke-1 s.d ke-3',
+                  lawRef: 'Hal. 13 BKN 2024'
+                },
+                { 
+                  id: 'cuti_alasan_penting', 
+                  name: 'Cuti Alasan Penting', 
+                  icon: AlertCircle,
+                  tag: 'Maks. 1 Bulan', 
+                  tagColor: 'bg-amber-100 text-amber-800 border-amber-200',
+                  desc: 'Keluarga, Nikah, Musibah',
+                  lawRef: 'Hal. 16 BKN 2024'
+                },
+                { 
+                  id: 'cuti_bersama', 
+                  name: 'Cuti Bersama', 
+                  icon: Users,
+                  tag: 'Keppres RI', 
+                  tagColor: 'bg-blue-100 text-blue-800 border-blue-200',
+                  desc: 'Tidak memotong cuti tahunan',
+                  lawRef: 'Hal. 18 BKN 2024'
+                },
+                { 
+                  id: 'cltn', 
+                  name: 'CLTN', 
+                  icon: ShieldAlert,
+                  tag: 'Maks. 3 Tahun', 
+                  tagColor: 'bg-slate-200 text-slate-800 border-slate-300',
+                  desc: 'Di Luar Tanggungan Negara',
+                  lawRef: 'Hal. 20 BKN 2024'
+                }
+              ].map((item) => {
+                const Icon = item.icon;
+                const isSelected = jenisCuti === item.id;
+                return (
+                  <label
+                    key={item.id}
+                    className={`relative p-4 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between select-none ${
+                      isSelected
+                        ? 'border-orange-500 bg-orange-50/70 shadow-sm ring-4 ring-orange-500/10'
+                        : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/60'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2.5">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+                            isSelected ? 'bg-orange-600 text-white shadow-2xs' : 'bg-slate-100 text-slate-600'
+                          }`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <span className="font-extrabold text-xs text-slate-900 block leading-tight">
+                              {item.name}
+                            </span>
+                            <span className="text-[10px] text-slate-400 font-medium">
+                              {item.lawRef}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="shrink-0">
+                          {isSelected ? (
+                            <CheckCircle2 className="w-5 h-5 text-orange-600 fill-orange-100" />
+                          ) : (
+                            <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
+                          )}
+                          <input
+                            type="radio"
+                            name="jenis_cuti"
+                            value={item.id}
+                            checked={isSelected}
+                            onChange={() => {
+                              setJenisCuti(item.id);
+                              setKategoriDetail('');
+                            }}
+                            className="sr-only"
+                          />
+                        </div>
+                      </div>
+
+                      <p className="text-[11px] text-slate-500 mt-2.5 leading-snug">
+                        {item.desc}
+                      </p>
+                    </div>
+
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border ${item.tagColor}`}>
+                        {item.tag}
+                      </span>
+                      {isSelected && (
+                        <span className="text-[10px] font-extrabold text-orange-700 tracking-wide uppercase">
+                          Terpilih
+                        </span>
+                      )}
+                    </div>
+                  </label>
+                );
+              })}
             </div>
 
             {/* Matriks Penghasilan Saat Cuti Live Preview (Hal. 24 Buku Saku BKN 2024) */}
@@ -672,19 +795,24 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
         {/* RIGHT COLUMN: STICKY TELEMETRY, BKN VALIDATION & SUBMIT (4 cols - Zero Dead Space) */}
         <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
           
-          <div className="bg-white rounded-3xl p-6 md:p-7 border border-slate-200/90 shadow-sm space-y-5">
+          <div className="bg-white rounded-3xl p-6 md:p-7 border border-slate-200/90 shadow-md shadow-slate-200/50 space-y-5">
             
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="font-extrabold text-sm text-slate-900">
-                Ringkasan Permohonan
-              </h3>
-              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-sm text-slate-900">
+                  Ringkasan Pengajuan
+                </h3>
+              </div>
+              <span className={`text-[10px] font-black px-2.5 py-1 rounded-full ${
                 validationResult.isValid 
                   ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
                   : 'bg-rose-100 text-rose-800 border border-rose-300 animate-pulse'
               }`}>
-                {validationResult.isValid ? '✓ Valid BKN' : '✕ Belum Valid'}
+                {validationResult.isValid ? '✓ Terverifikasi BKN' : '✕ Belum Valid'}
               </span>
             </div>
 
@@ -708,8 +836,37 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
               </div>
             </div>
 
+            {/* Live Quota Simulation for Cuti Tahunan */}
+            {jenisCuti === 'cuti_tahunan' && (
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 space-y-2.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-extrabold text-orange-950 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-orange-600" />
+                    Simulasi Saldo Cuti N:
+                  </span>
+                  <span className="font-black text-orange-700">
+                    {Math.max(0, (currentUser?.sisa_cuti_n || 12) - jumlahHari)} Hari Tersisa
+                  </span>
+                </div>
+                
+                <div className="w-full bg-orange-200/70 rounded-full h-2.5 overflow-hidden p-0.5">
+                  <div 
+                    className="bg-gradient-to-r from-orange-500 to-amber-500 h-1.5 rounded-full transition-all duration-300"
+                    style={{
+                      width: `${Math.min(100, Math.max(0, (((currentUser?.sisa_cuti_n || 12) - jumlahHari) / 12) * 100))}%`
+                    }}
+                  />
+                </div>
+
+                <div className="flex justify-between text-[10px] text-orange-800 font-semibold">
+                  <span>Awal: {currentUser?.sisa_cuti_n || 12} Hari</span>
+                  <span className="text-rose-600 font-bold">Terpakai: -{jumlahHari} Hari</span>
+                </div>
+              </div>
+            )}
+
             {/* Hak Penghasilan Preview */}
-            <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 text-xs text-amber-950 space-y-1">
+            <div className="p-3.5 rounded-2xl bg-amber-50/90 border border-amber-200 text-xs text-amber-950 space-y-1">
               <div className="font-bold flex items-center gap-1.5 text-[11px] text-amber-900">
                 <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>Penghasilan Saat Cuti (Hal. 24):</span>
@@ -758,9 +915,9 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
               <button
                 type="submit"
                 disabled={!validationResult.isValid || submitting}
-                className={`w-full py-4 rounded-2xl text-white font-extrabold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`w-full py-4 rounded-2xl text-white font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   validationResult.isValid && !submitting
-                    ? 'bg-orange-600 hover:bg-orange-700 shadow-orange-500/20 active:scale-[0.98]'
+                    ? 'bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 hover:from-orange-700 hover:to-amber-700 shadow-orange-500/25 active:scale-[0.98]'
                     : 'bg-slate-300 cursor-not-allowed text-slate-500 shadow-none'
                 }`}
               >
