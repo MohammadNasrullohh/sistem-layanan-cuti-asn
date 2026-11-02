@@ -265,10 +265,10 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
   if (!currentUser) return null;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-16">
+    <div className="w-full space-y-8 pb-16">
       
       {/* Title Banner */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/90 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mb-2">
             <FileText className="w-3.5 h-3.5" />
@@ -284,7 +284,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
 
         <button
           onClick={() => setActiveTab('sisa-cuti')}
-          className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors flex items-center gap-1.5"
+          className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors flex items-center gap-1.5 shrink-0"
         >
           <Clock className="w-3.5 h-3.5" />
           Lihat Sisa Cuti
@@ -293,7 +293,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
 
       {/* Success View (Step: Ekspor Form Cuti) */}
       {submittedRequest ? (
-        <div className="bg-white rounded-3xl p-8 border border-emerald-200 shadow-lg shadow-emerald-500/5 space-y-6 text-center animate-in fade-in zoom-in-95">
+        <div className="bg-white rounded-3xl p-8 border border-emerald-200 shadow-lg shadow-emerald-500/5 space-y-6 text-center animate-in fade-in zoom-in-95 max-w-3xl mx-auto">
           <div className="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-8 h-8" />
           </div>
@@ -330,7 +330,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <button
               onClick={() => onSelectRequestForExport(submittedRequest.id)}
-              className="px-6 py-3 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2"
+              className="px-6 py-3 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
               Ekspor Formulir Lampiran II BKN (Cetak / PDF)
@@ -343,15 +343,19 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                 setAttachment(null);
                 setAttachmentName('');
               }}
-              className="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all"
+              className="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all cursor-pointer"
             >
               Buat Pengajuan Baru
             </button>
           </div>
         </div>
       ) : (
-        /* Form Section */
-        <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 md:p-10 border border-slate-200/80 shadow-xs space-y-8">
+        /* Form Section (Widescreen 2-Column Responsive Layout) */
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* LEFT COLUMN: FORM SECTIONS (8 cols) */}
+            <div className="lg:col-span-8 bg-white rounded-3xl p-6 md:p-8 border border-slate-200/90 shadow-2xs space-y-8">
           
           {/* Bagian I: Data Pemohon (Readonly Information per BKN standard) */}
           <div className="space-y-4">
@@ -663,30 +667,70 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
               </div>
             </div>
           </div>
+        </div> {/* END LEFT COLUMN (8 cols) */}
 
-          {/* STEP FLOWCHART: SESUAI KETENTUAN? -> TAMPIL PESAN ERROR / STATUS SESUAI */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Pemeriksaan Otomatis Sistem BKN (Sesuai Ketentuan?)
-              </span>
-              <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
+        {/* RIGHT COLUMN: STICKY TELEMETRY, BKN VALIDATION & SUBMIT (4 cols - Zero Dead Space) */}
+        <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+          
+          <div className="bg-white rounded-3xl p-6 md:p-7 border border-slate-200/90 shadow-sm space-y-5">
+            
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="font-extrabold text-sm text-slate-900">
+                Ringkasan Permohonan
+              </h3>
+              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
                 validationResult.isValid 
-                  ? 'bg-emerald-100 text-emerald-800' 
-                  : 'bg-rose-100 text-rose-800 animate-pulse'
+                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
+                  : 'bg-rose-100 text-rose-800 border border-rose-300 animate-pulse'
               }`}>
-                {validationResult.isValid ? '✓ Memenuhi Regulasi BKN' : '✕ Tidak Sesuai Ketentuan'}
+                {validationResult.isValid ? '✓ Valid BKN' : '✕ Belum Valid'}
               </span>
             </div>
 
-            {/* Error Message Box (Flowchart: Tampil pesan error) */}
+            {/* Telemetry Summary Box */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 text-xs">
+              <div className="flex justify-between py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Jenis Cuti:</span>
+                <strong className="text-slate-900 capitalize">{jenisCuti.replace('_', ' ')}</strong>
+              </div>
+              <div className="flex justify-between py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Durasi Diajukan:</span>
+                <strong className="text-orange-600 font-extrabold text-sm">{jumlahHari} Hari Kerja</strong>
+              </div>
+              <div className="flex justify-between py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Periode:</span>
+                <span className="text-slate-800 font-semibold">{tanggalMulai} s.d {tanggalSelesai}</span>
+              </div>
+              <div className="flex justify-between py-1">
+                <span className="text-slate-500">Sisa Kuota N Saat Ini:</span>
+                <strong className="text-slate-900">{currentUser?.sisa_cuti_n || 12} Hari</strong>
+              </div>
+            </div>
+
+            {/* Hak Penghasilan Preview */}
+            <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 text-xs text-amber-950 space-y-1">
+              <div className="font-bold flex items-center gap-1.5 text-[11px] text-amber-900">
+                <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>Penghasilan Saat Cuti (Hal. 24):</span>
+              </div>
+              <p className="text-[11px] text-amber-800 leading-relaxed">
+                {jenisCuti === 'cltn' 
+                  ? 'Dinonaktifkan Selama Cuti (NOL Rupiah)' 
+                  : jenisCuti === 'cuti_besar'
+                  ? 'Gaji Pokok & Tunjangan Keluarga utuh. Tunjangan Jabatan & TPP TIDAK DAPAT.'
+                  : 'Menerima 100% Gaji Pokok, Tunjangan Jabatan, dan TPP tanpa potongan.'}
+              </p>
+            </div>
+
+            {/* Error Box */}
             {!validationResult.isValid && (
               <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-900 space-y-2 animate-in fade-in">
-                <div className="font-bold flex items-center gap-2 text-rose-800">
+                <div className="font-bold flex items-center gap-1.5 text-rose-800">
                   <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                  <span>Pengajuan Tidak Memenuhi Ketentuan Peraturan BKN No. 7 Tahun 2021:</span>
+                  <span>Belum Memenuhi Ketentuan BKN:</span>
                 </div>
-                <ul className="list-disc pl-6 space-y-1 text-[11px] text-rose-700">
+                <ul className="list-disc pl-5 space-y-1 text-[11px] text-rose-700">
                   {validationResult.errors.map((err, i) => (
                     <li key={i}>{err}</li>
                   ))}
@@ -694,48 +738,52 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
               </div>
             )}
 
-            {/* Warning Message Box */}
+            {/* Warnings */}
             {validationResult.warnings.length > 0 && (
-              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-1.5">
-                <div className="font-bold flex items-center gap-2 text-amber-800">
-                  <Info className="w-4 h-4 text-amber-600 shrink-0" />
-                  <span>Catatan Penting Regulasi:</span>
+              <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-1">
+                <div className="font-bold flex items-center gap-1.5 text-amber-800 text-[11px]">
+                  <Info className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <span>Catatan Regulasi:</span>
                 </div>
-                <ul className="list-disc pl-6 space-y-1 text-[11px] text-amber-800">
+                <ul className="list-disc pl-5 space-y-0.5 text-[11px] text-amber-800">
                   {validationResult.warnings.map((warn, i) => (
                     <li key={i}>{warn}</li>
                   ))}
                 </ul>
               </div>
             )}
+
+            {/* Action Buttons */}
+            <div className="space-y-2.5 pt-2">
+              <button
+                type="submit"
+                disabled={!validationResult.isValid || submitting}
+                className={`w-full py-4 rounded-2xl text-white font-extrabold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  validationResult.isValid && !submitting
+                    ? 'bg-orange-600 hover:bg-orange-700 shadow-orange-500/20 active:scale-[0.98]'
+                    : 'bg-slate-300 cursor-not-allowed text-slate-500 shadow-none'
+                }`}
+              >
+                <Send className="w-4 h-4" />
+                <span>{submitting ? 'Menyimpan Pengajuan...' : 'Kirim Permohonan Cuti'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('dashboard')}
+                className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors cursor-pointer"
+              >
+                Batal Kembali ke Dashboard
+              </button>
+            </div>
+
           </div>
 
-          {/* Submit Actions (Step: Simpan Pengajuan) */}
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setActiveTab('dashboard')}
-              className="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs md:text-sm transition-all"
-            >
-              Batal
-            </button>
+        </div> {/* END RIGHT COLUMN */}
 
-            <button
-              type="submit"
-              disabled={!validationResult.isValid || submitting}
-              className={`px-7 py-3 rounded-2xl text-white font-bold text-xs md:text-sm shadow-md transition-all flex items-center gap-2 ${
-                validationResult.isValid && !submitting
-                  ? 'bg-orange-600 hover:bg-orange-700 shadow-orange-500/20 active:scale-[0.98]'
-                  : 'bg-slate-300 cursor-not-allowed text-slate-500 shadow-none'
-              }`}
-            >
-              <Send className="w-4 h-4" />
-              {submitting ? 'Menyimpan...' : 'Simpan Pengajuan Cuti'}
-            </button>
-          </div>
-
-        </form>
-      )}
+      </div> {/* END GRID */}
+    </form>
+  )}
 
     </div>
   );

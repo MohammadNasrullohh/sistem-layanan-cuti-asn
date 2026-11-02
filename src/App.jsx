@@ -153,8 +153,8 @@ function MainApp() {
       />
 
       {/* Official Footer */}
-      <footer className="no-print mt-auto border-t border-slate-200 bg-white py-8 text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="no-print mt-auto border-t border-slate-200 bg-white py-8 text-xs text-slate-500 w-full">
+        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold text-xs">
               LH
