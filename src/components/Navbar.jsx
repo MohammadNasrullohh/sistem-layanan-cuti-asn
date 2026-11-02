@@ -157,8 +157,13 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
 
               {/* Role Dropdown */}
               {showRoleMenu && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in zoom-in-95">
-                  <div className="px-4 py-2 border-b border-slate-100">
+                <>
+                  <div 
+                    className="fixed inset-0 z-40 cursor-default" 
+                    onClick={() => setShowRoleMenu(false)} 
+                  />
+                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95">
+                    <div className="px-4 py-2 border-b border-slate-100">
                     <div className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">
                       Ganti Akun Simulasi (Role Switcher)
                     </div>
@@ -226,6 +231,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                     </button>
                   </div>
                 </div>
+                </>
               )}
             </div>
 

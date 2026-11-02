@@ -101,7 +101,16 @@ export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, o
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-96 md:w-[420px] bg-white shadow-2xl flex flex-col border-l border-slate-200 animate-in slide-in-from-right duration-200">
+    <>
+      {/* Backdrop overlay */}
+      <div 
+        onClick={onClose}
+        className="fixed inset-0 z-50 bg-slate-900/40 transition-opacity animate-in fade-in cursor-pointer"
+        title="Klik di luar untuk menutup chatbot"
+      />
+      
+      {/* Drawer Panel */}
+      <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-96 md:w-[420px] bg-white shadow-2xl flex flex-col border-l border-slate-200 animate-in slide-in-from-right duration-200">
       
       {/* WhatsApp Header */}
       <div className="bg-[#075E54] text-white p-3.5 flex items-center justify-between shadow-md">
@@ -294,5 +303,6 @@ export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, o
       </div>
 
     </div>
+    </>
   );
 }
