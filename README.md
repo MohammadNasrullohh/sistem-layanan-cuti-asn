@@ -282,8 +282,8 @@ CREATE TABLE chat_logs (
 ### Langkah Instalasi
 ```bash
 # 1. Clone repository
-git clone https://github.com/MohammadNasrullohh/lawethub-layanan-cuti.git
-cd lawethub-layanan-cuti
+git clone https://github.com/MohammadNasrullohh/sistem-layanan-cuti-asn.git
+cd sistem-layanan-cuti-asn
 
 # 2. Install dependencies
 npm install
