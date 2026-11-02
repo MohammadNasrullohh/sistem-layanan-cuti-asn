@@ -47,7 +47,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs w-full">
+    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs w-full">
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-16 gap-3">
           

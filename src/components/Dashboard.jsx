@@ -254,11 +254,11 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
       </div>
 
       {/* 3. PINTEREST LEAVE MANAGEMENT DUAL-CARD SHOWCASE (Exact Masterpiece Design) */}
-      <div className="relative rounded-[2.5rem] bg-gradient-to-br from-slate-100/90 via-[#fcfbf9] to-slate-100/70 p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-inner overflow-hidden">
+      <div className="relative rounded-[2.5rem] bg-gradient-to-br from-slate-100 via-[#fcfbf9] to-slate-200/80 p-6 sm:p-8 lg:p-10 border border-slate-200 shadow-inner overflow-hidden">
         
-        {/* Soft Decorative Ambient Circles from Pinterest Artwork */}
-        <div className="absolute -top-16 -right-16 w-80 h-80 rounded-full bg-amber-400/90 pointer-events-none filter blur-[1px]"></div>
-        <div className="absolute -bottom-16 -left-16 w-72 h-72 rounded-full bg-[#52bce6]/85 pointer-events-none filter blur-[1px]"></div>
+        {/* Solid Decorative Ambient Vector Discs from Pinterest Artwork (Zero blur) */}
+        <div className="absolute -top-14 -right-14 w-64 h-64 rounded-full bg-amber-400 pointer-events-none"></div>
+        <div className="absolute -bottom-14 -left-14 w-56 h-56 rounded-full bg-[#52bce6] pointer-events-none"></div>
 
         <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start justify-center">
           

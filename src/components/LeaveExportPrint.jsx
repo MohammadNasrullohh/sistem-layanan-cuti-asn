@@ -397,7 +397,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
 
       {/* TTE QR Code Verification Modal */}
       {showQrVerifyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 p-4 animate-in fade-in">
           <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl space-y-4 border border-slate-100">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm">

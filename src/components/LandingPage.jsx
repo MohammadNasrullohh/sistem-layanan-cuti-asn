@@ -33,47 +33,43 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
   return (
     <div className="space-y-10 pb-16 w-full">
       
-      {/* 1. HERO SECTION: FULL-WIDTH 2-COLUMN POWERHOUSE (ZERO EMPTY SPACE) */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 text-white p-7 md:p-10 lg:p-12 shadow-xl shadow-orange-500/15">
+      {/* 1. HERO SECTION: SOLID HIGH-CONTRAST 2-COLUMN POWERHOUSE (ZERO GLASSMORPHISM) */}
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 text-white p-7 md:p-10 lg:p-12 shadow-md">
         
-        {/* Soft Ambient Light Blobs */}
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-[500px] h-[500px] bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/4 -mb-24 w-96 h-96 bg-orange-700/30 rounded-full blur-2xl pointer-events-none"></div>
-
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
           {/* LEFT COLUMN: Headings, Badges, CTAs (7 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-5">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold tracking-wide border border-white/20">
-              <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-black tracking-wide border border-amber-300 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-slate-950" />
               <span>Resmi Sesuai Peraturan BKN Nomor 7 Tahun 2021</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
               Layanan Cuti ASN Terpadu <br className="hidden sm:inline" />
-              <span className="text-amber-200 underline decoration-amber-300/40 underline-offset-8">
+              <span className="text-amber-200 underline decoration-amber-300/60 underline-offset-8">
                 Modul LawetHub
               </span> Kabupaten Kebumen
             </h1>
 
-            <p className="text-sm sm:text-base lg:text-lg text-orange-100 font-normal leading-relaxed max-w-3xl">
+            <p className="text-sm sm:text-base lg:text-lg text-orange-50 font-normal leading-relaxed max-w-3xl">
               Sub-sistem mandiri pengajuan, validasi regulasi BKN, pertimbangan atasan langsung, dan penetapan SK cuti oleh PPK. Terpasang langsung sebagai modul resmi di dalam portal terpusat Dashboard LawetHub Kabupaten Kebumen.
             </p>
 
-            {/* Quick Action CTA Buttons */}
+            {/* Quick Action CTA Buttons (Solid colors) */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={() => setActiveTab('ajukan-cuti')}
-                className="px-6 py-3.5 rounded-2xl bg-white text-orange-600 font-bold text-sm shadow-lg shadow-black/10 hover:bg-orange-50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-6 py-3.5 rounded-2xl bg-white text-orange-700 font-extrabold text-sm shadow-md hover:bg-orange-50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
-                <FileText className="w-4 h-4 text-orange-600" />
+                <FileText className="w-4 h-4 text-orange-700" />
                 <span>Ajukan Cuti Online</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={() => setActiveTab('sisa-cuti')}
-                className="px-5 py-3.5 rounded-2xl bg-orange-600/40 hover:bg-orange-600/60 border border-white/30 text-white font-semibold text-sm backdrop-blur-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-2xl bg-orange-700 hover:bg-orange-800 border-2 border-white text-white font-bold text-sm shadow-sm transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
                 <Clock className="w-4 h-4" />
                 <span>Cek Sisa Cuti Saya</span>
@@ -81,7 +77,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
 
               <button
                 onClick={onOpenWhatsApp}
-                className="px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-sm transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Layanan WA Chatbot</span>
@@ -89,39 +85,39 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
             </div>
 
             {/* Active User Indicator & Key Feature Pills */}
-            <div className="pt-3 border-t border-white/20 flex flex-wrap items-center justify-between gap-3 text-xs text-orange-100">
+            <div className="pt-3 border-t border-orange-400/40 flex flex-wrap items-center justify-between gap-3 text-xs text-orange-100">
               {currentUser && (
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
                   <span>
-                    Masuk sebagai: <strong className="text-white">{currentUser.nama}</strong> ({currentUser.jenis_asn} - {currentUser.jabatan})
+                    Masuk sebagai: <strong className="text-white font-bold">{currentUser.nama}</strong> ({currentUser.jenis_asn} - {currentUser.jabatan})
                   </span>
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-orange-200">
-                <span className="px-2 py-0.5 rounded-md bg-white/10">7 Jenis Cuti PNS</span>
-                <span className="px-2 py-0.5 rounded-md bg-white/10">4 Jenis Cuti PPPK</span>
-                <span className="px-2 py-0.5 rounded-md bg-white/10">Format Lampiran II BKN</span>
-                <span className="px-2 py-0.5 rounded-md bg-white/10">Validasi Otomatis</span>
+              <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-orange-100">
+                <span className="px-2.5 py-1 rounded-lg bg-orange-700/70 border border-orange-400/40">7 Jenis Cuti PNS</span>
+                <span className="px-2.5 py-1 rounded-lg bg-orange-700/70 border border-orange-400/40">4 Jenis Cuti PPPK</span>
+                <span className="px-2.5 py-1 rounded-lg bg-orange-700/70 border border-orange-400/40">Format Lampiran II BKN</span>
+                <span className="px-2.5 py-1 rounded-lg bg-orange-700/70 border border-orange-400/40">Validasi Otomatis</span>
               </div>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Interactive Live Telemetry Card (5 cols - Zero Empty Space) */}
+          {/* RIGHT COLUMN: Solid Pure White Telemetry Card (Zero Glassmorphism) */}
           <div className="lg:col-span-5 xl:col-span-4">
-            <div className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-3xl p-5 sm:p-6 text-white shadow-2xl space-y-4">
+            <div className="bg-white rounded-3xl p-6 text-slate-800 shadow-xl border border-slate-200 space-y-4">
               
               {/* Header: Title & Online Dot */}
-              <div className="flex items-center justify-between pb-3 border-b border-white/20">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-amber-300" />
-                  <span className="text-xs uppercase font-extrabold tracking-wider text-amber-200">
+                  <Zap className="w-4 h-4 text-orange-600" />
+                  <span className="text-xs uppercase font-black tracking-wider text-slate-800">
                     Panel Status ASN
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-bold bg-emerald-500/30 text-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <div className="flex items-center gap-1.5 text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
                   <span>Terverifikasi BKN</span>
                 </div>
               </div>
@@ -132,20 +128,20 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                   <img
                     src={currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}
                     alt={currentUser.nama}
-                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-white/40 shrink-0"
+                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-orange-400 shrink-0"
                   />
                   <div className="min-w-0">
-                    <div className="font-bold text-sm text-white truncate leading-tight">
+                    <div className="font-extrabold text-sm text-slate-900 truncate leading-tight">
                       {currentUser.nama}
                     </div>
-                    <div className="text-[11px] text-orange-100 truncate mt-0.5">
+                    <div className="text-[11px] text-slate-500 truncate mt-0.5 font-medium">
                       NIP: {currentUser.nip}
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
-                      <span className="px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-blue-600/80 text-white">
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-black bg-blue-100 text-blue-800 border border-blue-200">
                         {currentUser.jenis_asn}
                       </span>
-                      <span className="text-[10px] text-orange-200 truncate">
+                      <span className="text-[10px] text-slate-600 font-semibold truncate">
                         {currentUser.unit_kerja}
                       </span>
                     </div>
@@ -153,58 +149,58 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 </div>
               ) : null}
 
-              {/* Live Sisa Cuti Box */}
-              <div className="p-3.5 rounded-2xl bg-black/20 border border-white/15 space-y-2">
+              {/* Live Sisa Cuti Box (Solid) */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-orange-200 font-medium">Sisa Cuti Tahunan 2026:</span>
-                  <span className="text-lg font-black text-white">
-                    {totalSisaTahunan} <span className="text-xs font-normal text-orange-200">Hari</span>
+                  <span className="text-slate-600 font-bold">Total Sisa Cuti 2026:</span>
+                  <span className="text-xl font-black text-orange-600">
+                    {totalSisaTahunan} <span className="text-xs font-semibold text-slate-500">Hari Kerja</span>
                   </span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-1.5 text-center text-[10px]">
-                  <div className="p-1.5 rounded-xl bg-white/10">
-                    <span className="text-orange-200 block text-[9px]">Tahun N</span>
-                    <strong className="text-white text-xs">{currentUser?.sisa_cuti_n || 12}</strong>
+                <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
+                  <div className="p-2 rounded-xl bg-white border border-slate-200">
+                    <span className="text-slate-400 block text-[9px] font-semibold">Tahun N</span>
+                    <strong className="text-slate-900 text-xs font-black">{currentUser?.sisa_cuti_n || 12}</strong>
                   </div>
-                  <div className="p-1.5 rounded-xl bg-white/10">
-                    <span className="text-orange-200 block text-[9px]">N-1 (2025)</span>
-                    <strong className="text-white text-xs">{currentUser?.sisa_cuti_n1 || 6}</strong>
+                  <div className="p-2 rounded-xl bg-white border border-slate-200">
+                    <span className="text-slate-400 block text-[9px] font-semibold">N-1 (2025)</span>
+                    <strong className="text-slate-900 text-xs font-black">{currentUser?.sisa_cuti_n1 || 6}</strong>
                   </div>
-                  <div className="p-1.5 rounded-xl bg-white/10">
-                    <span className="text-orange-200 block text-[9px]">N-2 (2024)</span>
-                    <strong className="text-white text-xs">{currentUser?.sisa_cuti_n2 || 0}</strong>
+                  <div className="p-2 rounded-xl bg-white border border-slate-200">
+                    <span className="text-slate-400 block text-[9px] font-semibold">N-2 (2024)</span>
+                    <strong className="text-slate-900 text-xs font-black">{currentUser?.sisa_cuti_n2 || 0}</strong>
                   </div>
                 </div>
               </div>
 
-              {/* Smart Holiday Alert Mini Tile */}
-              <div className="p-3 rounded-2xl bg-white/10 border border-white/15 text-xs flex items-center justify-between">
+              {/* Smart Holiday Alert Mini Tile (Solid) */}
+              <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <div className="text-[10px] text-amber-200 font-bold uppercase tracking-wide">
+                  <div className="text-[10px] text-amber-800 font-bold uppercase tracking-wide">
                     Libur / Cuti Bersama Terdekat
                   </div>
-                  <div className="text-xs font-bold text-white">
+                  <div className="text-xs font-extrabold text-slate-900">
                     14-15 Mei 2026 (Bridge Day)
                   </div>
-                  <div className="text-[10px] text-orange-100">
-                    Kenaikan Yesus Kristus (1 Hari Cuti = 4 Hari Libur)
+                  <div className="text-[10px] text-amber-700">
+                    Kenaikan Yesus Kristus (1 Cuti = 4 Libur)
                   </div>
                 </div>
                 <button
                   onClick={() => setActiveTab('dashboard')}
-                  className="px-3 py-1.5 rounded-xl bg-white text-orange-700 font-bold text-[11px] shadow-sm hover:bg-orange-50 transition-all shrink-0 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-orange-600 text-white font-bold text-[11px] shadow-xs hover:bg-orange-700 transition-all shrink-0 cursor-pointer"
                 >
                   Detail &rarr;
                 </button>
               </div>
 
-              {/* Direct Link to Dashboard */}
+              {/* Direct Link to Dashboard (Solid dark) */}
               <button
                 onClick={() => setActiveTab('dashboard')}
-                className="w-full py-2.5 rounded-xl bg-white/20 hover:bg-white/30 border border-white/30 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                className="w-full py-3 rounded-2xl bg-slate-900 hover:bg-orange-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
               >
-                <span>Buka Dashboard & Pinterest Dayoff Tracker</span>
+                <span>Buka Dashboard & Dayoff Tracker</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
 
