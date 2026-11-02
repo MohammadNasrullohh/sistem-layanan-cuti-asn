@@ -93,7 +93,8 @@ export default function LeaveExportPrint({ requestId, onBack }) {
       </div>
 
       {/* Official Printable Document Container */}
-      <div className="printable-area bg-white p-8 md:p-12 rounded-3xl border border-slate-200 shadow-sm max-w-4xl mx-auto text-slate-900 text-[11pt] font-serif leading-relaxed">
+      <div className="w-full overflow-x-auto pb-4 -mx-2 sm:mx-0 px-2 sm:px-0">
+        <div className="printable-area bg-white p-4 sm:p-8 md:p-12 rounded-3xl border border-slate-200 shadow-sm min-w-[620px] md:min-w-0 max-w-4xl mx-auto text-slate-900 text-[11pt] font-serif leading-relaxed">
         
         {/* Official Header */}
         <div className="text-right text-[9pt] leading-tight mb-4 font-sans text-slate-600">
@@ -394,6 +395,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
         </div>
 
       </div>
+    </div>
 
       {/* TTE QR Code Verification Modal */}
       {showQrVerifyModal && (

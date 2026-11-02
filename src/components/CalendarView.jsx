@@ -90,18 +90,32 @@ export default function CalendarView() {
       </div>
 
       {/* Calendar Grid */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs">
-        
-        {/* Days Header */}
-        <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold uppercase tracking-wider mb-4">
-          <div className="py-2 text-rose-500 bg-rose-50/50 rounded-xl">Minggu</div>
-          <div className="py-2 text-slate-600">Senin</div>
-          <div className="py-2 text-slate-600">Selasa</div>
-          <div className="py-2 text-slate-600">Rabu</div>
-          <div className="py-2 text-slate-600">Kamis</div>
-          <div className="py-2 text-slate-600">Jumat</div>
-          <div className="py-2 text-rose-500 bg-rose-50/50 rounded-xl">Sabtu</div>
-        </div>
+      <div className="bg-white rounded-3xl p-3 sm:p-6 md:p-8 border border-slate-200/80 shadow-xs overflow-x-auto">
+        <div className="min-w-[340px]">
+          {/* Days Header */}
+          <div className="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4">
+            <div className="py-1.5 sm:py-2 text-rose-500 bg-rose-50/50 rounded-xl">
+              <span className="sm:hidden">Min</span><span className="hidden sm:inline">Minggu</span>
+            </div>
+            <div className="py-1.5 sm:py-2 text-slate-600">
+              <span className="sm:hidden">Sen</span><span className="hidden sm:inline">Senin</span>
+            </div>
+            <div className="py-1.5 sm:py-2 text-slate-600">
+              <span className="sm:hidden">Sel</span><span className="hidden sm:inline">Selasa</span>
+            </div>
+            <div className="py-1.5 sm:py-2 text-slate-600">
+              <span className="sm:hidden">Rab</span><span className="hidden sm:inline">Rabu</span>
+            </div>
+            <div className="py-1.5 sm:py-2 text-slate-600">
+              <span className="sm:hidden">Kam</span><span className="hidden sm:inline">Kamis</span>
+            </div>
+            <div className="py-1.5 sm:py-2 text-slate-600">
+              <span className="sm:hidden">Jum</span><span className="hidden sm:inline">Jumat</span>
+            </div>
+            <div className="py-1.5 sm:py-2 text-rose-500 bg-rose-50/50 rounded-xl">
+              <span className="sm:hidden">Sab</span><span className="hidden sm:inline">Sabtu</span>
+            </div>
+          </div>
 
         {/* Days Matrix */}
         <div className="grid grid-cols-7 gap-2">
@@ -188,6 +202,8 @@ export default function CalendarView() {
         </div>
 
       </div>
+
+    </div>
 
     </div>
   );
