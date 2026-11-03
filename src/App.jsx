@@ -100,15 +100,29 @@ function MainApp() {
         )}
 
         {activeTab === 'persetujuan' && (
-          <LeaveApprovalView
-            onSelectRequestForExport={handleSelectRequestForExport}
-          />
+          (currentUser.role === 'atasan' || currentUser.role === 'ppk' || currentUser.role === 'admin') ? (
+            <LeaveApprovalView
+              onSelectRequestForExport={handleSelectRequestForExport}
+            />
+          ) : (
+            <Dashboard
+              setActiveTab={setActiveTab}
+              onSelectRequestForExport={handleSelectRequestForExport}
+            />
+          )
         )}
 
         {activeTab === 'rekapitulasi' && (
-          <AdminRecapView
-            onSelectRequestForExport={handleSelectRequestForExport}
-          />
+          (currentUser.role === 'ppk' || currentUser.role === 'admin') ? (
+            <AdminRecapView
+              onSelectRequestForExport={handleSelectRequestForExport}
+            />
+          ) : (
+            <Dashboard
+              setActiveTab={setActiveTab}
+              onSelectRequestForExport={handleSelectRequestForExport}
+            />
+          )
         )}
 
         {activeTab === 'kalender' && (

@@ -23,6 +23,10 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [filterWorkflow, setFilterWorkflow] = useState(
+    currentUser?.role === 'atasan' ? 'ATASAN_PENDING' :
+    currentUser?.role === 'ppk' ? 'PPK_PENDING' : 'ALL'
+  );
 
   // Approval Form State
   const [actionType, setActionType] = useState('DISETUJUI'); // 'DISETUJUI', 'PERUBAHAN', 'DITANGGUHKAN', 'TIDAK_DISETUJUI'
@@ -31,6 +35,9 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
   useEffect(() => {
     fetchRequests();
+    if (currentUser?.role === 'atasan') setFilterWorkflow('ATASAN_PENDING');
+    else if (currentUser?.role === 'ppk') setFilterWorkflow('PPK_PENDING');
+    else setFilterWorkflow('ALL');
   }, [currentUser]);
 
   const fetchRequests = async () => {
@@ -136,8 +143,55 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
               </span>
             </div>
 
-            <div className="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
-              {requests.map((r) => {
+            {/* Workflow Filter Tabs */}
+            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl overflow-x-auto text-[11px] font-bold">
+              <button
+                type="button"
+                onClick={() => setFilterWorkflow('ALL')}
+                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
+                  filterWorkflow === 'ALL' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Semua ({requests.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilterWorkflow('ATASAN_PENDING')}
+                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
+                  filterWorkflow === 'ATASAN_PENDING' ? 'bg-amber-500 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Atasan ({requests.filter(r => r.status === 'diajukan' || !r.atasan_aksi).length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilterWorkflow('PPK_PENDING')}
+                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
+                  filterWorkflow === 'PPK_PENDING' ? 'bg-purple-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                PPK ({requests.filter(r => r.status === 'pertimbangan_atasan' || (r.atasan_aksi && !r.ppk_aksi)).length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilterWorkflow('APPROVED')}
+                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
+                  filterWorkflow === 'APPROVED' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Terbit SK ({requests.filter(r => r.status === 'disetujui').length})
+              </button>
+            </div>
+
+            <div className="space-y-2.5 max-h-[580px] overflow-y-auto pr-1">
+              {requests
+                .filter(r => {
+                  if (filterWorkflow === 'ATASAN_PENDING') return r.status === 'diajukan' || !r.atasan_aksi;
+                  if (filterWorkflow === 'PPK_PENDING') return r.status === 'pertimbangan_atasan' || (r.atasan_aksi && !r.ppk_aksi);
+                  if (filterWorkflow === 'APPROVED') return r.status === 'disetujui';
+                  return true;
+                })
+                .map((r) => {
                 const isSelected = selectedRequest?.id === r.id;
                 const statusBadge = {
                   diajukan: 'bg-blue-100 text-blue-700',
