@@ -130,7 +130,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 flex items-center justify-center font-bold">
-                    <Building className="w-4 h-4" />
+                    <Building2 className="w-4 h-4" />
                   </div>
                   <span className="text-xs uppercase font-black tracking-wider text-slate-900">
                     Status Dokumen ASN
