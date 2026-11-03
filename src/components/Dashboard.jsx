@@ -30,12 +30,15 @@ import {
   MoreVertical,
   ChevronLeft,
   ChevronDown,
-  Home
+  Home,
+  CheckSquare,
+  FileSpreadsheet
 } from 'lucide-react';
 
 export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
   const { currentUser, employees } = useAuth();
   const [requests, setRequests] = useState([]);
+  const [roleRequests, setRoleRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   
   // Pinterest Dual-Card Interactive States
@@ -47,6 +50,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
 
   useEffect(() => {
     fetchLeaveRequests();
+    fetchRoleRequests();
   }, [currentUser]);
 
   const fetchLeaveRequests = async () => {
@@ -60,6 +64,17 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
       console.error('Failed to fetch requests:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRoleRequests = async () => {
+    if (!currentUser || currentUser.role === 'pegawai') return;
+    try {
+      const res = await fetch('/api/leave-requests');
+      const data = await res.json();
+      setRoleRequests(data);
+    } catch (err) {
+      console.error('Failed to fetch role requests:', err);
     }
   };
 
@@ -252,6 +267,282 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
           </button>
         </div>
       </div>
+
+      {/* 2B. ROLE-SPECIFIC WORKSPACE PANELS (Specialized for Pegawai, Atasan, PPK & Admin) */}
+      {currentUser.role === 'atasan' && (
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border-2 border-amber-300 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                <CheckSquare className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                    Ruang Kendali Atasan Langsung
+                  </h2>
+                  <span className="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-300">
+                    Bagian VI BKN
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Kewenangan penetapan pertimbangan permohonan cuti staf unit {currentUser.unit_kerja}
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setActiveTab('persetujuan')}
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+            >
+              <span>Buka Ruang Persetujuan</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
+              <div className="text-[10px] uppercase font-bold text-amber-800">Menunggu Pertimbangan Anda:</div>
+              <div className="text-2xl font-black text-amber-900 mt-0.5">
+                {roleRequests.filter(r => r.status === 'diajukan' || !r.atasan_aksi).length} Berkas
+              </div>
+              <div className="text-[10px] text-amber-700 mt-0.5">Prioritas verifikasi hari ini</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="text-[10px] uppercase font-bold text-slate-500">Staf Sedang Cuti:</div>
+              <div className="text-2xl font-black text-slate-800 mt-0.5">
+                {colleaguesInUnit.filter(c => c.id !== currentUser.id).length > 0 ? '1 Pegawai' : '0 Pegawai'}
+              </div>
+              <div className="text-[10px] text-slate-500 mt-0.5">Pelayanan tetap normal</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="text-[10px] uppercase font-bold text-slate-500">Telah Dipertimbangkan:</div>
+              <div className="text-2xl font-black text-emerald-700 mt-0.5">
+                {roleRequests.filter(r => r.atasan_aksi).length} Berkas
+              </div>
+              <div className="text-[10px] text-slate-500 mt-0.5">Tercatat dalam log audit</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {currentUser.role === 'ppk' && (
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border-2 border-purple-300 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center font-bold">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                    Ruang Kendali Pejabat Pembina Kepegawaian (PPK)
+                  </h2>
+                  <span className="text-[10px] font-extrabold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full border border-purple-300">
+                    Bagian VII BKN
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Otoritas penetapan Surat Keputusan (SK) Cuti resmi dan tanda tangan digital TTE Kabupaten Kebumen
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setActiveTab('persetujuan')}
+                className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>Tetapkan SK Berkas Masuk</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setActiveTab('rekapitulasi')}
+                className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
+              >
+                Rekapitulasi Global
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="p-3.5 rounded-2xl bg-purple-50/70 border border-purple-200">
+              <div className="text-[10px] uppercase font-bold text-purple-800">Menunggu Penetapan SK PPK:</div>
+              <div className="text-2xl font-black text-purple-900 mt-0.5">
+                {roleRequests.filter(r => r.status === 'pertimbangan_atasan' || (r.atasan_aksi && !r.ppk_aksi)).length} Berkas
+              </div>
+              <div className="text-[10px] text-purple-700 mt-0.5">Siap diterbitkan SK & QR Code</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+              <div className="text-[10px] uppercase font-bold text-emerald-800">Total SK Terbit Tahun 2026:</div>
+              <div className="text-2xl font-black text-emerald-900 mt-0.5">
+                {roleRequests.filter(r => r.status === 'disetujui').length} SK
+              </div>
+              <div className="text-[10px] text-emerald-700 mt-0.5">Surat Keputusan sah berkekuatan hukum</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="text-[10px] uppercase font-bold text-slate-500">Cuti Ditangguhkan (N-2):</div>
+              <div className="text-2xl font-black text-slate-800 mt-0.5">
+                {roleRequests.filter(r => r.status === 'ditangguhkan').length} Berkas
+              </div>
+              <div className="text-[10px] text-slate-500 mt-0.5">Hak dialihkan ke saldo N-2</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {currentUser.role === 'admin' && (
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border-2 border-emerald-300 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <FileSpreadsheet className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                    Pusat Pengawasan Kepegawaian BKPSDM
+                  </h2>
+                  <span className="text-[10px] font-extrabold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-300">
+                    Audit BKN No. 7/2021
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Monitoring data pengajuan cuti aparatur sipil negara seluruh Perangkat Daerah Kabupaten Kebumen
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setActiveTab('rekapitulasi')}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>Buka Rekapitulasi & Ekspor CSV</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setActiveTab('persetujuan')}
+                className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
+              >
+                Alur Persetujuan
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+              <div className="text-[10px] uppercase font-bold text-emerald-800">Total Berkas Terdaftar:</div>
+              <div className="text-2xl font-black text-emerald-900 mt-0.5">
+                {roleRequests.length} Berkas
+              </div>
+              <div className="text-[10px] text-emerald-700 mt-0.5">Seluruh OPD Kebumen</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200">
+              <div className="text-[10px] uppercase font-bold text-blue-800">SK Selesai Terbit:</div>
+              <div className="text-2xl font-black text-blue-900 mt-0.5">
+                {roleRequests.filter(r => r.status === 'disetujui').length} SK
+              </div>
+              <div className="text-[10px] text-blue-700 mt-0.5">Disahkan oleh PPK</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
+              <div className="text-[10px] uppercase font-bold text-amber-800">Dalam Proses Alur:</div>
+              <div className="text-2xl font-black text-amber-900 mt-0.5">
+                {roleRequests.filter(r => r.status === 'diajukan' || r.status === 'pertimbangan_atasan').length} Berkas
+              </div>
+              <div className="text-[10px] text-amber-700 mt-0.5">Verifikasi berjenjang</div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-purple-50/70 border border-purple-200">
+              <div className="text-[10px] uppercase font-bold text-purple-800">Kepatuhan Regulasi:</div>
+              <div className="text-2xl font-black text-purple-900 mt-0.5">
+                100%
+              </div>
+              <div className="text-[10px] text-purple-700 mt-0.5">Valid standar BKN 7/2021</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {currentUser.role === 'pegawai' && (
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-2xs space-y-3.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                    Layanan Mandiri Cuti ASN ({currentUser.jenis_asn})
+                  </h2>
+                  <span className="text-[10px] font-extrabold bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full border border-orange-200">
+                    Portal Pegawai
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Pengajuan cuti online terintegrasi standar Formulir Permintaan & Pemberian Cuti Lampiran II BKN
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveTab('ajukan-cuti')}
+                className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Ajukan Cuti Baru</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('sisa-cuti')}
+                className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
+              >
+                Cek Saldo N, N-1, N-2
+              </button>
+            </div>
+          </div>
+
+          {/* Riwayat permohonan terakhir jika ada */}
+          {requests.length > 0 ? (
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+              <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+                <div>
+                  <span className="text-slate-500">Pengajuan Terakhir: </span>
+                  <strong className="text-slate-800 capitalize">{requests[0].jenis_cuti.replace('_', ' ')} ({requests[0].jumlah_hari} Hari)</strong>
+                  <span className="text-slate-400 text-[11px] ml-2">No: {requests[0].nomor_surat || '-'}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  requests[0].status === 'disetujui' ? 'bg-emerald-100 text-emerald-800' :
+                  requests[0].status === 'pertimbangan_atasan' ? 'bg-purple-100 text-purple-800' : 'bg-amber-100 text-amber-800'
+                }`}>
+                  {requests[0].status.replace('_', ' ').toUpperCase()}
+                </span>
+                <button
+                  onClick={() => onSelectRequestForExport(requests[0].id)}
+                  className="text-[11px] font-bold text-orange-600 hover:text-orange-700 underline cursor-pointer"
+                >
+                  Cetak Dokumen &rarr;
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="p-3 rounded-2xl bg-slate-50 text-xs text-slate-500 flex items-center justify-between">
+              <span>Belum ada riwayat permohonan cuti aktif di tahun berjalan.</span>
+              <span className="text-orange-600 font-semibold">Siap diajukan secara online</span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 3. PINTEREST LEAVE MANAGEMENT DUAL-CARD SHOWCASE (Exact Masterpiece Design) */}
       <div className="relative rounded-[2.5rem] bg-gradient-to-br from-slate-100 via-[#fcfbf9] to-slate-200/80 p-6 sm:p-8 lg:p-10 border border-slate-200 shadow-inner overflow-hidden">
