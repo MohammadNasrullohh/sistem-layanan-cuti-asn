@@ -341,40 +341,63 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           </div>
         </form>
 
-        {/* Right Summary Aside */}
-        <aside className="lawet-card p-5 flex flex-col">
-          <h2 className="text-[16px] font-semibold text-[#1c2530] m-0 mb-2">
-            Ringkasan
-          </h2>
+        {/* Right Summary Column with Smart Guidance */}
+        <div className="flex flex-col gap-5">
+          {/* Card 1: Ringkasan Saldo */}
+          <aside className="lawet-card p-5 flex flex-col">
+            <h2 className="text-[16px] font-semibold text-[#1c2530] m-0 mb-2">
+              Ringkasan
+            </h2>
 
-          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
-            <span className="text-[#1c2530]">Durasi</span>
-            <span className="mono font-medium text-[#1c2530]">
-              {jumlahHari} hari kerja
-            </span>
+            <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+              <span className="text-[#1c2530]">Durasi</span>
+              <span className="mono font-medium text-[#1c2530]">
+                {jumlahHari} hari kerja
+              </span>
+            </div>
+
+            <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+              <span className="text-[#1c2530]">Saldo N (2026) sebelum</span>
+              <span className="mono text-[#1c2530]">{cutiN}</span>
+            </div>
+
+            <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+              <span className="text-[#1c2530]">Saldo N sesudah</span>
+              <span className="mono font-semibold text-[#173a5e]">
+                {saldoNSesudah}
+              </span>
+            </div>
+
+            <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+              <span className="text-[#1c2530]">Saldo N-1 (2025)</span>
+              <span className="mono text-[#5a6472]">{saldoN1Keterangan}</span>
+            </div>
+
+            <p className="text-[13px] text-[#5a6472] leading-[1.5] mt-4 mb-0">
+              Gaji pokok, tunjangan jabatan, dan TPP tetap dibayar penuh selama cuti tahunan. Alur: atasan, PPK, lalu formulir resmi terbit.
+            </p>
+          </aside>
+
+          {/* Card 2: Panduan Regulasi Cepat */}
+          <div className="lawet-card p-5 flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[13px] font-semibold text-[#1c2530]">
+                Ketentuan BKN 7/2021
+              </span>
+              <span className="text-[11px] text-[#5a6472]">Validasi SIMPEG</span>
+            </div>
+
+            <ul className="list-disc pl-4 text-[12px] text-[#5a6472] space-y-1.5 m-0">
+              <li>Hari Sabtu, Minggu, dan Libur Nasional otomatis dikecualikan dari perhitungan kuota.</li>
+              <li>Hak cuti tahun berjalan yang tidak habis dapat diakumulasikan maksimal 6 hari di tahun N+1.</li>
+              <li>Tanda tangan elektronik resmi terbit setelah persetujuan PPK (Kepala BKPSDM).</li>
+            </ul>
+
+            <div className="pt-2 border-t border-[#e8ebe6] text-[11px] text-[#5a6472]">
+              Butuh konsultasi aturan? Klik menu <b>Aturan cuti (BKN)</b> di sidebar.
+            </div>
           </div>
-
-          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
-            <span className="text-[#1c2530]">Saldo N (2026) sebelum</span>
-            <span className="mono text-[#1c2530]">{cutiN}</span>
-          </div>
-
-          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
-            <span className="text-[#1c2530]">Saldo N sesudah</span>
-            <span className="mono font-semibold text-[#173a5e]">
-              {saldoNSesudah}
-            </span>
-          </div>
-
-          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
-            <span className="text-[#1c2530]">Saldo N-1 (2025)</span>
-            <span className="mono text-[#5a6472]">{saldoN1Keterangan}</span>
-          </div>
-
-          <p className="text-[13px] text-[#5a6472] leading-[1.5] mt-4 mb-0">
-            Gaji pokok, tunjangan jabatan, dan TPP tetap dibayar penuh selama cuti tahunan. Alur: atasan, PPK, lalu formulir resmi terbit.
-          </p>
-        </aside>
+        </div>
       </div>
     </div>
   );

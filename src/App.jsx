@@ -93,8 +93,8 @@ function MainApp() {
         setIsMobileOpen={setIsMobileOpen}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 p-5 sm:p-8 lg:p-[32px_40px] max-w-[1400px] w-full overflow-y-auto">
+      {/* Main Content Area - Full Responsive Adaptive Width (Zero Dead Space) */}
+      <main className="flex-1 p-4 sm:p-6 lg:p-[28px_36px] xl:p-[32px_40px] w-full min-h-screen overflow-y-auto">
         {activeTab === 'dashboard' && (
           <Dashboard
             setActiveTab={setActiveTab}
