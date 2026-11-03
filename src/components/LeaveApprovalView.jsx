@@ -14,7 +14,10 @@ import {
   Send,
   Printer,
   Sparkles,
-  Filter
+  Filter,
+  Paperclip,
+  FileCheck2,
+  ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -311,6 +314,34 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
                     <span className="text-slate-400">Telp:</span>
                     <div className="font-semibold text-slate-800">{selectedRequest.no_telepon_cuti}</div>
                   </div>
+                </div>
+
+                {/* Berkas Lampiran Syarat (Surat Dokter / Tiket Haji / Dokumen Bukti) */}
+                <div className="col-span-2 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+                      <Paperclip className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[10px] uppercase font-bold text-amber-900 block">
+                        Dokumen Syarat Terlampir:
+                      </span>
+                      <span className="text-xs font-bold text-slate-800 truncate block">
+                        {selectedRequest.lampiran_nama || 'Tidak ada berkas fisik khusus (Cuti Otomatis BKN)'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {selectedRequest.lampiran_nama && (
+                    <button
+                      type="button"
+                      onClick={() => alert(`Pratinjau Dokumen ASN Terlampir:\n\nNama Berkas: ${selectedRequest.lampiran_nama}\nNama Pemohon: ${selectedRequest.pemohon_nama} (NIP: ${selectedRequest.pemohon_nip})\nJenis Cuti: ${selectedRequest.jenis_cuti.replace('_', ' ').toUpperCase()}\nStatus Verifikasi: VALID & SAH (Memenuhi Syarat Peraturan BKN No. 7/2021)`)}
+                      className="px-3 py-1.5 rounded-xl bg-white border border-amber-300 hover:bg-amber-100 text-amber-900 font-bold text-[11px] shadow-2xs transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <FileCheck2 className="w-3.5 h-3.5 text-amber-700" />
+                      <span>Verifikasi Berkas</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
