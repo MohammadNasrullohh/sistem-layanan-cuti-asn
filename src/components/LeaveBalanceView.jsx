@@ -109,7 +109,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
       {/* Header */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold mb-2 border border-slate-700">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2 border border-blue-200">
             <Clock className="w-3.5 h-3.5" />
             <span>Layanan Mandiri Cuti ASN (Menu 1)</span>
           </div>
@@ -123,7 +123,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
 
         <button
           onClick={() => setActiveTab('ajukan-cuti')}
-          className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs md:text-sm shadow-md transition-all flex items-center gap-2 border border-slate-700 cursor-pointer"
+          className="px-6 py-3 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs md:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer"
         >
           <FileText className="w-4 h-4" />
           Ajukan Cuti Sekarang
@@ -157,7 +157,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
           <div className="p-5 rounded-2xl bg-slate-50 border-2 border-slate-200 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-black uppercase tracking-wider text-slate-900">Tahun N (2026)</span>
-              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-900 text-white font-extrabold border border-slate-800">
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 font-bold border border-blue-200">
                 Tahun Berjalan
               </span>
             </div>
@@ -172,7 +172,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
             {/* Progress track */}
             <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
               <div 
-                className="bg-slate-900 h-2 rounded-full"
+                className="bg-blue-600 h-2 rounded-full"
                 style={{ width: `${Math.min(100, ((currentUser.sisa_cuti_n || 12) / 12) * 100)}%` }}
               />
             </div>
@@ -376,7 +376,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
                 <tr 
                   key={item.id} 
                   className={`hover:bg-slate-50 transition-colors cursor-pointer ${
-                    selectedLeaveSim === item.id ? 'bg-slate-100 font-bold border-l-4 border-slate-900' : ''
+                    selectedLeaveSim === item.id ? 'bg-blue-50 font-bold border-l-4 border-blue-600' : ''
                   }`}
                   onClick={() => setSelectedLeaveSim(item.id)}
                 >

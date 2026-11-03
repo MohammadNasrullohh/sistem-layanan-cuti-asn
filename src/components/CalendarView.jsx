@@ -58,7 +58,7 @@ export default function CalendarView() {
       {/* Header */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold mb-2 border border-slate-700">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2 border border-blue-200">
             <CalendarIcon className="w-3.5 h-3.5" />
             <span>Kalender Cuti Bersama & Cuti Pegawai</span>
           </div>

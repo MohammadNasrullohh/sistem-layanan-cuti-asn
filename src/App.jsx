@@ -171,7 +171,7 @@ function MainApp() {
       <footer className="no-print mt-auto border-t border-slate-200 bg-white py-8 text-xs text-slate-500 w-full">
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-slate-900 border border-amber-400/50 text-amber-400 flex items-center justify-center font-black text-xs shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-blue-700 text-white flex items-center justify-center font-black text-xs shadow-xs">
               KBM
             </div>
             <div>
@@ -184,7 +184,7 @@ function MainApp() {
             <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold border border-slate-200">SPBE Terintegrasi</span>
             <span>Peraturan BKN No. 7 Tahun 2021</span>
             <span>•</span>
-            <span className="text-amber-700 font-bold">BerAKHLAK: Bangga Melayani Bangsa</span>
+            <span className="text-blue-700 font-bold">BerAKHLAK: Bangga Melayani Bangsa</span>
           </div>
         </div>
       </footer>

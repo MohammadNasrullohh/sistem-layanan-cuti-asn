@@ -87,13 +87,13 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
               className="flex items-center gap-2.5 cursor-pointer shrink-0" 
               onClick={() => setActiveTab('beranda')}
             >
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 border border-amber-400/50 flex items-center justify-center text-amber-400 shadow-sm shrink-0">
-                <Building2 className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center shadow-xs shrink-0">
+                <Building2 className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5 leading-none">
-                  <span className="font-black text-sm sm:text-base text-slate-900 tracking-tight">Layanan Cuti ASN</span>
-                  <span className="text-[9px] uppercase font-black tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  <span className="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight">Layanan Cuti ASN</span>
+                  <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
                     SPBE
                   </span>
                 </div>
@@ -105,7 +105,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 flex-nowrap overflow-x-auto no-scrollbar py-1">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-nowrap overflow-x-auto no-scrollbar py-1">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -113,16 +113,16 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 select-none cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 select-none cursor-pointer ${
                     isActive
-                      ? 'bg-slate-900 text-white shadow-xs border border-slate-900'
-                      : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+                      ? 'bg-blue-700 text-white shadow-xs font-bold'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                   <span className="whitespace-nowrap">{item.label}</span>
                   {item.badge > 0 && (
-                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-black bg-red-600 text-white shrink-0 animate-pulse">
+                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-rose-600 text-white shrink-0 animate-pulse">
                       {item.badge}
                     </span>
                   )}
@@ -282,11 +282,11 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                   }}
                   className={`p-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-slate-900 text-white border border-slate-900 shadow-2xs'
+                      ? 'bg-blue-700 text-white shadow-xs'
                       : 'text-slate-700 hover:bg-slate-100 border border-transparent'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                   <span className="truncate">{item.label}</span>
                   {item.badge > 0 && (
                     <span className="ml-auto px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-rose-500 text-white">

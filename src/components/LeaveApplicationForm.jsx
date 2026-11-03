@@ -344,7 +344,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <button
               onClick={() => onSelectRequestForExport(submittedRequest.id)}
-              className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer border border-slate-700"
+              className="px-6 py-3 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
               Ekspor Formulir Lampiran II BKN (Cetak / PDF)
@@ -375,7 +375,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center text-xs font-black shadow-xs font-mono">I</span>
+                <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center text-xs font-black shadow-xs font-mono">I</span>
                 <span>Data Pegawai Pemohon</span>
               </h2>
               <span className="text-[11px] font-semibold text-slate-400">Terisi Otomatis dari Profil LawetHub</span>
@@ -431,10 +431,10 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <h2 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center text-xs font-black shadow-xs font-mono">II</span>
+                <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center text-xs font-black shadow-xs font-mono">II</span>
                 <span>Jenis Cuti Yang Diambil</span>
               </h2>
-              <span className="text-xs font-bold text-amber-600">Pilih salah satu (7 Kategori BKN)</span>
+              <span className="text-xs font-bold text-blue-700">Pilih salah satu (7 Kategori BKN)</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -510,7 +510,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                     key={item.id}
                     className={`relative p-4 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between select-none ${
                       isSelected
-                        ? 'border-slate-900 bg-slate-50 shadow-sm ring-2 ring-slate-900/15'
+                        ? 'border-blue-600 bg-blue-50/40 shadow-xs ring-2 ring-blue-600/15'
                         : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/60'
                     }`}
                   >
@@ -518,7 +518,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2.5">
                           <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
-                            isSelected ? 'bg-slate-900 text-amber-400 shadow-2xs border border-slate-700' : 'bg-slate-100 text-slate-600'
+                            isSelected ? 'bg-blue-700 text-white shadow-2xs' : 'bg-slate-100 text-slate-600'
                           }`}>
                             <Icon className="w-4 h-4" />
                           </div>
@@ -674,7 +674,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center text-xs font-black shadow-xs font-mono">III</span>
+                <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center text-xs font-black shadow-xs font-mono">III</span>
                 <span>Alasan & Durasi Pelaksanaan Cuti</span>
               </h2>
             </div>
@@ -804,7 +804,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center font-bold">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center font-bold">
                   <FileText className="w-4 h-4" />
                 </div>
                 <h3 className="font-extrabold text-sm text-slate-900">
@@ -855,7 +855,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                 
                 <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden p-0.5">
                   <div 
-                    className="bg-slate-900 h-1.5 rounded-full transition-all duration-300"
+                    className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
                     style={{
                       width: `${Math.min(100, Math.max(0, (((currentUser?.sisa_cuti_n || 12) - jumlahHari) / 12) * 100))}%`
                     }}
@@ -919,13 +919,13 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
               <button
                 type="submit"
                 disabled={!validationResult.isValid || submitting}
-                className={`w-full py-4 rounded-2xl text-white font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`w-full py-4 rounded-2xl text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   validationResult.isValid && !submitting
-                    ? 'bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-900 shadow-slate-900/20 active:scale-[0.98]'
+                    ? 'bg-blue-700 hover:bg-blue-800 text-white shadow-blue-700/20 active:scale-[0.98]'
                     : 'bg-slate-300 cursor-not-allowed text-slate-500 shadow-none'
                 }`}
               >
-                <Send className="w-4 h-4 text-amber-300" />
+                <Send className="w-4 h-4 text-white" />
                 <span>{submitting ? 'Memproses Berkas...' : 'Kirim Permohonan Resmi'}</span>
               </button>
 

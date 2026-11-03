@@ -112,7 +112,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
           <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-lg shadow-slate-200/50 space-y-6">
             
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-slate-900 border border-amber-400/50 text-amber-400 flex items-center justify-center font-bold shadow-md">
+              <div className="w-10 h-10 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-bold shadow-md">
                 <Building2 className="w-5 h-5" />
               </div>
               <div>
@@ -145,7 +145,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                     onChange={(e) => setNip(e.target.value)}
                     placeholder="Contoh: 199208152018021003"
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-slate-900 focus:border-slate-900"
+                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
                   />
                 </div>
                 <div className="text-[10px] text-slate-400 mt-1">
@@ -165,7 +165,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Kata sandi akun"
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-slate-900 focus:border-slate-900"
+                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
                   />
                 </div>
                 <div className="text-[10px] text-slate-400 mt-1">
@@ -177,7 +177,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs md:text-sm shadow-md active:scale-[0.99] transition-all flex items-center justify-center gap-2 border border-slate-700 cursor-pointer"
+                  className="w-full py-3.5 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs md:text-sm shadow-md active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>{loading ? 'Memverifikasi...' : 'Masuk ke Dashboard LawetHub'}</span>
                   <ArrowRight className="w-4 h-4" />

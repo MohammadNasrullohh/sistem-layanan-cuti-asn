@@ -268,7 +268,7 @@ export default function BknHandbookModal({ setActiveTab }) {
               onClick={() => setSelectedSection(sec.id)}
               className={`w-full p-4 rounded-2xl border text-left transition-all flex items-center justify-between ${
                 selectedSection === sec.id
-                  ? 'border-slate-900 bg-slate-100 shadow-xs'
+                  ? 'border-blue-600 bg-blue-50/70 shadow-xs'
                   : 'border-slate-200 hover:border-slate-300 bg-white'
               }`}
             >

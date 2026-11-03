@@ -84,7 +84,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
         <div className="flex items-center gap-2">
           <button
             onClick={handlePrint}
-            className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs shadow-md transition-all flex items-center gap-2 border border-slate-700 cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
           >
             <Printer className="w-4 h-4" />
             Cetak / Simpan PDF

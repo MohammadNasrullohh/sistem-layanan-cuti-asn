@@ -35,7 +35,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
     <div className="space-y-12 pb-20 w-full font-sans select-none">
       
       {/* 1. HERO SECTION: STATE EXECUTIVE GOVERNMENT PORTAL (TEGAS & RESMI PEMERINTAH) */}
-      <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#0c192e] via-[#112444] to-[#18325a] text-white p-8 md:p-12 lg:p-14 shadow-2xl shadow-slate-950/30 border-2 border-amber-400/30">
+      <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#0a192f] via-[#102a4e] to-[#0c1e38] text-white p-8 md:p-12 lg:p-14 shadow-2xl shadow-slate-950/20 border border-blue-900/40">
         
         {/* Smooth Architectural Government Wave & Geometric Shapes (Resmi, Elegan & Presisi) */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -43,16 +43,16 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]"></div>
 
           {/* Smooth Ambient Light Orbs */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-blue-600/15 blur-3xl"></div>
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl"></div>
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-indigo-600/15 blur-3xl"></div>
 
           {/* Smooth Topographic Contour Lines SVG */}
           <svg className="absolute inset-0 w-full h-full opacity-25" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 600">
-            <path d="M-100,200 C300,100 500,450 900,250 C1100,150 1250,300 1400,200" fill="none" stroke="rgba(251, 191, 36, 0.45)" strokeWidth="1.5" />
+            <path d="M-100,200 C300,100 500,450 900,250 C1100,150 1250,300 1400,200" fill="none" stroke="rgba(147, 197, 253, 0.35)" strokeWidth="1.5" />
             <path d="M-100,280 C250,180 550,520 950,320 C1150,220 1280,380 1400,280" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
-            <path d="M-100,360 C200,260 600,590 1000,390 C1200,290 1310,460 1400,360" fill="none" stroke="rgba(251, 191, 36, 0.3)" strokeWidth="1.2" />
+            <path d="M-100,360 C200,260 600,590 1000,390 C1200,290 1310,460 1400,360" fill="none" stroke="rgba(147, 197, 253, 0.25)" strokeWidth="1.2" />
             <circle cx="950" cy="180" r="160" fill="none" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1" strokeDasharray="6 6" />
-            <circle cx="950" cy="180" r="240" fill="none" stroke="rgba(251, 191, 36, 0.15)" strokeWidth="1" />
+            <circle cx="950" cy="180" r="240" fill="none" stroke="rgba(147, 197, 253, 0.12)" strokeWidth="1" />
           </svg>
         </div>
 
@@ -61,26 +61,26 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
           {/* LEFT COLUMN: Headings, Badges, CTAs (7 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-6">
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600/90 text-white text-[11px] font-black tracking-wider uppercase border border-red-400 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600 text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
                 <span>REPUBLIK INDONESIA</span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black tracking-wide border border-amber-300 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-slate-950" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/40 text-blue-100 text-[11px] font-semibold tracking-wide border border-blue-400/30">
+                <Sparkles className="w-3.5 h-3.5 text-sky-300" />
                 <span>Peraturan BKN No. 7 Tahun 2021</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 text-amber-300 text-[11px] font-extrabold border border-slate-700">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 text-slate-200 text-[11px] font-medium border border-slate-700">
                 <span>SPBE Kabupaten Kebumen</span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <div className="text-xs sm:text-sm font-extrabold text-amber-400 uppercase tracking-widest flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <div className="text-xs sm:text-sm font-bold text-blue-300 uppercase tracking-widest flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-400"></span>
                 <span>Pemerintah Kabupaten Kebumen • BKPSDM</span>
               </div>
               <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.12] text-white">
                 Sistem Layanan Cuti <br className="hidden sm:inline" />
-                <span className="text-amber-300 underline decoration-amber-400/50 underline-offset-8">
+                <span className="text-sky-300">
                   Aparatur Sipil Negara
                 </span>
               </h1>
@@ -94,27 +94,27 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
             <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <button
                 onClick={() => setActiveTab('ajukan-cuti')}
-                className="px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer border border-amber-300"
+                className="px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-blue-950 font-black text-sm shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
-                <FileText className="w-4 h-4 text-slate-950" />
+                <FileText className="w-4 h-4 text-blue-700" />
                 <span>Ajukan Permohonan Cuti</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-blue-700" />
               </button>
 
               <button
                 onClick={() => setActiveTab('sisa-cuti')}
-                className="px-5 py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-900 border-2 border-slate-600 text-white font-extrabold text-sm shadow-sm hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
-                <Clock className="w-4 h-4 text-amber-400" />
+                <Clock className="w-4 h-4 text-sky-300" />
                 <span>Rincian Saldo Kuota Cuti</span>
               </button>
 
               <button
                 onClick={onOpenWhatsApp}
-                className="px-5 py-3.5 rounded-2xl bg-emerald-700 hover:bg-emerald-600 text-white font-extrabold text-sm shadow-sm hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer border border-emerald-500/40"
+                className="px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Chatbot WhatsApp ASN</span>
+                <span>Layanan WhatsApp</span>
               </button>
             </div>
 
@@ -145,14 +145,14 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
               {/* Header: Title & Online Dot */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 flex items-center justify-center font-bold">
+                  <div className="w-7 h-7 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold">
                     <Building2 className="w-4 h-4" />
                   </div>
-                  <span className="text-xs uppercase font-black tracking-wider text-slate-900">
+                  <span className="text-xs uppercase font-extrabold tracking-wider text-slate-900">
                     Status Dokumen ASN
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-black bg-emerald-100 text-emerald-900 px-3 py-1 rounded-full border border-emerald-300">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold bg-emerald-50 text-emerald-800 px-3 py-1 rounded-full border border-emerald-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span>
                   <span>Sah Regulasi BKN</span>
                 </div>
@@ -164,7 +164,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                   <img
                     src={currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}
                     alt={currentUser.nama}
-                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-slate-900 shrink-0"
+                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-blue-100 shrink-0"
                   />
                   <div className="min-w-0 flex-1">
                     <div className="font-extrabold text-sm text-slate-900 truncate leading-tight">
@@ -174,10 +174,12 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                       NIP: <strong className="text-slate-800">{currentUser.nip}</strong>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
-                      <span className="px-2 py-0.2 rounded-md text-[9px] font-black bg-slate-900 text-white">
+                      <span className={`px-2 py-0.2 rounded-md text-[9px] font-bold ${
+                        currentUser.jenis_asn === 'PNS' ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                      }`}>
                         {currentUser.jenis_asn}
                       </span>
-                      <span className="text-[10px] text-slate-700 font-bold truncate">
+                      <span className="text-[10px] text-slate-600 font-semibold truncate">
                         {currentUser.unit_kerja}
                       </span>
                     </div>
@@ -225,7 +227,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 </div>
                 <button
                   onClick={() => setActiveTab('dashboard')}
-                  className="px-3 py-1.5 rounded-xl bg-slate-900 text-amber-400 font-bold text-[11px] shadow-xs hover:bg-slate-800 transition-all shrink-0 cursor-pointer border border-slate-700"
+                  className="px-3 py-1.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-[11px] shadow-xs transition-all shrink-0 cursor-pointer"
                 >
                   Detail &rarr;
                 </button>
@@ -234,7 +236,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
               {/* Direct Link to Dashboard (Solid dark) */}
               <button
                 onClick={() => setActiveTab('dashboard')}
-                className="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-extrabold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm hover:shadow-md border border-slate-700"
+                className="w-full py-3.5 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm hover:shadow-md"
               >
                 <span>Buka Dashboard & Dayoff Tracker</span>
                 <ChevronRight className="w-4 h-4" />
@@ -249,7 +251,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
       {/* 2. PROCESS FLOW: 4 STEPS AESTHETIC BLUEPRINT */}
       <section className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-xs space-y-8">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-extrabold mb-2 border border-slate-700">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2 border border-blue-200">
             <span>Alur Proses Terstandarisasi BKN</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -263,9 +265,9 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
           
           {/* STEP 1 */}
-          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-slate-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
             <div>
-              <div className="w-10 h-10 rounded-2xl bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center font-black text-sm mb-4 shadow-sm font-mono">
+              <div className="w-10 h-10 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-bold text-sm mb-4 shadow-sm">
                 1
               </div>
               <h3 className="font-extrabold text-slate-900 text-base">Akses & Pilih Menu</h3>
@@ -273,7 +275,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 Akses web LawetHub atau kirim pesan WhatsApp. Pilih menu <strong>Lihat Sisa Cuti</strong> atau <strong>Ajukan Cuti</strong>.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-slate-900">
+            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-blue-700">
               <span>Web Portal & WA Bot</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
@@ -444,20 +446,20 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
         
         <div 
           onClick={() => setActiveTab('sisa-cuti')}
-          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-slate-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
+          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <Clock className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-slate-800 transition-colors">
+            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
               Cek Kuota & Sisa Cuti
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
               Periksa rincian sisa cuti tahunan N-2, N-1, N berjalan, kelayakan cuti besar, dan simulasi penghasilan saat cuti.
             </p>
           </div>
-          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-black text-slate-900">
+          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-700">
             <span>Buka Rincian Sisa Cuti</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
           </div>

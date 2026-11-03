@@ -265,7 +265,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
                 <button
                   onClick={() => onSelectRequestForExport(selectedRequest.id)}
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 text-xs font-bold transition-colors flex items-center gap-1.5 border border-slate-700 cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold transition-colors flex items-center gap-1.5 border border-blue-200 cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   Pratinjau Form BKN
@@ -412,9 +412,9 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
                       key={btn.id}
                       type="button"
                       onClick={() => setActionType(btn.id)}
-                      className={`p-2.5 rounded-xl text-xs font-bold border transition-all ${
+                      className={`p-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                         actionType === btn.id
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                          ? 'bg-blue-700 text-white border-blue-700 shadow-xs'
                           : `bg-white ${btn.color}`
                       }`}
                     >
@@ -432,7 +432,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
                     value={catatan}
                     onChange={(e) => setCatatan(e.target.value)}
                     placeholder="Masukkan catatan rekomendasi atau pertimbangan resmi..."
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
                   />
                 </div>
 
@@ -443,7 +443,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
                       type="button"
                       disabled={submitting}
                       onClick={() => handleProcessAction(false)}
-                      className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2"
+                      className="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
                       Simpan Pertimbangan Atasan
@@ -456,7 +456,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
                       type="button"
                       disabled={submitting}
                       onClick={() => handleProcessAction(true)}
-                      className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2"
+                      className="px-5 py-2.5 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
                     >
                       <ShieldCheck className="w-4 h-4" />
                       Tetapkan Keputusan PPK & Terbitkan SK
