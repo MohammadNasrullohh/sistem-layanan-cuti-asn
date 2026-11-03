@@ -277,27 +277,31 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
   return (
     <div className="w-full space-y-8 pb-16">
       
-      {/* Title Banner */}
+      {/* Official Government Form Banner */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/90 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mb-2">
-            <FileText className="w-3.5 h-3.5" />
-            <span>Formulir Elektronik (Menu 2)</span>
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="px-3 py-1 rounded-full bg-slate-900 text-amber-300 text-xs font-black tracking-wide border border-slate-800">
+              Anak Lampiran II BKN
+            </span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              Peraturan BKN No. 7 Tahun 2021
+            </span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Pengajuan Permohonan Cuti ASN
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+            Formulir Permintaan dan Pemberian Cuti ASN
           </h1>
-          <p className="text-xs md:text-sm text-slate-500 mt-1">
-            Standar Format Formulir Permintaan dan Pemberian Cuti Peraturan BKN No. 7 Tahun 2021
+          <p className="text-xs md:text-sm text-slate-600 mt-1">
+            Standar format dokumen resmi pengajuan izin cuti Aparatur Sipil Negara Pemerintah Kabupaten Kebumen
           </p>
         </div>
 
         <button
           onClick={() => setActiveTab('sisa-cuti')}
-          className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors flex items-center gap-1.5 shrink-0"
+          className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 border border-slate-200"
         >
-          <Clock className="w-3.5 h-3.5" />
-          Lihat Sisa Cuti
+          <Clock className="w-3.5 h-3.5 text-slate-500" />
+          Lihat Sisa Cuti N
         </button>
       </div>
 
@@ -917,12 +921,12 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                 disabled={!validationResult.isValid || submitting}
                 className={`w-full py-4 rounded-2xl text-white font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   validationResult.isValid && !submitting
-                    ? 'bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 hover:from-orange-700 hover:to-amber-700 shadow-orange-500/25 active:scale-[0.98]'
+                    ? 'bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-900 shadow-slate-900/20 active:scale-[0.98]'
                     : 'bg-slate-300 cursor-not-allowed text-slate-500 shadow-none'
                 }`}
               >
-                <Send className="w-4 h-4" />
-                <span>{submitting ? 'Menyimpan Pengajuan...' : 'Kirim Permohonan Cuti'}</span>
+                <Send className="w-4 h-4 text-amber-300" />
+                <span>{submitting ? 'Memproses Berkas...' : 'Kirim Permohonan Resmi'}</span>
               </button>
 
               <button

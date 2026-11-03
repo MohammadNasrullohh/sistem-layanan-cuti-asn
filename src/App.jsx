@@ -166,22 +166,24 @@ function MainApp() {
         onSelectRequestForExport={handleSelectRequestForExport}
       />
 
-      {/* Official Footer */}
+      {/* Official Government Footer */}
       <footer className="no-print mt-auto border-t border-slate-200 bg-white py-8 text-xs text-slate-500 w-full">
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold text-xs">
-              LH
+            <div className="w-8 h-8 rounded-xl bg-slate-900 border border-amber-400/50 text-amber-400 flex items-center justify-center font-black text-xs shadow-xs">
+              KBM
             </div>
             <div>
-              <span className="font-bold text-slate-800">LawetHub</span> • Badan Kepegawaian dan Pengembangan SDM Kabupaten Kebumen
+              <div className="font-black text-slate-900">Pemerintah Kabupaten Kebumen</div>
+              <div className="text-[11px] text-slate-500">Badan Kepegawaian dan Pengembangan Sumber Daya Manusia (BKPSDM)</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 font-semibold">
+            <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold border border-slate-200">SPBE Terintegrasi</span>
             <span>Peraturan BKN No. 7 Tahun 2021</span>
             <span>•</span>
-            <span>Buku Saku Kompensasi ASN 2024</span>
+            <span className="text-amber-700 font-bold">BerAKHLAK: Bangga Melayani Bangsa</span>
           </div>
         </div>
       </footer>

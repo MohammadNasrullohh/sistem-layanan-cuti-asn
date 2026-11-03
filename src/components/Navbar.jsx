@@ -48,6 +48,26 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs w-full">
+      {/* 1. Official Republic & Regional Government Ribbon (Merah-Putih & Institutional Title) */}
+      <div className="h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-slate-200 w-full"></div>
+      <div className="bg-[#0b172a] text-slate-300 text-[10px] py-1 border-b border-slate-800 w-full select-none">
+        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 tracking-wider font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+            <span className="text-white font-black uppercase tracking-tight">PEMERINTAH KABUPATEN KEBUMEN</span>
+            <span className="text-slate-600 hidden sm:inline">•</span>
+            <span className="hidden sm:inline text-slate-400">Badan Kepegawaian dan Pengembangan SDM (BKPSDM)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-0.2 rounded bg-amber-400/20 text-amber-300 font-black text-[9px] border border-amber-400/30">
+              BerAKHLAK
+            </span>
+            <span className="hidden md:inline text-[10px] text-slate-400 font-medium">Bangga Melayani Bangsa</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Main Navigation Bar */}
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-16 gap-3">
           
@@ -55,36 +75,36 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
           <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
             <button
               onClick={() => setActiveTab('beranda')}
-              className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-orange-600 transition-colors pr-2.5 sm:pr-3.5 border-r border-slate-200 select-none cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors pr-2.5 sm:pr-3.5 border-r border-slate-200 select-none cursor-pointer"
               title="Kembali ke Dashboard Utama LawetHub"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-slate-400" />
-              <span className="hidden sm:inline">Dashboard</span>
-              <span>LawetHub</span>
+              <span className="hidden sm:inline font-medium">Dashboard</span>
+              <span className="font-bold text-slate-700">LawetHub</span>
             </button>
 
             <div 
-              className="flex items-center gap-2 cursor-pointer shrink-0" 
+              className="flex items-center gap-2.5 cursor-pointer shrink-0" 
               onClick={() => setActiveTab('beranda')}
             >
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-500/20 shrink-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-900 border border-amber-400/50 flex items-center justify-center text-amber-400 shadow-sm shrink-0">
                 <Building2 className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5 leading-none">
-                  <span className="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight">Layanan Cuti</span>
-                  <span className="text-[9px] uppercase font-bold tracking-wide px-1.5 py-0.5 rounded-md bg-orange-100 text-orange-700">
-                    Modul ASN
+                  <span className="font-black text-sm sm:text-base text-slate-900 tracking-tight">Layanan Cuti ASN</span>
+                  <span className="text-[9px] uppercase font-black tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    SPBE
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-400 mt-0.5 hidden sm:inline leading-none font-medium">
-                  Peraturan BKN No. 7/2021
+                <span className="text-[10px] text-slate-500 mt-0.5 hidden sm:inline leading-none font-semibold">
+                  Peraturan BKN No. 7 Tahun 2021
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Desktop Navigation Links (Smooth horizontal flow, never wraps text) */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2 flex-nowrap overflow-x-auto no-scrollbar py-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -93,16 +113,16 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 select-none ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 select-none cursor-pointer ${
                     isActive
-                      ? 'bg-orange-50 text-orange-700 font-bold shadow-2xs ring-1 ring-orange-200/80'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
+                      ? 'bg-slate-900 text-white shadow-xs border border-slate-900'
+                      : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-orange-600' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
                   <span className="whitespace-nowrap">{item.label}</span>
                   {item.badge > 0 && (
-                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-rose-500 text-white shrink-0 animate-pulse">
+                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-black bg-red-600 text-white shrink-0 animate-pulse">
                       {item.badge}
                     </span>
                   )}
@@ -260,13 +280,13 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                     setActiveTab(item.id);
                     setMobileMenuOpen(false);
                   }}
-                  className={`p-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
+                  className={`p-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-orange-50 text-orange-700 font-bold border border-orange-200'
-                      : 'text-slate-600 hover:bg-slate-50 border border-transparent'
+                      ? 'bg-slate-900 text-white border border-slate-900 shadow-2xs'
+                      : 'text-slate-700 hover:bg-slate-100 border border-transparent'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-orange-600' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
                   <span className="truncate">{item.label}</span>
                   {item.badge > 0 && (
                     <span className="ml-auto px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-rose-500 text-white">

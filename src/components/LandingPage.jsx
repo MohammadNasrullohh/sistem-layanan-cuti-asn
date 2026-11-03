@@ -34,120 +34,134 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
   return (
     <div className="space-y-12 pb-20 w-full font-sans select-none">
       
-      {/* 1. HERO SECTION: ULTRA-AESTHETIC SOLID POWERHOUSE (ZERO GLASSMORPHISM) */}
-      <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-amber-600 via-orange-600 to-rose-700 text-white p-8 md:p-12 lg:p-14 shadow-xl shadow-orange-950/20 border border-orange-400/30">
+      {/* 1. HERO SECTION: STATE EXECUTIVE GOVERNMENT PORTAL (TEGAS & RESMI PEMERINTAH) */}
+      <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#0c192e] via-[#112444] to-[#18325a] text-white p-8 md:p-12 lg:p-14 shadow-2xl shadow-slate-950/30 border-2 border-amber-400/30">
         
-        {/* Subtle Geometric Blueprint Grid Overlay (No blur, crisp architectural texture) */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none"></div>
+        {/* Subtle Architectural Grid Texture (No blur, crisp official watermark pattern) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none"></div>
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* LEFT COLUMN: Headings, Badges, CTAs (7 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-6">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-400 text-slate-950 text-xs font-black tracking-wide border border-amber-300 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-slate-950" />
-              <span>Standar Resmi Peraturan BKN Nomor 7 Tahun 2021</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600/90 text-white text-[11px] font-black tracking-wider uppercase border border-red-400 shadow-sm">
+                <span>REPUBLIK INDONESIA</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black tracking-wide border border-amber-300 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-slate-950" />
+                <span>Peraturan BKN No. 7 Tahun 2021</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 text-amber-300 text-[11px] font-extrabold border border-slate-700">
+                <span>SPBE Kabupaten Kebumen</span>
+              </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.12] text-white">
-              Layanan Cuti ASN Terpadu <br className="hidden sm:inline" />
-              <span className="text-amber-200 underline decoration-amber-300/60 underline-offset-8">
-                Modul LawetHub
-              </span> Kabupaten Kebumen
-            </h1>
+            <div className="space-y-2">
+              <div className="text-xs sm:text-sm font-extrabold text-amber-400 uppercase tracking-widest flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                <span>Pemerintah Kabupaten Kebumen • BKPSDM</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.12] text-white">
+                Sistem Layanan Cuti <br className="hidden sm:inline" />
+                <span className="text-amber-300 underline decoration-amber-400/50 underline-offset-8">
+                  Aparatur Sipil Negara
+                </span>
+              </h1>
+            </div>
 
-            <p className="text-sm sm:text-base lg:text-lg text-orange-50 font-normal leading-relaxed max-w-2xl">
-              Sub-sistem mandiri pengajuan, validasi kepatuhan regulasi BKN, pertimbangan atasan langsung, dan penetapan SK cuti resmi oleh PPK. Terpasang langsung sebagai modul resmi di dalam portal terpusat Dashboard LawetHub.
+            <p className="text-sm sm:text-base lg:text-lg text-slate-200 font-normal leading-relaxed max-w-2xl">
+              Sub-sistem mandiri pengajuan izin cuti elektronik, audit kepatuhan regulasi otomatis, verifikasi pertimbangan atasan berjenjang, dan penerbitan Surat Keputusan (SK) resmi ber-TTE digital untuk seluruh aparatur PNS dan PPPK Pemerintah Kabupaten Kebumen.
             </p>
 
-            {/* Quick Action CTA Buttons (Solid high-contrast surfaces) */}
+            {/* Quick Action CTA Buttons (Authoritative Government Palette) */}
             <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <button
                 onClick={() => setActiveTab('ajukan-cuti')}
-                className="px-6 py-3.5 rounded-2xl bg-white text-orange-700 font-extrabold text-sm shadow-md hover:bg-orange-50 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer border border-amber-300"
               >
-                <FileText className="w-4 h-4 text-orange-700" />
-                <span>Ajukan Cuti Online</span>
+                <FileText className="w-4 h-4 text-slate-950" />
+                <span>Ajukan Permohonan Cuti</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={() => setActiveTab('sisa-cuti')}
-                className="px-5 py-3.5 rounded-2xl bg-orange-800/80 hover:bg-orange-800 border-2 border-white/90 text-white font-extrabold text-sm shadow-sm hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-900 border-2 border-slate-600 text-white font-extrabold text-sm shadow-sm hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
-                <Clock className="w-4 h-4" />
-                <span>Cek Sisa Cuti Saya</span>
+                <Clock className="w-4 h-4 text-amber-400" />
+                <span>Rincian Saldo Kuota Cuti</span>
               </button>
 
               <button
                 onClick={onOpenWhatsApp}
-                className="px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-sm hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-2xl bg-emerald-700 hover:bg-emerald-600 text-white font-extrabold text-sm shadow-sm hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer border border-emerald-500/40"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Layanan WA Chatbot</span>
+                <span>Chatbot WhatsApp ASN</span>
               </button>
             </div>
 
             {/* Active User Indicator & Key Feature Pills */}
-            <div className="pt-4 border-t border-orange-400/40 flex flex-wrap items-center justify-between gap-3 text-xs text-orange-100">
+            <div className="pt-4 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
               {currentUser && (
                 <div className="flex items-center gap-2.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
                   <span>
-                    Masuk sebagai: <strong className="text-white font-extrabold">{currentUser.nama}</strong> ({currentUser.jenis_asn} - {currentUser.jabatan})
+                    Aparatur Aktif: <strong className="text-white font-extrabold">{currentUser.nama}</strong> ({currentUser.jenis_asn} • {currentUser.jabatan})
                   </span>
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold text-orange-100">
-                <span className="px-3 py-1 rounded-lg bg-orange-700/80 border border-orange-400/40 shadow-2xs">7 Jenis Cuti PNS</span>
-                <span className="px-3 py-1 rounded-lg bg-orange-700/80 border border-orange-400/40 shadow-2xs">4 Jenis Cuti PPPK</span>
-                <span className="px-3 py-1 rounded-lg bg-orange-700/80 border border-orange-400/40 shadow-2xs">Anak Lampiran II BKN</span>
-                <span className="px-3 py-1 rounded-lg bg-orange-700/80 border border-orange-400/40 shadow-2xs">Validasi Otomatis</span>
+              <div className="flex flex-wrap items-center gap-2 text-[11px] font-black text-slate-200">
+                <span className="px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700 shadow-2xs">7 Jenis Cuti PNS</span>
+                <span className="px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700 shadow-2xs">4 Jenis Cuti PPPK</span>
+                <span className="px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700 shadow-2xs">Anak Lampiran II BKN</span>
+                <span className="px-3 py-1 rounded-lg bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 shadow-2xs">TTE Sah BKN</span>
               </div>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Solid Pure White Telemetry Card (Zero Glassmorphism) */}
+          {/* RIGHT COLUMN: Official State Credential Status Card (Solid & High-Contrast) */}
           <div className="lg:col-span-5 xl:col-span-4">
-            <div className="bg-white rounded-[2rem] p-7 text-slate-800 shadow-2xl shadow-slate-900/15 border-2 border-orange-100/90 space-y-4.5">
+            <div className="bg-white rounded-[2rem] p-7 text-slate-800 shadow-2xl shadow-slate-950/20 border-2 border-slate-200 space-y-4.5">
               
               {/* Header: Title & Online Dot */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
-                    <Zap className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 flex items-center justify-center font-bold">
+                    <Building className="w-4 h-4" />
                   </div>
                   <span className="text-xs uppercase font-black tracking-wider text-slate-900">
-                    Panel Status ASN
+                    Status Dokumen ASN
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-extrabold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full border border-emerald-300">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-                  <span>Terverifikasi BKN</span>
+                <div className="flex items-center gap-1.5 text-[10px] font-black bg-emerald-100 text-emerald-900 px-3 py-1 rounded-full border border-emerald-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span>
+                  <span>Sah Regulasi BKN</span>
                 </div>
               </div>
 
               {/* User Identity Snapshot */}
               {currentUser ? (
-                <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80">
+                <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50 border border-slate-200">
                   <img
                     src={currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}
                     alt={currentUser.nama}
-                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-orange-400 shrink-0"
+                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-slate-900 shrink-0"
                   />
                   <div className="min-w-0 flex-1">
                     <div className="font-extrabold text-sm text-slate-900 truncate leading-tight">
                       {currentUser.nama}
                     </div>
                     <div className="text-[11px] text-slate-500 truncate mt-0.5 font-medium">
-                      NIP: <strong className="text-slate-700">{currentUser.nip}</strong>
+                      NIP: <strong className="text-slate-800">{currentUser.nip}</strong>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
-                      <span className="px-2 py-0.2 rounded-md text-[9px] font-black bg-blue-100 text-blue-800 border border-blue-200">
+                      <span className="px-2 py-0.2 rounded-md text-[9px] font-black bg-slate-900 text-white">
                         {currentUser.jenis_asn}
                       </span>
-                      <span className="text-[10px] text-slate-600 font-semibold truncate">
+                      <span className="text-[10px] text-slate-700 font-bold truncate">
                         {currentUser.unit_kerja}
                       </span>
                     </div>
@@ -155,26 +169,26 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 </div>
               ) : null}
 
-              {/* Live Sisa Cuti Box (Solid) */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-50/90 to-amber-50/60 border border-orange-200 space-y-3">
+              {/* Live Sisa Cuti Box (State Neutral Solid) */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-600 font-bold">Total Sisa Cuti 2026:</span>
-                  <span className="text-2xl font-black text-orange-600 tracking-tight">
-                    {totalSisaTahunan} <span className="text-xs font-semibold text-slate-600">Hari Kerja</span>
+                  <span className="text-slate-600 font-bold uppercase tracking-wide text-[10px]">Saldo Cuti Tahunan 2026:</span>
+                  <span className="text-2xl font-black text-slate-900 tracking-tight">
+                    {totalSisaTahunan} <span className="text-xs font-semibold text-slate-500">Hari Kerja</span>
                   </span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
-                  <div className="p-2.5 rounded-xl bg-white border border-orange-100 shadow-2xs">
-                    <span className="text-slate-400 block text-[9px] font-semibold">Tahun N</span>
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                    <span className="text-slate-400 block text-[9px] font-bold">Tahun N</span>
                     <strong className="text-slate-900 text-sm font-black">{currentUser?.sisa_cuti_n || 12}</strong>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-orange-100 shadow-2xs">
-                    <span className="text-slate-400 block text-[9px] font-semibold">N-1 (2025)</span>
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                    <span className="text-slate-400 block text-[9px] font-bold">N-1 (2025)</span>
                     <strong className="text-slate-900 text-sm font-black">{currentUser?.sisa_cuti_n1 || 6}</strong>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-orange-100 shadow-2xs">
-                    <span className="text-slate-400 block text-[9px] font-semibold">N-2 (2024)</span>
+                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                    <span className="text-slate-400 block text-[9px] font-bold">N-2 (2024)</span>
                     <strong className="text-slate-900 text-sm font-black">{currentUser?.sisa_cuti_n2 || 0}</strong>
                   </div>
                 </div>
