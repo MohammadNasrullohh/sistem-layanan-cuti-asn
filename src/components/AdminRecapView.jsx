@@ -136,7 +136,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="lawet-input bg-white cursor-pointer"
+          className="lawet-select"
         >
           <option value="ALL">Semua status</option>
           <option value="pertimbangan_atasan">Menunggu atasan</option>
@@ -149,7 +149,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
         <select
           value={filterJenis}
           onChange={(e) => setFilterJenis(e.target.value)}
-          className="lawet-input bg-white cursor-pointer"
+          className="lawet-select"
         >
           <option value="ALL">Semua jenis cuti</option>
           <option value="Cuti Tahunan">Cuti Tahunan</option>
@@ -162,7 +162,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
         <select
           value={filterMonth}
           onChange={(e) => setFilterMonth(e.target.value)}
-          className="lawet-input bg-white cursor-pointer"
+          className="lawet-select"
         >
           <option value="2026-11">November 2026</option>
           <option value="2026-12">Desember 2026</option>

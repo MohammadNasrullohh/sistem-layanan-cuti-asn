@@ -210,7 +210,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
             <select
               value={jenisCuti}
               onChange={(e) => setJenisCuti(e.target.value)}
-              className="lawet-input bg-white cursor-pointer"
+              className="lawet-select"
             >
               <option value="cuti_tahunan">Cuti Tahunan — sisa {totalSisa} hari kerja</option>
               <option value="cuti_besar">Cuti Besar</option>

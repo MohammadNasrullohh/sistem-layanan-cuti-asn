@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import Modal from './Modal';
 
 export default function LoginPage({ onLoginSuccess }) {
   const { employees, loginWithNip, loginAsUser } = useAuth();
@@ -7,6 +8,7 @@ export default function LoginPage({ onLoginSuccess }) {
   const [password, setPassword] = useState('123456');
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,16 +104,13 @@ export default function LoginPage({ onLoginSuccess }) {
               {loading ? 'Memverifikasi...' : 'Masuk'}
             </button>
 
-            <a
-              href="#bantuan"
-              onClick={(e) => {
-                e.preventDefault();
-                alert('Untuk bantuan akun SIMPEG atau reset kata sandi, silakan hubungi Subbag Kepegawaian BKPSDM Kebumen di Gedung Setda Lantai 2.');
-              }}
-              className="text-[13px] text-[#173a5e] hover:underline"
+            <button
+              type="button"
+              onClick={() => setShowHelpModal(true)}
+              className="text-left text-[13px] text-[#173a5e] hover:underline bg-transparent border-0 cursor-pointer p-0"
             >
               Lupa kata sandi? Hubungi admin BKPSDM
-            </a>
+            </button>
           </form>
 
           {/* Quick Demo Switchers */}
@@ -139,6 +138,35 @@ export default function LoginPage({ onLoginSuccess }) {
           </div>
         </div>
       </section>
+
+      {/* LawetHub Cohesive Help Modal Dialog */}
+      <Modal
+        isOpen={showHelpModal}
+        onClose={() => setShowHelpModal(false)}
+        title="Bantuan Akun & Kata Sandi"
+        subtitle="BKPSDM Kabupaten Kebumen"
+        actions={
+          <button
+            type="button"
+            onClick={() => setShowHelpModal(false)}
+            className="lawet-btn"
+          >
+            Tutup
+          </button>
+        }
+      >
+        <div className="space-y-3">
+          <p className="m-0">
+            Autentikasi akun LawetHub terhubung langsung dengan basis data <b>SIMPEG Kebumen</b>.
+          </p>
+          <div className="p-3 bg-[#f4f5f3] border border-[#dcdfda] rounded-[6px] text-[13px] text-[#5a6472]">
+            <div className="font-semibold text-[#1c2530] mb-1">Subbag Pengadaan & Informasi Kepegawaian</div>
+            <div>Gedung Setda Kabupaten Kebumen, Lantai 2</div>
+            <div className="mono text-[#173a5e] mt-1">Layanan WhatsApp: 0812-3456-7890</div>
+            <div>Jam Layanan: Senin–Jumat, 07.30–16.00 WIB</div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

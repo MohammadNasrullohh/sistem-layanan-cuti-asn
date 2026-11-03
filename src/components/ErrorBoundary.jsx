@@ -1,5 +1,4 @@
 import React from 'react';
-import { AlertTriangle, RefreshCw, Home, ShieldAlert } from 'lucide-react';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -29,50 +28,43 @@ export default class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-slate-100 text-slate-800 flex items-center justify-center p-4 font-sans select-none">
-          <div className="max-w-xl w-full bg-white border border-slate-300 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="min-h-screen bg-[#f4f5f3] text-[#1c2530] flex items-center justify-center p-4 font-sans select-none">
+          <div className="max-w-[480px] w-full bg-white border border-[#dcdfda] rounded-[8px] p-6 sm:p-7 shadow-lg flex flex-col gap-4">
             
-            {/* Republic Ribbon Accent */}
-            <div className="h-1 bg-red-600 rounded-full w-full"></div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-red-600 shrink-0">
-                <ShieldAlert className="w-6 h-6" />
+            <div>
+              <div className="text-[12px] text-[#5a6472]">
+                Pemerintah Kabupaten Kebumen · BKPSDM
               </div>
-              <div>
-                <div className="text-[11px] font-bold tracking-wider text-slate-600 uppercase">
-                  Pemerintah Kabupaten Kebumen • BKPSDM
-                </div>
-                <h1 className="text-xl font-black text-slate-900 tracking-tight">
-                  Pemulihan Sistem Layanan Cuti ASN
-                </h1>
-              </div>
+              <h1 className="text-[18px] font-semibold text-[#1c2530] mt-1 m-0 tracking-tight">
+                Pemulihan Sistem Layanan Cuti ASN
+              </h1>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-[13px] text-[#5a6472] leading-relaxed m-0">
               Terjadi kendala saat memuat antarmuka sistem. Sesi tersimpan Anda mungkin mengalami inkonsistensi data. Silakan klik tombol di bawah untuk menyetel ulang sesi dan memuat ulang halaman.
             </p>
 
             {this.state.error && (
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] font-mono text-red-700 overflow-x-auto max-h-36">
-                <strong>Error:</strong> {this.state.error.toString()}
+              <div className="p-3 bg-[#fbf3e2] border border-[#e3cf9c] rounded-[6px] text-[12px] mono text-[#1c2530] overflow-x-auto max-h-32">
+                <b>Error:</b> {this.state.error.toString()}
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+            <div className="flex items-center gap-3 pt-2 border-t border-[#e8ebe6]">
               <button
+                type="button"
                 onClick={this.handleReset}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="lawet-btn"
               >
-                <RefreshCw className="w-4 h-4" />
-                <span>Reset Sesi & Muat Ulang</span>
+                Reset Sesi & Muat Ulang
               </button>
 
               <button
+                type="button"
                 onClick={() => window.location.reload()}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-300 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="lawet-btn-secondary"
               >
-                <span>Refresh Halaman</span>
+                Refresh Halaman
               </button>
             </div>
           </div>

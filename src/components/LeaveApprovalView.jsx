@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import Modal from './Modal';
 
 export default function LeaveApprovalView({ onSelectRequestForExport }) {
   const { currentUser, refreshCurrentUserData } = useAuth();
@@ -9,6 +10,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
   const [catatan, setCatatan] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState('');
+  const [modalInfo, setModalInfo] = useState({ isOpen: false, title: '', message: '' });
 
   const isPpkRole = currentUser?.role === 'ppk';
 
@@ -47,7 +49,11 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
     if (!selectedRequest) return;
 
     if ((actionType === 'PERUBAHAN' || actionType === 'DITANGGUHKAN') && !catatan.trim()) {
-      alert('Catatan wajib diisi untuk pilihan Perubahan atau Penangguhan.');
+      setModalInfo({
+        isOpen: true,
+        title: 'Catatan Diperlukan',
+        message: 'Berdasarkan Peraturan BKN No. 7 Tahun 2021, catatan pertimbangan wajib diisi apabila memilih opsi Perubahan atau Ditangguhkan agar pegawai mengetahui alasan dinas yang mendasari.'
+      });
       return;
     }
 
@@ -76,11 +82,19 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
         await fetchRequests();
         if (refreshCurrentUserData) refreshCurrentUserData();
       } else {
-        alert(data.error || 'Gagal memproses pertimbangan');
+        setModalInfo({
+          isOpen: true,
+          title: 'Kendala Pemrosesan',
+          message: data.error || 'Gagal memproses pertimbangan cuti kepegawaian.'
+        });
       }
     } catch (err) {
       console.error(err);
-      alert('Terjadi kesalahan saat memproses data.');
+      setModalInfo({
+        isOpen: true,
+        title: 'Kesalahan Sistem',
+        message: 'Terjadi kendala teknis saat memproses pertimbangan. Silakan periksa koneksi server.'
+      });
     } finally {
       setSubmitting(false);
     }
@@ -277,6 +291,26 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
           </div>
         </section>
       </div>
+
+      {/* LawetHub Cohesive Modal Dialog */}
+      <Modal
+        isOpen={modalInfo.isOpen}
+        onClose={() => setModalInfo({ ...modalInfo, isOpen: false })}
+        title={modalInfo.title}
+        actions={
+          <button
+            type="button"
+            onClick={() => setModalInfo({ ...modalInfo, isOpen: false })}
+            className="lawet-btn"
+          >
+            Mengerti
+          </button>
+        }
+      >
+        <p className="m-0 text-[14px] leading-relaxed text-[#1c2530]">
+          {modalInfo.message}
+        </p>
+      </Modal>
     </div>
   );
 }
