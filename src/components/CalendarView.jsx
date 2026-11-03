@@ -145,7 +145,7 @@ export default function CalendarView() {
                     ? 'bg-rose-50/70 border-rose-200'
                     : isWeekend
                     ? 'bg-slate-50/60 border-slate-100'
-                    : 'bg-white border-slate-200 hover:border-orange-300'
+                    : 'bg-white border-slate-200 hover:border-blue-400'
                 }`}
               >
                 <div className="flex items-center justify-between">

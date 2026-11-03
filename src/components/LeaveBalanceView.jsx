@@ -345,7 +345,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-600 mb-1">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-700 mb-1">
               <Coins className="w-4 h-4" />
               <span>Regulasi Finansial ASN (Halaman 24 Buku Saku BKN)</span>
             </div>

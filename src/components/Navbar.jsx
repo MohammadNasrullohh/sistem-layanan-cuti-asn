@@ -48,21 +48,23 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs w-full">
-      {/* 1. Official Republic & Regional Government Ribbon (Merah-Putih & Institutional Title) */}
-      <div className="h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-slate-200 w-full"></div>
-      <div className="bg-[#0b172a] text-slate-300 text-[10px] py-1 border-b border-slate-800 w-full select-none">
+      {/* 1. Official Republic & Regional Government Ribbon (Clean & Dignified) */}
+      <div className="h-1 bg-red-600 w-full"></div>
+      <div className="bg-slate-100/90 text-slate-600 text-xs py-1.5 border-b border-slate-200 w-full select-none">
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 tracking-wider font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
-            <span className="text-white font-black uppercase tracking-tight">PEMERINTAH KABUPATEN KEBUMEN</span>
-            <span className="text-slate-600 hidden sm:inline">•</span>
-            <span className="hidden sm:inline text-slate-400">Badan Kepegawaian dan Pengembangan SDM (BKPSDM)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-0.2 rounded bg-amber-400/20 text-amber-300 font-black text-[9px] border border-amber-400/30">
-              BerAKHLAK
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-700">
+            <span className="inline-block w-4 h-2.5 rounded-xs overflow-hidden border border-slate-300 shadow-2xs shrink-0">
+              <span className="block h-1/2 bg-red-600"></span>
+              <span className="block h-1/2 bg-white"></span>
             </span>
-            <span className="hidden md:inline text-[10px] text-slate-400 font-medium">Bangga Melayani Bangsa</span>
+            <span className="font-bold text-slate-800">PEMERINTAH KABUPATEN KEBUMEN</span>
+            <span className="text-slate-400 hidden sm:inline">•</span>
+            <span className="text-slate-600 hidden sm:inline font-normal">Badan Kepegawaian dan Pengembangan SDM (BKPSDM)</span>
+          </div>
+          <div className="flex items-center gap-3 text-[11px] text-slate-500">
+            <span className="hidden md:inline font-medium">Portal Layanan Cuti ASN</span>
+            <span className="hidden md:inline text-slate-300">•</span>
+            <span className="font-semibold text-slate-700">Peraturan BKN No. 7 Tahun 2021</span>
           </div>
         </div>
       </div>

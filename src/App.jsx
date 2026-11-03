@@ -46,7 +46,7 @@ function MainApp() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center space-y-3">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <div className="w-12 h-12 border-4 border-blue-700 border-t-transparent rounded-full animate-spin mx-auto"></div>
           <div className="text-sm font-bold text-slate-700">Memuat Sistem Informasi Cuti ASN LawetHub...</div>
         </div>
       </div>

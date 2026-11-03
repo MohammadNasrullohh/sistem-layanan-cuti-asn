@@ -35,83 +35,71 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
     <div className="space-y-12 pb-20 w-full font-sans select-none">
       
       {/* 1. HERO SECTION: STATE EXECUTIVE GOVERNMENT PORTAL (TEGAS & RESMI PEMERINTAH) */}
-      <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#0a192f] via-[#102a4e] to-[#0c1e38] text-white p-8 md:p-12 lg:p-14 shadow-2xl shadow-slate-950/20 border border-blue-900/40">
+      <section className="relative overflow-hidden rounded-3xl bg-white text-slate-800 p-6 sm:p-10 lg:p-12 shadow-xs border border-slate-200">
         
-        {/* Smooth Architectural Government Wave & Geometric Shapes (Resmi, Elegan & Presisi) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Subtle Grid overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+        {/* Dignified Indonesian State Ribbon */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-red-600"></div>
 
-          {/* Smooth Ambient Light Orbs */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-indigo-600/15 blur-3xl"></div>
-
-          {/* Smooth Topographic Contour Lines SVG */}
-          <svg className="absolute inset-0 w-full h-full opacity-25" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 600">
-            <path d="M-100,200 C300,100 500,450 900,250 C1100,150 1250,300 1400,200" fill="none" stroke="rgba(147, 197, 253, 0.35)" strokeWidth="1.5" />
-            <path d="M-100,280 C250,180 550,520 950,320 C1150,220 1280,380 1400,280" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
-            <path d="M-100,360 C200,260 600,590 1000,390 C1200,290 1310,460 1400,360" fill="none" stroke="rgba(147, 197, 253, 0.25)" strokeWidth="1.2" />
-            <circle cx="950" cy="180" r="160" fill="none" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1" strokeDasharray="6 6" />
-            <circle cx="950" cy="180" r="240" fill="none" stroke="rgba(147, 197, 253, 0.12)" strokeWidth="1" />
-          </svg>
-        </div>
-
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
           {/* LEFT COLUMN: Headings, Badges, CTAs (7 cols) */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-6">
+          <div className="lg:col-span-7 xl:col-span-8 space-y-5">
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600 text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-700 text-xs font-bold border border-red-200">
+                <span className="inline-block w-3.5 h-2.5 rounded-xs overflow-hidden border border-red-300 shadow-2xs shrink-0">
+                  <span className="block h-1/2 bg-red-600"></span>
+                  <span className="block h-1/2 bg-white"></span>
+                </span>
                 <span>REPUBLIK INDONESIA</span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/40 text-blue-100 text-[11px] font-semibold tracking-wide border border-blue-400/30">
-                <Sparkles className="w-3.5 h-3.5 text-sky-300" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-700" />
                 <span>Peraturan BKN No. 7 Tahun 2021</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 text-slate-200 text-[11px] font-medium border border-slate-700">
-                <span>SPBE Kabupaten Kebumen</span>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200">
+                <span>SPBE Kebumen</span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <div className="text-xs sm:text-sm font-bold text-blue-300 uppercase tracking-widest flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+              <div className="text-xs font-bold text-blue-800 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-700"></span>
                 <span>Pemerintah Kabupaten Kebumen • BKPSDM</span>
               </div>
-              <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.12] text-white">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900">
                 Sistem Layanan Cuti <br className="hidden sm:inline" />
-                <span className="text-sky-300">
+                <span className="text-blue-700">
                   Aparatur Sipil Negara
                 </span>
               </h1>
             </div>
 
-            <p className="text-sm sm:text-base lg:text-lg text-slate-200 font-normal leading-relaxed max-w-2xl">
-              Sub-sistem mandiri pengajuan izin cuti elektronik, audit kepatuhan regulasi otomatis, verifikasi pertimbangan atasan berjenjang, dan penerbitan Surat Keputusan (SK) resmi ber-TTE digital untuk seluruh aparatur PNS dan PPPK Pemerintah Kabupaten Kebumen.
+            <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-2xl">
+              Portal mandiri pengajuan izin cuti elektronik, audit kepatuhan regulasi otomatis, verifikasi pertimbangan atasan berjenjang, dan penerbitan Surat Keputusan (SK) resmi sesuai standar formulir Lampiran II BKN bagi seluruh PNS dan PPPK Pemerintah Kabupaten Kebumen.
             </p>
 
             {/* Quick Action CTA Buttons (Authoritative Government Palette) */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={() => setActiveTab('ajukan-cuti')}
-                className="px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-blue-950 font-black text-sm shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-6 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
-                <FileText className="w-4 h-4 text-blue-700" />
+                <FileText className="w-4 h-4 text-white" />
                 <span>Ajukan Permohonan Cuti</span>
-                <ArrowRight className="w-4 h-4 text-blue-700" />
+                <ArrowRight className="w-4 h-4 text-white" />
               </button>
 
               <button
                 onClick={() => setActiveTab('sisa-cuti')}
-                className="px-5 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm border border-slate-200 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
-                <Clock className="w-4 h-4 text-sky-300" />
+                <Clock className="w-4 h-4 text-slate-500" />
                 <span>Rincian Saldo Kuota Cuti</span>
               </button>
 
               <button
                 onClick={onOpenWhatsApp}
-                className="px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                className="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Layanan WhatsApp</span>
@@ -119,31 +107,31 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
             </div>
 
             {/* Active User Indicator & Key Feature Pills */}
-            <div className="pt-4 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
+            <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
               {currentUser && (
-                <div className="flex items-center gap-2.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
                   <span>
-                    Aparatur Aktif: <strong className="text-white font-extrabold">{currentUser.nama}</strong> ({currentUser.jenis_asn} • {currentUser.jabatan})
+                    Aparatur Aktif: <strong className="text-slate-900 font-bold">{currentUser.nama}</strong> ({currentUser.jenis_asn} • {currentUser.jabatan})
                   </span>
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-2 text-[11px] font-black text-slate-200">
-                <span className="px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700 shadow-2xs">7 Jenis Cuti PNS</span>
-                <span className="px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700 shadow-2xs">4 Jenis Cuti PPPK</span>
-                <span className="px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700 shadow-2xs">Anak Lampiran II BKN</span>
-                <span className="px-3 py-1 rounded-lg bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 shadow-2xs">TTE Sah BKN</span>
+              <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-700">
+                <span className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">7 Jenis Cuti PNS</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">4 Jenis Cuti PPPK</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">Anak Lampiran II BKN</span>
+                <span className="px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">TTE Sah BKN</span>
               </div>
             </div>
           </div>
 
           {/* RIGHT COLUMN: Official State Credential Status Card (Solid & High-Contrast) */}
           <div className="lg:col-span-5 xl:col-span-4">
-            <div className="bg-white rounded-[2rem] p-7 text-slate-800 shadow-2xl shadow-slate-950/20 border-2 border-slate-200 space-y-4.5">
+            <div className="bg-slate-50/80 rounded-2xl p-6 text-slate-800 border border-slate-200 space-y-4">
               
               {/* Header: Title & Online Dot */}
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold">
                     <Building2 className="w-4 h-4" />
@@ -152,19 +140,19 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                     Status Dokumen ASN
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-bold bg-emerald-50 text-emerald-800 px-3 py-1 rounded-full border border-emerald-200">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span>
+                <div className="flex items-center gap-1.5 text-[10px] font-bold bg-blue-50 text-blue-800 px-2.5 py-1 rounded-full border border-blue-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
                   <span>Sah Regulasi BKN</span>
                 </div>
               </div>
 
               {/* User Identity Snapshot */}
               {currentUser ? (
-                <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white border border-slate-200">
                   <img
                     src={currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}
                     alt={currentUser.nama}
-                    className="w-12 h-12 rounded-2xl object-cover ring-2 ring-blue-100 shrink-0"
+                    className="w-12 h-12 rounded-xl object-cover ring-1 ring-slate-200 shrink-0"
                   />
                   <div className="min-w-0 flex-1">
                     <div className="font-extrabold text-sm text-slate-900 truncate leading-tight">
@@ -188,7 +176,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
               ) : null}
 
               {/* Live Sisa Cuti Box (State Neutral Solid) */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <div className="p-4 rounded-xl bg-white border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-600 font-bold uppercase tracking-wide text-[10px]">Saldo Cuti Tahunan 2026:</span>
                   <span className="text-2xl font-black text-slate-900 tracking-tight">
@@ -197,23 +185,23 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                    <span className="text-slate-400 block text-[9px] font-bold">Tahun N</span>
+                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <span className="text-slate-500 block text-[9px] font-bold">Tahun N</span>
                     <strong className="text-slate-900 text-sm font-black">{currentUser?.sisa_cuti_n || 12}</strong>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                    <span className="text-slate-400 block text-[9px] font-bold">N-1 (2025)</span>
+                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <span className="text-slate-500 block text-[9px] font-bold">N-1 (2025)</span>
                     <strong className="text-slate-900 text-sm font-black">{currentUser?.sisa_cuti_n1 || 6}</strong>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                    <span className="text-slate-400 block text-[9px] font-bold">N-2 (2024)</span>
+                  <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <span className="text-slate-500 block text-[9px] font-bold">N-2 (2024)</span>
                     <strong className="text-slate-900 text-sm font-black">{currentUser?.sisa_cuti_n2 || 0}</strong>
                   </div>
                 </div>
               </div>
 
               {/* Smart Holiday Alert Mini Tile (Solid) */}
-              <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 text-xs flex items-center justify-between">
                 <div className="space-y-0.5">
                   <div className="text-[10px] text-amber-800 font-black uppercase tracking-wider">
                     Libur / Cuti Bersama Terdekat
@@ -227,7 +215,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 </div>
                 <button
                   onClick={() => setActiveTab('dashboard')}
-                  className="px-3 py-1.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-[11px] shadow-xs transition-all shrink-0 cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold text-[11px] shadow-xs transition-all shrink-0 cursor-pointer"
                 >
                   Detail &rarr;
                 </button>
@@ -236,7 +224,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
               {/* Direct Link to Dashboard (Solid dark) */}
               <button
                 onClick={() => setActiveTab('dashboard')}
-                className="w-full py-3.5 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm hover:shadow-md"
+                className="w-full py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
               >
                 <span>Buka Dashboard & Dayoff Tracker</span>
                 <ChevronRight className="w-4 h-4" />
@@ -282,9 +270,9 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
           </div>
 
           {/* STEP 2 */}
-          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+          <div className="group p-6 rounded-2xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div>
-              <div className="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black text-sm mb-4 shadow-sm shadow-blue-600/30">
+              <div className="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold text-sm mb-4 shadow-xs">
                 2
               </div>
               <h3 className="font-extrabold text-slate-900 text-base">Pengisian & Validasi</h3>
@@ -292,16 +280,16 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 Isi form cuti. Sistem otomatis memvalidasi syarat: masa kerja, sisa kuota, batas durasi, dan dokumen pendukung sesuai BKN.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-blue-600">
+            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-blue-700">
               <span>Peraturan BKN No. 7/2021</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* STEP 3 */}
-          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-purple-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+          <div className="group p-6 rounded-2xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div>
-              <div className="w-10 h-10 rounded-2xl bg-purple-600 text-white flex items-center justify-center font-black text-sm mb-4 shadow-sm shadow-purple-600/30">
+              <div className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold text-sm mb-4 shadow-xs">
                 3
               </div>
               <h3 className="font-extrabold text-slate-900 text-base">Pertimbangan & SK</h3>
@@ -309,16 +297,16 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 Atasan Langsung memberikan pertimbangan (Disetujui/Perubahan/Ditangguhkan), diteruskan ke PPK untuk penetapan keputusan resmi.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-purple-600">
+            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-slate-700">
               <span>Approval Berjenjang</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* STEP 4 */}
-          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+          <div className="group p-6 rounded-2xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-emerald-300 hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div>
-              <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm mb-4 shadow-sm shadow-emerald-600/30">
+              <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold text-sm mb-4 shadow-xs">
                 4
               </div>
               <h3 className="font-extrabold text-slate-900 text-base">Ekspor Formulir Resmi</h3>
@@ -326,7 +314,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 Cetak atau unduh <strong>Lampiran II Peraturan BKN No. 7 Tahun 2021</strong> format 7 bagian lengkap dengan nomor registrasi & QR validasi.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-emerald-600">
+            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-emerald-700">
               <span>Format Lampiran II BKN</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
@@ -339,11 +327,11 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
         
         {/* PNS Card */}
-        <div className="bg-white rounded-[2.5rem] p-8 md:p-10 border-2 border-blue-100 shadow-sm relative overflow-hidden flex flex-col justify-between space-y-6">
+        <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-xs relative overflow-hidden flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black text-base shadow-sm shadow-blue-500/20">
+                <div className="w-12 h-12 rounded-xl bg-blue-700 text-white flex items-center justify-center font-black text-base shadow-xs">
                   PNS
                 </div>
                 <div>
@@ -390,11 +378,11 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
         </div>
 
         {/* PPPK Card */}
-        <div className="bg-white rounded-[2.5rem] p-8 md:p-10 border-2 border-emerald-100 shadow-sm relative overflow-hidden flex flex-col justify-between space-y-6">
+        <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-xs relative overflow-hidden flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black text-base shadow-sm shadow-emerald-500/20">
+                <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-black text-base shadow-xs">
                   PPPK
                 </div>
                 <div>
@@ -402,7 +390,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                   <p className="text-xs text-slate-500 font-medium">Perjanjian Kerja (4 Jenis Cuti)</p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-emerald-50 text-emerald-800 border border-emerald-200">
                 4 Jenis Cuti
               </span>
             </div>
@@ -418,8 +406,8 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 { name: 'Cuti Melahirkan', desc: 'Diberikan untuk kelahiran anak pertama sampai dengan anak ketiga selama 3 bulan.' },
                 { name: 'Cuti Bersama', desc: 'Mengikuti ketetapan cuti bersama nasional tanpa memotong jatah cuti tahunan.' }
               ].map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 text-xs">
-                  <div className="w-5 h-5 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/80 text-xs">
+                  <div className="w-5 h-5 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <div>
@@ -431,7 +419,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-950 flex items-start gap-3">
+          <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 flex items-start gap-3">
             <HelpCircle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
             <div className="leading-relaxed">
               <strong>Ketentuan Pembatas Regulasi BKN:</strong> PPPK <em>tidak berhak</em> atas Cuti Besar, Cuti Karena Alasan Penting (CAP), maupun CLTN. Sistem otomatis mengunci opsi ini jika diajukan oleh akun PPPK.
@@ -446,10 +434,10 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
         
         <div 
           onClick={() => setActiveTab('sisa-cuti')}
-          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
+          className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between space-y-4"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
               <Clock className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
@@ -461,49 +449,49 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
           </div>
           <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-700">
             <span>Buka Rincian Sisa Cuti</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
 
         <div 
           onClick={() => setActiveTab('ajukan-cuti')}
-          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
+          className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between space-y-4"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
               <FileText className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">
+            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
               Formulir Pengajuan Cuti
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
               Ajukan permohonan cuti secara elektronik dengan validasi otomatis sesuai Peraturan BKN No. 7 Tahun 2021.
             </p>
           </div>
-          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-extrabold text-blue-600">
+          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-700">
             <span>Isi Formulir Sekarang</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
 
         <div 
           onClick={onOpenWhatsApp}
-          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
+          className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 hover:border-emerald-300 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between space-y-4"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
               <MessageSquare className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">
+            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors">
               Chatbot WhatsApp ASN
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
               Simulasi interaksi pesan WhatsApp untuk cek sisa cuti kilat dan kirim permohonan via bot chat.
             </p>
           </div>
-          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-extrabold text-emerald-600">
+          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-emerald-700">
             <span>Mulai Chatbot WA</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
 

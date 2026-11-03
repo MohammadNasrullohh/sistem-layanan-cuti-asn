@@ -47,14 +47,14 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
         
         {/* Left Information Card (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold border border-slate-700">
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
             <span>Alur Resmi Diagram 2 LawetHub</span>
           </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Masuk ke Layanan Cuti <span className="text-slate-900 underline decoration-amber-400 underline-offset-4">LawetHub</span>
+              Masuk ke Layanan Cuti <span className="text-blue-700">LawetHub</span>
             </h1>
             <p className="text-xs text-slate-500 leading-relaxed">
               Autentikasi akun aparatur sipil negara (PNS & PPPK) untuk mengakses rincian sisa cuti, permohonan izin cuti online, dan penerbitan formulir BKN.
@@ -67,7 +67,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
               <span className="text-[10px] uppercase font-extrabold tracking-wider text-slate-400">
                 1-Klik Akses Demo Role:
               </span>
-              <span className="text-[10px] text-amber-600 font-bold">Simulasi Instan</span>
+              <span className="text-[10px] text-blue-700 font-bold">Simulasi Instan</span>
             </div>
 
             <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">

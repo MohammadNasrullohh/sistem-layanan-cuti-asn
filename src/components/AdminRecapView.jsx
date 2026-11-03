@@ -165,7 +165,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Cari nama, NIP, atau no surat..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500"
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600"
           />
         </div>
 
@@ -173,7 +173,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
           <select
             value={filterUnit}
             onChange={(e) => setFilterUnit(e.target.value)}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-orange-500"
+            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-blue-600"
           >
             <option value="ALL">Semua Unit Kerja / SKPD</option>
             <option value="Dinas Komunikasi dan Informatika">Dinas Komunikasi dan Informatika</option>
@@ -186,7 +186,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
           <select
             value={filterJenis}
             onChange={(e) => setFilterJenis(e.target.value)}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-orange-500"
+            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-blue-600"
           >
             <option value="ALL">Semua Jenis Cuti</option>
             <option value="cuti_tahunan">Cuti Tahunan</option>
@@ -203,7 +203,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-orange-500"
+            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-blue-600"
           >
             <option value="ALL">Semua Status</option>
             <option value="disetujui">Disetujui (Terbit SK)</option>

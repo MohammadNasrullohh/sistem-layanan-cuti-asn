@@ -307,8 +307,8 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
 
       {/* Success View (Step: Ekspor Form Cuti) */}
       {submittedRequest ? (
-        <div className="bg-white rounded-3xl p-8 border border-emerald-200 shadow-lg shadow-emerald-500/5 space-y-6 text-center animate-in fade-in zoom-in-95 max-w-3xl mx-auto">
-          <div className="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xs space-y-6 text-center animate-in fade-in zoom-in-95 max-w-3xl mx-auto">
+          <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-8 h-8" />
           </div>
 
@@ -386,7 +386,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                 <img
                   src={currentUser.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120'}
                   alt={currentUser.nama}
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover ring-2 ring-orange-500/30 shrink-0"
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover ring-2 ring-blue-600/30 shrink-0"
                 />
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -419,7 +419,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                 </div>
                 <div className="p-2.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs col-span-2 md:col-span-1">
                   <div className="text-[10px] uppercase font-bold text-slate-400">Masa Kerja:</div>
-                  <div className="font-bold text-orange-600 text-xs">
+                  <div className="font-bold text-blue-700 text-xs">
                     {currentUser.masa_kerja_tahun} Thn {currentUser.masa_kerja_bulan} Bln
                   </div>
                 </div>
@@ -534,7 +534,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
 
                         <div className="shrink-0">
                           {isSelected ? (
-                            <CheckCircle2 className="w-5 h-5 text-orange-600 fill-orange-100" />
+                            <CheckCircle2 className="w-5 h-5 text-blue-700 fill-blue-100" />
                           ) : (
                             <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
                           )}
@@ -562,7 +562,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                         {item.tag}
                       </span>
                       {isSelected && (
-                        <span className="text-[10px] font-extrabold text-orange-700 tracking-wide uppercase">
+                        <span className="text-[10px] font-extrabold text-blue-700 tracking-wide uppercase">
                           Terpilih
                         </span>
                       )}
@@ -575,7 +575,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
             {/* Matriks Penghasilan Saat Cuti Live Preview (Hal. 24 Buku Saku BKN 2024) */}
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2 text-slate-700">
-                <ShieldCheck className="w-4 h-4 text-orange-600 shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-blue-700 shrink-0" />
                 <span>Status Hak Penghasilan (Hal. 24 BKN):</span>
                 <span className="font-bold text-slate-900">
                   {jenisCuti === 'cltn' ? 'Dinonaktifkan Selama Cuti (NOL Rupiah)' :
@@ -690,7 +690,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                   onChange={(e) => setAlasanCuti(e.target.value)}
                   placeholder="Contoh: Mengurus keperluan keluarga mendesak dan mendampingi orang tua kontrol medis di rumah sakit..."
                   required
-                  className="w-full p-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  className="w-full p-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
                 />
               </div>
 
@@ -701,7 +701,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                     type="date"
                     value={tanggalMulai}
                     onChange={(e) => setTanggalMulai(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600"
                   />
                 </div>
 
@@ -711,7 +711,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                     type="date"
                     value={tanggalSelesai}
                     onChange={(e) => setTanggalSelesai(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600"
                   />
                 </div>
 
@@ -723,7 +723,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                       min="1"
                       value={jumlahHari}
                       onChange={(e) => setJumlahHari(parseInt(e.target.value, 10) || 1)}
-                      className="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-bold text-orange-600 focus:ring-2 focus:ring-orange-500"
+                      className="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-bold text-blue-700 focus:ring-2 focus:ring-blue-600"
                     />
                     <span className="text-slate-500 shrink-0">Hari Kerja</span>
                   </div>
@@ -739,7 +739,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                     onChange={(e) => setAlamatSelamaCuti(e.target.value)}
                     placeholder="Alamat domisili selama cuti"
                     required
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600"
                   />
                 </div>
 
@@ -751,7 +751,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                     onChange={(e) => setNoTeleponCuti(e.target.value)}
                     placeholder="0812xxxx"
                     required
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600"
                   />
                 </div>
               </div>
@@ -761,9 +761,9 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                 <label className="font-semibold text-slate-700 block mb-1">
                   Lampiran Dokumen Bukti (Surat Dokter / Tiket Haji / Surat Rawat Inap):
                 </label>
-                <div className="p-4 rounded-2xl border-2 border-dashed border-slate-200 hover:border-orange-300 transition-colors bg-slate-50 flex items-center justify-between">
+                <div className="p-4 rounded-2xl border-2 border-dashed border-slate-200 hover:border-blue-400 transition-colors bg-slate-50 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
                       <Upload className="w-5 h-5" />
                     </div>
                     <div>
@@ -862,7 +862,7 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
                   />
                 </div>
 
-                <div className="flex justify-between text-[10px] text-orange-800 font-semibold">
+                <div className="flex justify-between text-[10px] text-slate-600 font-semibold">
                   <span>Awal: {currentUser?.sisa_cuti_n || 12} Hari</span>
                   <span className="text-rose-600 font-bold">Terpakai: -{jumlahHari} Hari</span>
                 </div>

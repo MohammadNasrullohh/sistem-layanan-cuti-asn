@@ -199,22 +199,22 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
         {/* Rekomendasi Cerdas AI */}
         <div 
           onClick={() => setActiveTab('ajukan-cuti')}
-          className="p-4 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xs cursor-pointer hover:shadow-md transition-all flex items-center justify-between group"
+          className="p-4 rounded-2xl bg-blue-50/80 border border-blue-200 text-slate-800 shadow-2xs cursor-pointer hover:bg-blue-100/60 transition-all flex items-center justify-between group"
         >
           <div className="space-y-0.5">
-            <div className="flex items-center gap-1 text-[10px] font-bold text-amber-200 uppercase tracking-wide">
-              <Sparkles className="w-3 h-3" />
+            <div className="flex items-center gap-1 text-[10px] font-bold text-blue-700 uppercase tracking-wide">
+              <Sparkles className="w-3 h-3 text-blue-700" />
               <span>Saran Cerdas BKN</span>
             </div>
-            <div className="text-sm font-black leading-tight">
+            <div className="text-sm font-black text-slate-900 leading-tight">
               1 Hari Cuti = 4 Hari Rehat
             </div>
-            <div className="text-[10px] text-orange-100 group-hover:underline">
+            <div className="text-[10px] text-blue-700 font-semibold group-hover:underline">
               Klik untuk ajukan rekomendasi &rarr;
             </div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center font-bold shrink-0 group-hover:scale-105 transition-transform">
-            <Zap className="w-5 h-5 text-amber-200" />
+          <div className="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold shrink-0 shadow-xs">
+            <Zap className="w-5 h-5 text-white" />
           </div>
         </div>
 
@@ -531,7 +531,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
                 </span>
                 <button
                   onClick={() => onSelectRequestForExport(requests[0].id)}
-                  className="text-[11px] font-bold text-orange-600 hover:text-orange-700 underline cursor-pointer"
+                  className="text-[11px] font-bold text-blue-700 hover:text-blue-800 underline cursor-pointer"
                 >
                   Cetak Dokumen &rarr;
                 </button>
@@ -540,7 +540,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
           ) : (
             <div className="p-3 rounded-2xl bg-slate-50 text-xs text-slate-500 flex items-center justify-between">
               <span>Belum ada riwayat permohonan cuti aktif di tahun berjalan.</span>
-              <span className="text-orange-600 font-semibold">Siap diajukan secara online</span>
+              <span className="text-blue-700 font-semibold">Siap diajukan secara online</span>
             </div>
           )}
         </div>
@@ -603,7 +603,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
                   onClick={() => setCalendarViewMode('single')}
                   className={`px-3 py-0.5 rounded-full transition-all ${
                     calendarViewMode === 'single'
-                      ? 'bg-white text-orange-600 font-bold shadow-2xs'
+                      ? 'bg-white text-blue-700 font-bold shadow-2xs'
                       : 'hover:text-slate-600'
                   }`}
                 >
@@ -613,7 +613,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
                   onClick={() => setCalendarViewMode('multiple')}
                   className={`px-3 py-0.5 rounded-full transition-all ${
                     calendarViewMode === 'multiple'
-                      ? 'bg-white text-orange-600 font-bold shadow-2xs'
+                      ? 'bg-white text-blue-700 font-bold shadow-2xs'
                       : 'hover:text-slate-600'
                   }`}
                 >
@@ -906,7 +906,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
         <div className="lg:col-span-5 bg-white rounded-3xl p-5 border border-slate-200/90 shadow-2xs space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-orange-600" />
+              <Users className="w-4 h-4 text-blue-700" />
               <span className="text-xs uppercase font-extrabold tracking-wider text-slate-700">
                 Presensi Unit Kerja ({currentUser.unit_kerja})
               </span>
