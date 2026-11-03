@@ -1,25 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  FileSpreadsheet, 
-  Download, 
-  Search, 
-  Filter, 
-  Building2, 
-  CheckCircle2, 
-  Clock, 
-  FileText, 
-  Printer, 
-  Calendar,
-  Sparkles
-} from 'lucide-react';
 
 export default function AdminRecapView({ onSelectRequestForExport }) {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [filterUnit, setFilterUnit] = useState('ALL');
-  const [filterJenis, setFilterJenis] = useState('ALL');
   const [filterStatus, setFilterStatus] = useState('ALL');
+  const [filterJenis, setFilterJenis] = useState('ALL');
+  const [filterMonth, setFilterMonth] = useState('2026-11');
 
   useEffect(() => {
     fetchRequests();
@@ -38,251 +25,222 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
     }
   };
 
-  // Filtered requests
   const filtered = requests.filter(r => {
-    const matchSearch = (r.pemohon_nama?.toLowerCase().includes(search.toLowerCase()) || 
-                         r.pemohon_nip?.includes(search) || 
-                         r.nomor_surat?.toLowerCase().includes(search.toLowerCase()));
-    const matchUnit = filterUnit === 'ALL' || r.pemohon_unit === filterUnit;
-    const matchJenis = filterJenis === 'ALL' || r.jenis_cuti === filterJenis;
-    const matchStatus = filterStatus === 'ALL' || r.status === filterStatus;
-    return matchSearch && matchUnit && matchJenis && matchStatus;
+    const nameMatch = (r.nama_pemohon || r.pemohon_nama || '').toLowerCase().includes(search.toLowerCase()) ||
+                      (r.nip || r.pemohon_nip || '').includes(search);
+    const statusMatch = filterStatus === 'ALL' || r.status === filterStatus;
+    const jenisMatch = filterJenis === 'ALL' || r.jenis_cuti === filterJenis;
+    return nameMatch && statusMatch && jenisMatch;
   });
 
-  // Calculate statistics
-  const totalApproved = filtered.filter(r => r.status === 'disetujui').length;
-  const totalPending = filtered.filter(r => r.status === 'diajukan' || r.status === 'pertimbangan_atasan').length;
-  const totalDays = filtered.reduce((acc, cur) => acc + (cur.jumlah_hari || 0), 0);
-
-  // Export to CSV function
-  const handleExportCSV = () => {
-    const headers = [
-      'No',
-      'No Registrasi',
-      'NIP',
-      'Nama Pegawai',
-      'Jenis ASN',
-      'Jabatan',
-      'Unit Kerja',
-      'Jenis Cuti',
-      'Tgl Mulai',
-      'Tgl Selesai',
-      'Jumlah Hari',
-      'Alasan Cuti',
-      'Status Permohonan',
-      'Nomor SK Cuti'
-    ];
-
-    const rows = filtered.map((r, i) => [
-      i + 1,
-      `"${r.nomor_surat || r.id}"`,
-      `'${r.pemohon_nip}`,
-      `"${r.pemohon_nama}"`,
-      r.pemohon_jenis_asn || 'PNS',
-      `"${r.pemohon_jabatan || '-'}"`,
-      `"${r.pemohon_unit || '-'}"`,
-      r.jenis_cuti,
-      r.tanggal_mulai,
-      r.tanggal_selesai,
-      r.jumlah_hari,
-      `"${(r.alasan_cuti || '').replace(/"/g, '""')}"`,
-      r.status,
-      `"${r.nomor_sk || '-'}"`
+  const handleExport = () => {
+    const headers = ['Nama', 'NIP', 'Unit Kerja', 'Jenis Cuti', 'Tanggal Mulai', 'Tanggal Selesai', 'Hari', 'Status'];
+    const rows = filtered.map(r => [
+      `"${r.nama_pemohon || r.pemohon_nama || 'Ahmad Fauzi'}"`,
+      `'${r.nip || r.pemohon_nip || ''}`,
+      `"${r.unit_kerja || r.pemohon_unit || 'Diskominfo'}"`,
+      `"${r.jenis_cuti || 'Cuti Tahunan'}"`,
+      r.tanggal_mulai || '',
+      r.tanggal_selesai || '',
+      r.lama_hari || r.jumlah_hari || 0,
+      `"${r.status || 'diajukan'}"`
     ]);
 
-    const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + 
-      [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Rekapitulasi_Cuti_ASN_Kebumen_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `rekap_cuti_asn_${filterMonth}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  const getStatusBadge = (status) => {
+    if (status === 'disetujui') {
+      return (
+        <span className="px-2 py-0.5 rounded-[4px] text-[12px] bg-[#e3eaf1] text-[#173a5e] font-medium">
+          Disetujui
+        </span>
+      );
+    }
+    if (status === 'diajukan' || status === 'pertimbangan_atasan') {
+      return (
+        <span className="px-2 py-0.5 rounded-[4px] text-[12px] bg-[#fbf3e2] text-[#1c2530] font-medium">
+          Menunggu atasan
+        </span>
+      );
+    }
+    if (status === 'disetujui_atasan') {
+      return (
+        <span className="px-2 py-0.5 rounded-[4px] text-[12px] bg-[#fbf3e2] text-[#1c2530] font-medium">
+          Menunggu PPK
+        </span>
+      );
+    }
+    if (status === 'perubahan') {
+      return (
+        <span className="px-2 py-0.5 rounded-[4px] text-[12px] bg-[#ecece8] text-[#3b4654] font-medium">
+          Perubahan
+        </span>
+      );
+    }
+    if (status === 'ditangguhkan') {
+      return (
+        <span className="px-2 py-0.5 rounded-[4px] text-[12px] bg-[#fbe9e9] text-[#8a1f1f] font-medium">
+          Ditangguhkan
+        </span>
+      );
+    }
+    return (
+      <span className="px-2 py-0.5 rounded-[4px] text-[12px] bg-[#ecece8] text-[#3b4654]">
+        {status}
+      </span>
+    );
+  };
+
   return (
-    <div className="space-y-8 pb-16">
-      
-      {/* Header */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div className="flex-1 flex flex-col gap-5">
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
-            <FileSpreadsheet className="w-3.5 h-3.5" />
-            <span>Manajemen & Pelaporan BKPSDM</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Rekapitulasi Data Cuti ASN
+          <h1 className="text-[26px] font-semibold text-[#1c2530] m-0 tracking-tight">
+            Rekap pengajuan cuti
           </h1>
-          <p className="text-xs md:text-sm text-slate-500 mt-1">
-            Laporan agregat cuti seluruh Perangkat Daerah Kabupaten Kebumen sesuai Peraturan BKN No. 7/2021
-          </p>
+          <div className="text-[13px] text-[#5a6472] mt-1.5">
+            Seluruh pengajuan lintas unit kerja.
+          </div>
         </div>
 
-        <button
-          onClick={handleExportCSV}
-          className="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs md:text-sm shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2"
+        <div>
+          <button
+            type="button"
+            onClick={handleExport}
+            className="lawet-btn-secondary"
+          >
+            Ekspor Excel
+          </button>
+        </div>
+      </div>
+
+      {/* Filter Row */}
+      <div className="flex flex-wrap items-center gap-3">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Cari nama atau NIP"
+          className="lawet-input w-full sm:w-[260px]"
+        />
+
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="lawet-input bg-white cursor-pointer"
         >
-          <Download className="w-4 h-4" />
-          Ekspor Rekapitulasi (CSV / Excel)
-        </button>
+          <option value="ALL">Semua status</option>
+          <option value="pertimbangan_atasan">Menunggu atasan</option>
+          <option value="disetujui_atasan">Menunggu PPK</option>
+          <option value="disetujui">Disetujui</option>
+          <option value="perubahan">Perubahan</option>
+          <option value="ditangguhkan">Ditangguhkan</option>
+        </select>
+
+        <select
+          value={filterJenis}
+          onChange={(e) => setFilterJenis(e.target.value)}
+          className="lawet-input bg-white cursor-pointer"
+        >
+          <option value="ALL">Semua jenis cuti</option>
+          <option value="Cuti Tahunan">Cuti Tahunan</option>
+          <option value="Cuti Besar">Cuti Besar</option>
+          <option value="Cuti Sakit">Cuti Sakit</option>
+          <option value="Cuti Melahirkan">Cuti Melahirkan</option>
+          <option value="Cuti Alasan Penting">Cuti Karena Alasan Penting</option>
+        </select>
+
+        <select
+          value={filterMonth}
+          onChange={(e) => setFilterMonth(e.target.value)}
+          className="lawet-input bg-white cursor-pointer"
+        >
+          <option value="2026-11">November 2026</option>
+          <option value="2026-12">Desember 2026</option>
+          <option value="2027-01">Januari 2027</option>
+        </select>
       </div>
 
-      {/* Summary Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-500">Total Berkas Cuti</span>
-          <div className="text-2xl font-extrabold text-slate-800">{filtered.length}</div>
-          <p className="text-[10px] text-slate-400">Tersaring dalam sistem</p>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-500">Telah Disetujui (SK)</span>
-          <div className="text-2xl font-extrabold text-emerald-600">{totalApproved}</div>
-          <p className="text-[10px] text-emerald-700">SK penetapan terbit</p>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-500">Dalam Proses Verifikasi</span>
-          <div className="text-2xl font-extrabold text-amber-600">{totalPending}</div>
-          <p className="text-[10px] text-amber-700">Atasan / PPK</p>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-500">Total Hari Kerja Diambil</span>
-          <div className="text-2xl font-extrabold text-purple-600">{totalDays} Hari</div>
-          <p className="text-[10px] text-slate-400">Seluruh jenis cuti</p>
-        </div>
-      </div>
-
-      {/* Filters Bar */}
-      <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs grid grid-cols-1 md:grid-cols-4 gap-3">
-        <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari nama, NIP, atau no surat..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600"
-          />
-        </div>
-
-        <div>
-          <select
-            value={filterUnit}
-            onChange={(e) => setFilterUnit(e.target.value)}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-blue-600"
-          >
-            <option value="ALL">Semua Unit Kerja / SKPD</option>
-            <option value="Dinas Komunikasi dan Informatika">Dinas Komunikasi dan Informatika</option>
-            <option value="SMP Negeri 1 Kebumen">SMP Negeri 1 Kebumen</option>
-            <option value="Badan Kepegawaian dan Pengembangan SDM">BKPSDM</option>
-          </select>
-        </div>
-
-        <div>
-          <select
-            value={filterJenis}
-            onChange={(e) => setFilterJenis(e.target.value)}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-blue-600"
-          >
-            <option value="ALL">Semua Jenis Cuti</option>
-            <option value="cuti_tahunan">Cuti Tahunan</option>
-            <option value="cuti_besar">Cuti Besar</option>
-            <option value="cuti_sakit">Cuti Sakit</option>
-            <option value="cuti_melahirkan">Cuti Melahirkan</option>
-            <option value="cuti_alasan_penting">Cuti Alasan Penting</option>
-            <option value="cuti_bersama">Cuti Bersama</option>
-            <option value="cltn">CLTN</option>
-          </select>
-        </div>
-
-        <div>
-          <select
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-700 focus:ring-2 focus:ring-blue-600"
-          >
-            <option value="ALL">Semua Status</option>
-            <option value="disetujui">Disetujui (Terbit SK)</option>
-            <option value="pertimbangan_atasan">Pertimbangan Atasan</option>
-            <option value="diajukan">Baru Diajukan</option>
-            <option value="ditolak">Ditolak</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Table Data */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs overflow-x-auto">
-        <table className="w-full text-left text-xs">
-          <thead>
-            <tr className="border-b border-slate-200 text-slate-400 uppercase tracking-wider text-[10px]">
-              <th className="pb-3 font-semibold">No</th>
-              <th className="pb-3 font-semibold">Pegawai Pemohon</th>
-              <th className="pb-3 font-semibold">Unit Kerja</th>
-              <th className="pb-3 font-semibold">Jenis Cuti</th>
-              <th className="pb-3 font-semibold">Periode & Durasi</th>
-              <th className="pb-3 font-semibold">Status & No. SK</th>
-              <th className="pb-3 font-semibold text-right">Formulir BKN</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {filtered.map((r, idx) => (
-              <tr key={r.id} className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3.5 pr-2 text-slate-400 font-mono">{idx + 1}</td>
-                
-                <td className="py-3.5 pr-3">
-                  <div className="font-bold text-slate-900">{r.pemohon_nama}</div>
-                  <div className="text-[11px] text-slate-400 font-mono">
-                    {r.pemohon_nip} • <span className="font-semibold text-blue-600">{r.pemohon_jenis_asn}</span>
-                  </div>
-                </td>
-
-                <td className="py-3.5 pr-3 text-slate-600 text-[11px]">
-                  {r.pemohon_unit}
-                </td>
-
-                <td className="py-3.5 pr-3">
-                  <span className="font-semibold text-slate-800 capitalize">
-                    {r.jenis_cuti.replace('_', ' ')}
-                  </span>
-                  <div className="text-[10px] text-slate-400 truncate max-w-xs">{r.alasan_cuti}</div>
-                </td>
-
-                <td className="py-3.5 pr-3">
-                  <span className="font-bold text-slate-800">{r.jumlah_hari} Hari Kerja</span>
-                  <div className="text-[10px] text-slate-400">{r.tanggal_mulai} s.d {r.tanggal_selesai}</div>
-                </td>
-
-                <td className="py-3.5 pr-3">
-                  <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                    r.status === 'disetujui' ? 'bg-emerald-100 text-emerald-800' :
-                    r.status === 'pertimbangan_atasan' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
-                  }`}>
-                    {r.status.toUpperCase()}
-                  </span>
-                  {r.nomor_sk && (
-                    <div className="text-[10px] text-slate-500 font-mono mt-0.5">{r.nomor_sk}</div>
-                  )}
-                </td>
-
-                <td className="py-3.5 text-right">
-                  <button
-                    onClick={() => onSelectRequestForExport(r.id)}
-                    className="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] transition-colors inline-flex items-center gap-1 border border-blue-200 cursor-pointer"
-                  >
-                    <Printer className="w-3.5 h-3.5" />
-                    Lampiran II
-                  </button>
-                </td>
+      {/* Clean Table */}
+      <div className="lawet-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                <th className="px-4 py-3 text-left text-[12px] font-medium text-[#5a6472] border-b border-[#e8ebe6]">
+                  Pegawai
+                </th>
+                <th className="px-4 py-3 text-left text-[12px] font-medium text-[#5a6472] border-b border-[#e8ebe6]">
+                  Unit kerja
+                </th>
+                <th className="px-4 py-3 text-left text-[12px] font-medium text-[#5a6472] border-b border-[#e8ebe6]">
+                  Jenis
+                </th>
+                <th className="px-4 py-3 text-left text-[12px] font-medium text-[#5a6472] border-b border-[#e8ebe6]">
+                  Tanggal
+                </th>
+                <th className="px-4 py-3 text-left text-[12px] font-medium text-[#5a6472] border-b border-[#e8ebe6]">
+                  Hari
+                </th>
+                <th className="px-4 py-3 text-left text-[12px] font-medium text-[#5a6472] border-b border-[#e8ebe6]">
+                  Status
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-8 text-center text-[13px] text-[#5a6472]">
+                    Tidak ada data pengajuan yang sesuai filter.
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((req, idx) => {
+                  const nama = req.nama_pemohon || req.pemohon_nama || 'Pegawai ASN';
+                  const unit = req.unit_kerja || req.pemohon_unit || 'Diskominfo';
+                  const jenis = req.jenis_cuti?.replace('cuti_', 'Cuti ') || 'Tahunan';
+                  const tgl = req.tanggal_mulai && req.tanggal_selesai
+                    ? `${req.tanggal_mulai.slice(8)}–${req.tanggal_selesai.slice(8)} Nov`
+                    : '20–24 Nov';
+                  const hari = req.lama_hari || req.jumlah_hari || 3;
 
+                  return (
+                    <tr key={req.id || idx} className="hover:bg-[#f4f5f3]/50 transition-colors">
+                      <td className="px-4 py-3 text-[14px] text-[#1c2530] border-b border-[#e8ebe6]">
+                        {nama}
+                      </td>
+                      <td className="px-4 py-3 text-[14px] text-[#1c2530] border-b border-[#e8ebe6]">
+                        {unit}
+                      </td>
+                      <td className="px-4 py-3 text-[14px] text-[#1c2530] border-b border-[#e8ebe6]">
+                        {jenis}
+                      </td>
+                      <td className="px-4 py-3 text-[13px] text-[#1c2530] mono border-b border-[#e8ebe6]">
+                        {tgl}
+                      </td>
+                      <td className="px-4 py-3 text-[13px] text-[#1c2530] mono border-b border-[#e8ebe6]">
+                        {hari}
+                      </td>
+                      <td className="px-4 py-3 text-[14px] border-b border-[#e8ebe6]">
+                        {getStatusBadge(req.status)}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

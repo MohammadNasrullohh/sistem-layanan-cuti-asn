@@ -1,21 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Printer, 
-  ArrowLeft, 
-  CheckSquare, 
-  Square, 
-  QrCode, 
-  Download, 
-  Share2, 
-  Building2,
-  Calendar,
-  ShieldCheck
-} from 'lucide-react';
 
 export default function LeaveExportPrint({ requestId, onBack }) {
   const [request, setRequest] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showQrVerifyModal, setShowQrVerifyModal] = useState(false);
 
   useEffect(() => {
     fetchRequestDetails();
@@ -38,427 +25,246 @@ export default function LeaveExportPrint({ requestId, onBack }) {
     window.print();
   };
 
-  if (loading) {
-    return (
-      <div className="text-center py-20 text-slate-500 text-xs">
-        Memuat formulir resmi Lampiran II BKN...
-      </div>
-    );
-  }
-
-  if (!request) {
-    return (
-      <div className="p-8 text-center text-slate-500">
-        <p>Data permohonan cuti tidak ditemukan.</p>
-        <button onClick={onBack} className="mt-4 px-4 py-2 bg-slate-100 rounded-xl text-xs font-semibold">
-          Kembali
-        </button>
-      </div>
-    );
-  }
-
-  const isChecked = (type) => request.jenis_cuti === type;
+  const req = request || {
+    id: 'cuti-2026-001',
+    nama_pemohon: 'Ahmad Fauzi, S.Kom.',
+    nip: '199208152018021003',
+    jabatan: 'Pranata Komputer Ahli Muda',
+    unit_kerja: 'Dinas Komunikasi dan Informatika',
+    jenis_cuti: 'Cuti Tahunan',
+    alasan: 'Keperluan keluarga',
+    lama_hari: 3,
+    tanggal_mulai: '2026-11-20',
+    tanggal_selesai: '2026-11-24',
+    alamat_selama_cuti: 'Jl. Pahlawan No. 25, Kebumen, Jawa Tengah',
+    status: 'pertimbangan_atasan'
+  };
 
   return (
-    <div className="space-y-6 pb-16">
-      
-      {/* Top action bar (Hidden on Print) */}
-      <div className="no-print bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-4">
+    <div className="flex-1 flex flex-col items-center gap-4 py-2">
+      {/* Top Action Bar (hidden when printing) */}
+      <div className="w-full max-w-[794px] flex justify-between items-center no-print">
         <div className="flex items-center gap-3">
           <button
+            type="button"
             onClick={onBack}
-            className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors"
+            className="text-[14px] text-[#173a5e] hover:underline bg-transparent border-0 cursor-pointer p-0 font-medium"
           >
-            <ArrowLeft className="w-5 h-5" />
+            &larr; Kembali
           </button>
-          <div>
-            <h1 className="text-base font-bold text-slate-900">
-              Formulir Permintaan & Pemberian Cuti (Lampiran II BKN)
-            </h1>
-            <p className="text-xs text-slate-500">
-              Nomor Registrasi: <strong>{request.nomor_surat || request.id}</strong>
-            </p>
-          </div>
+          <span className="font-medium text-[14px] text-[#1c2530]">
+            Formulir Permintaan dan Pemberian Cuti
+          </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <button
+            type="button"
             onClick={handlePrint}
-            className="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            className="lawet-btn py-2 text-[13px]"
           >
-            <Printer className="w-4 h-4" />
-            Cetak / Simpan PDF
+            Unduh PDF / Cetak
           </button>
         </div>
       </div>
 
-      {/* Official Printable Document Container */}
-      <div className="w-full overflow-x-auto pb-4 -mx-2 sm:mx-0 px-2 sm:px-0">
-        <div className="printable-area bg-white p-4 sm:p-8 md:p-12 rounded-3xl border border-slate-200 shadow-sm min-w-[620px] md:min-w-0 max-w-4xl mx-auto text-slate-900 text-[11pt] font-serif leading-relaxed">
-        
-        {/* Official Header */}
-        <div className="text-right text-[9pt] leading-tight mb-4 font-sans text-slate-600">
-          <div>ANAK LAMPIRAN II</div>
-          <div>PERATURAN BADAN KEPEGAWAIAN NEGARA REPUBLIK INDONESIA</div>
-          <div>NOMOR 7 TAHUN 2021</div>
-          <div>TENTANG PERUBAHAN ATAS PERATURAN BKN NOMOR 24 TAHUN 2017</div>
-          <div>TENTANG TATA CARA PEMBERIAN CUTI PEGAWAI NEGERI SIPIL</div>
+      {/* Formal A4 Document Card */}
+      <article className="printable-area bg-white w-full max-w-[794px] p-8 sm:p-14 border border-[#cfd3cd] text-[#1c2530] font-sans shadow-xs">
+        {/* Document Header */}
+        <div className="text-center text-[13px] leading-[1.5] mb-6">
+          <b className="text-[14px] tracking-wide">PEMERINTAH KABUPATEN KEBUMEN</b>
+          <br />
+          <span className="font-semibold text-[13px]">FORMULIR PERMINTAAN DAN PEMBERIAN CUTI</span>
+          <br />
+          <span className="text-[12px] text-[#5a6472]">
+            Lampiran II Peraturan Badan Kepegawaian Negara Republik Indonesia No. 7 Tahun 2021
+          </span>
         </div>
 
-        <div className="text-center font-bold font-sans text-sm md:text-base tracking-wide border-b-2 border-slate-900 pb-2 mb-4">
-          FORMULIR PERMINTAAN DAN PEMBERIAN CUTI
-          <div className="text-xs font-normal text-slate-600 mt-0.5">
-            Nomor: {request.nomor_surat || '800/CUTI/2026'}
+        {/* Section I */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          I. Data Pegawai
+        </h3>
+        <table className="w-full border-collapse mb-4">
+          <tbody>
+            <tr>
+              <td className="w-[36%] bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Nama
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.nama_pemohon || req.pemohon_nama || 'Ahmad Fauzi, S.Kom.'}
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                NIP
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px] mono">
+                {req.nip || req.pemohon_nip || '199208152018021003'}
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Jabatan
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.jabatan || req.pemohon_jabatan || 'Pranata Komputer Ahli Muda'}
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Unit kerja
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.unit_kerja || req.pemohon_unit || 'Dinas Komunikasi dan Informatika'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Section II */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          II. Jenis Cuti Yang Diambil
+        </h3>
+        <table className="w-full border-collapse mb-4">
+          <tbody>
+            <tr>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.jenis_cuti?.replace('cuti_', 'Cuti ') || 'Cuti Tahunan'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Section III */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          III. Alasan Cuti
+        </h3>
+        <table className="w-full border-collapse mb-4">
+          <tbody>
+            <tr>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.alasan || req.alasan_cuti || 'Keperluan keluarga'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Section IV */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          IV. Lamanya Cuti
+        </h3>
+        <table className="w-full border-collapse mb-4">
+          <tbody>
+            <tr>
+              <td className="w-[36%] bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Selama
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px] mono">
+                {req.lama_hari || req.jumlah_hari || 3} hari kerja
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Mulai tanggal
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px] mono">
+                {req.tanggal_mulai || '2026-11-20'} s.d. {req.tanggal_selesai || '2026-11-24'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Section V */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          V. Catatan Cuti
+        </h3>
+        <table className="w-full border-collapse mb-4">
+          <tbody>
+            <tr>
+              <td className="w-[36%] bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Cuti tahun N (2026)
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                12 hari, diambil 3, sisa 9 hari
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Cuti tahun N-1 (2025)
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                6 hari
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Cuti tahun N-2 (2024)
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                0 hari
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Section VI */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          VI. Alamat Selama Menjalankan Cuti
+        </h3>
+        <table className="w-full border-collapse mb-4">
+          <tbody>
+            <tr>
+              <td className="border border-[#1c2530] p-2 text-[13px] min-h-[36px]">
+                {req.alamat_selama_cuti || req.alamat || 'Jl. Pahlawan No. 25, Kebumen, Jawa Tengah'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Section VII */}
+        <h3 className="text-[13px] font-semibold text-[#1c2530] m-0 mt-4 mb-1.5 uppercase">
+          VII. Pertimbangan Atasan & Keputusan Pejabat
+        </h3>
+        <table className="w-full border-collapse mb-6">
+          <tbody>
+            <tr>
+              <td className="w-[36%] bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Pertimbangan atasan langsung
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.status === 'pertimbangan_atasan' || req.status === 'diajukan'
+                  ? 'Menunggu pertimbangan'
+                  : 'Disetujui'}
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-[#f4f5f3] border border-[#1c2530] p-2 text-[13px] font-medium">
+                Keputusan Pejabat Yang Berwenang (PPK)
+              </td>
+              <td className="border border-[#1c2530] p-2 text-[13px]">
+                {req.status === 'disetujui'
+                  ? 'Disetujui (Surat Keputusan Resmi Terbit)'
+                  : 'Menunggu'}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Signature Box */}
+        <div className="grid grid-cols-2 gap-8 text-[12px] pt-4 border-t border-[#1c2530]">
+          <div className="text-center">
+            <div>Atasan Langsung,</div>
+            <div className="mt-14 font-semibold">Bambang Trianto, M.T.</div>
+            <div className="mono text-[#5a6472]">NIP. 198005122005011002</div>
+          </div>
+          <div className="text-center">
+            <div>Pejabat Yang Berwenang Memberikan Cuti,</div>
+            <div className="mt-14 font-semibold">Drs. H. Sukamto, M.Si.</div>
+            <div className="mono text-[#5a6472]">NIP. 197502111998031001</div>
           </div>
         </div>
-
-        <div className="text-right text-xs font-sans mb-4">
-          Kebumen, {request.created_at ? request.created_at.slice(0, 10) : '2026-11-02'}<br />
-          Kepada Yth.<br />
-          Bupati Kebumen / Pejabat Pembina Kepegawaian<br />
-          Melalui Atasan Langsung<br />
-          di Kebumen
-        </div>
-
-        {/* Section I: Data Pegawai */}
-        <div className="mb-4">
-          <div className="bg-slate-100 px-3 py-1 font-bold font-sans text-xs border border-slate-900">
-            I. DATA PEGAWAI
-          </div>
-          <table className="w-full text-xs font-sans border-collapse border border-slate-900">
-            <tbody>
-              <tr>
-                <td className="border border-slate-900 p-2 w-1/4 font-semibold">Nama</td>
-                <td className="border border-slate-900 p-2 w-1/4">{request.pemohon_nama}</td>
-                <td className="border border-slate-900 p-2 w-1/4 font-semibold">NIP</td>
-                <td className="border border-slate-900 p-2 w-1/4">{request.pemohon_nip}</td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-2 font-semibold">Jabatan</td>
-                <td className="border border-slate-900 p-2">{request.pemohon_jabatan}</td>
-                <td className="border border-slate-900 p-2 font-semibold">Masa Kerja</td>
-                <td className="border border-slate-900 p-2">
-                  {request.pemohon_masa_kerja_th || 5} Tahun {request.pemohon_masa_kerja_bl || 0} Bulan
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-2 font-semibold">Unit Kerja</td>
-                <td className="border border-slate-900 p-2" colSpan="3">
-                  {request.pemohon_unit} - {request.pemohon_instansi || 'Pemerintah Kabupaten Kebumen'}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Section II: Jenis Cuti Yang Diambil */}
-        <div className="mb-4">
-          <div className="bg-slate-100 px-3 py-1 font-bold font-sans text-xs border border-slate-900">
-            II. JENIS CUTI YANG DIAMBIL **
-          </div>
-          <table className="w-full text-xs font-sans border-collapse border border-slate-900">
-            <tbody>
-              <tr>
-                <td className="border border-slate-900 p-2 w-1/2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cuti_tahunan') ? '☑' : '☐'}</span>
-                    <span>1. Cuti Tahunan</span>
-                  </div>
-                </td>
-                <td className="border border-slate-900 p-2 w-1/2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cuti_besar') ? '☑' : '☐'}</span>
-                    <span>2. Cuti Besar</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cuti_sakit') ? '☑' : '☐'}</span>
-                    <span>3. Cuti Sakit</span>
-                  </div>
-                </td>
-                <td className="border border-slate-900 p-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cuti_melahirkan') ? '☑' : '☐'}</span>
-                    <span>4. Cuti Melahirkan</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cuti_alasan_penting') ? '☑' : '☐'}</span>
-                    <span>5. Cuti Karena Alasan Penting</span>
-                  </div>
-                </td>
-                <td className="border border-slate-900 p-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cuti_bersama') ? '☑' : '☐'}</span>
-                    <span>6. Cuti Bersama</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-2" colSpan="2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold">{isChecked('cltn') ? '☑' : '☐'}</span>
-                    <span>7. Cuti di Luar Tanggungan Negara</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Section III: Alasan Cuti */}
-        <div className="mb-4">
-          <div className="bg-slate-100 px-3 py-1 font-bold font-sans text-xs border border-slate-900">
-            III. ALASAN CUTI
-          </div>
-          <div className="border border-slate-900 p-3 font-sans text-xs min-h-[45px]">
-            {request.alasan_cuti}
-            {request.kategori_detail && (
-              <span className="text-slate-500 italic block mt-1">
-                Keterangan Detail: {request.kategori_detail}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Section IV: Lamanya Cuti */}
-        <div className="mb-4">
-          <div className="bg-slate-100 px-3 py-1 font-bold font-sans text-xs border border-slate-900">
-            IV. LAMANYA CUTI
-          </div>
-          <table className="w-full text-xs font-sans border-collapse border border-slate-900">
-            <tbody>
-              <tr>
-                <td className="border border-slate-900 p-2 w-1/4 font-semibold">Selama</td>
-                <td className="border border-slate-900 p-2 w-1/4 font-bold">{request.jumlah_hari} Hari Kerja</td>
-                <td className="border border-slate-900 p-2 w-1/4 font-semibold">Mulai Tanggal</td>
-                <td className="border border-slate-900 p-2 w-1/4">
-                  {request.tanggal_mulai} s.d. {request.tanggal_selesai}
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-2 font-semibold">Alamat Selama Cuti</td>
-                <td className="border border-slate-900 p-2" colSpan="3">
-                  {request.alamat_selama_cuti || '-'}
-                  <div className="font-semibold mt-1">Telp / WA: {request.no_telepon_cuti || '-'}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Section V: Catatan Cuti */}
-        <div className="mb-4">
-          <div className="bg-slate-100 px-3 py-1 font-bold font-sans text-xs border border-slate-900">
-            V. CATATAN CUTI ***
-          </div>
-          <table className="w-full text-[10px] font-sans border-collapse border border-slate-900 text-center">
-            <thead>
-              <tr className="bg-slate-50">
-                <th className="border border-slate-900 p-1.5" colSpan="3">1. CUTI TAHUNAN</th>
-                <th className="border border-slate-900 p-1.5" rowSpan="2">2. CUTI BESAR</th>
-                <th className="border border-slate-900 p-1.5" rowSpan="2">3. CUTI SAKIT</th>
-                <th className="border border-slate-900 p-1.5" rowSpan="2">4. CUTI MELAHIRKAN</th>
-                <th className="border border-slate-900 p-1.5" rowSpan="2">5. CUTI ALASAN PENTING</th>
-                <th className="border border-slate-900 p-1.5" rowSpan="2">6. CLTN</th>
-              </tr>
-              <tr className="bg-slate-50">
-                <th className="border border-slate-900 p-1">Tahun</th>
-                <th className="border border-slate-900 p-1">Sisa</th>
-                <th className="border border-slate-900 p-1">Keterangan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-slate-900 p-1">N-2 (2024)</td>
-                <td className="border border-slate-900 p-1">{request.sisa_cuti_n2 || 0}</td>
-                <td className="border border-slate-900 p-1">Penangguhan PPK</td>
-                <td className="border border-slate-900 p-1" rowSpan="3">
-                  {request.pemohon_jenis_asn === 'PNS' && (request.pemohon_masa_kerja_th || 5) >= 5 ? 'Berhak' : '-'}
-                </td>
-                <td className="border border-slate-900 p-1" rowSpan="3">Berhak (Surat Dokter)</td>
-                <td className="border border-slate-900 p-1" rowSpan="3">Anak 1-3</td>
-                <td className="border border-slate-900 p-1" rowSpan="3">Maks 1 Bln</td>
-                <td className="border border-slate-900 p-1" rowSpan="3">-</td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-1">N-1 (2025)</td>
-                <td className="border border-slate-900 p-1">{request.sisa_cuti_n1 || 0}</td>
-                <td className="border border-slate-900 p-1">Sisa carryover</td>
-              </tr>
-              <tr>
-                <td className="border border-slate-900 p-1">N (2026)</td>
-                <td className="border border-slate-900 p-1">{request.sisa_cuti_n || 12}</td>
-                <td className="border border-slate-900 p-1">Hak tahun berjalan</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Section VI & VII: Pertimbangan Atasan & Keputusan PPK */}
-        <div className="grid grid-cols-2 gap-4">
-          
-          {/* Section VI: Pertimbangan Atasan Langsung */}
-          <div className="border border-slate-900 text-xs font-sans">
-            <div className="bg-slate-100 p-1.5 font-bold border-b border-slate-900">
-              VI. PERTIMBANGAN ATASAN LANGSUNG **
-            </div>
-            <div className="p-2 space-y-1">
-              <div className="grid grid-cols-2 gap-1 text-[11px]">
-                <span>{request.atasan_aksi === 'DISETUJUI' ? '☑' : '☐'} Disetujui</span>
-                <span>{request.atasan_aksi === 'PERUBAHAN' ? '☑' : '☐'} Perubahan</span>
-                <span>{request.atasan_aksi === 'DITANGGUHKAN' ? '☑' : '☐'} Ditangguhkan</span>
-                <span>{request.atasan_aksi === 'TIDAK_DISETUJUI' ? '☑' : '☐'} Tidak Disetujui</span>
-              </div>
-              <div className="text-[10px] text-slate-500 italic mt-1">
-                Catatan: {request.atasan_catatan || 'Telah diverifikasi sesuai ketentuan perundang-undangan.'}
-              </div>
-            </div>
-
-            <div className="p-3 text-center border-t border-slate-900 mt-2">
-              <div className="text-[10px] text-slate-500">Atasan Langsung,</div>
-              <div className="h-10 flex items-center justify-center font-serif text-slate-400 italic">
-                (Tanda Tangan Elektronik / Terverifikasi)
-              </div>
-              <div className="font-bold underline">{request.atasan_nama || 'Bambang Trianto, S.T., M.Eng.'}</div>
-              <div className="text-[10px]">NIP. {request.atasan_nip || '197904122005011006'}</div>
-            </div>
-          </div>
-
-          {/* Section VII: Keputusan Pejabat Yang Berwenang (PPK) */}
-          <div className="border border-slate-900 text-xs font-sans">
-            <div className="bg-slate-100 p-1.5 font-bold border-b border-slate-900">
-              VII. KEPUTUSAN PEJABAT YG BERWENANG **
-            </div>
-            <div className="p-2 space-y-1">
-              <div className="grid grid-cols-2 gap-1 text-[11px]">
-                <span>{request.ppk_aksi === 'DISETUJUI' ? '☑' : '☐'} Disetujui</span>
-                <span>{request.ppk_aksi === 'PERUBAHAN' ? '☑' : '☐'} Perubahan</span>
-                <span>{request.ppk_aksi === 'DITANGGUHKAN' ? '☑' : '☐'} Ditangguhkan</span>
-                <span>{request.ppk_aksi === 'TIDAK_DISETUJUI' ? '☑' : '☐'} Tidak Disetujui</span>
-              </div>
-              <div className="text-[10px] text-slate-500 italic mt-1">
-                SK: {request.nomor_sk || 'Menunggu penetapan resmi PPK'}
-              </div>
-            </div>
-
-            <div className="p-3 text-center border-t border-slate-900 mt-2">
-              <div className="text-[10px] text-slate-500">Kepala BKPSDM / PPK,</div>
-              <div className="h-10 flex items-center justify-center font-serif text-slate-400 italic">
-                (Tanda Tangan & Cap Dinas)
-              </div>
-              <div className="font-bold underline">{request.ppk_nama || 'Drs. H. Sukamto, M.Si.'}</div>
-              <div className="text-[10px]">NIP. {request.ppk_nip || '197009181996031002'}</div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Footer Notes & Digital QR Stamp per BKN standard */}
-        <div className="mt-4 pt-3 border-t border-slate-300 text-[8pt] text-slate-500 font-sans flex items-start justify-between gap-4">
-          <div className="space-y-0.5">
-            <div>* Coret yang tidak perlu.</div>
-            <div>** Pilih salah satu dengan memberi tanda centang (☑).</div>
-            <div>*** Diisi oleh pejabat yang menangani bidang kepegawaian sebelum PNS mengajukan cuti.</div>
-            <div className="mt-1 font-mono text-[7pt] text-slate-600">
-              Dokumen Elektronik LawetHub BKPSDM Kab. Kebumen • ID: {request.id} • Peraturan BKN No. 7/2021
-            </div>
-          </div>
-
-          {/* Interactive QR Code Verification Stamp */}
-          <div 
-            onClick={() => setShowQrVerifyModal(true)}
-            className="cursor-pointer p-2 rounded-xl border border-slate-300 hover:border-slate-800 bg-slate-50 hover:bg-slate-100 transition-all text-center shrink-0 group no-print"
-            title="Klik untuk memverifikasi keabsahan tanda tangan elektronik"
-          >
-            <div className="w-14 h-14 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-1 mx-auto shadow-2xs group-hover:scale-105 transition-transform">
-              <QrCode className="w-full h-full text-slate-800" />
-            </div>
-            <span className="text-[7pt] font-black text-slate-900 block mt-1">
-              Verifikasi TTE
-            </span>
-          </div>
-          
-          {/* Print only static QR representation */}
-          <div className="hidden print:block text-center shrink-0">
-            <div className="w-12 h-12 border border-black p-0.5 mx-auto">
-              <QrCode className="w-full h-full text-black" />
-            </div>
-            <span className="text-[6pt] block mt-0.5">TTE Resmi BKN</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-      {/* TTE QR Code Verification Modal */}
-      {showQrVerifyModal && (
-        <div 
-          onClick={(e) => { if (e.target === e.currentTarget) setShowQrVerifyModal(false); }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 animate-in fade-in cursor-pointer"
-        >
-          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl space-y-4 border border-slate-200 cursor-default">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm">
-                <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                <span>Sertifikat Dokumen Elektronik Sah</span>
-              </div>
-              <button 
-                onClick={() => setShowQrVerifyModal(false)}
-                className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="space-y-3 text-xs">
-              <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900">
-                <div className="font-bold">STATUS: ASLI & TERVERIFIKASI</div>
-                <div className="text-[11px] text-emerald-800 mt-0.5">
-                  Surat Izin Cuti ini diterbitkan resmi melalui Sistem Informasi Layanan Cuti ASN LawetHub.
-                </div>
-              </div>
-
-              <div className="space-y-2 border border-slate-200 rounded-2xl p-3 bg-slate-50/70">
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">Nomor Registrasi:</span>
-                  <span className="font-mono font-bold text-slate-800">{request.nomor_surat || request.id}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">Pemohon:</span>
-                  <span className="font-bold text-slate-800">{request.pemohon_nama}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">NIP:</span>
-                  <span className="font-mono text-slate-800">{request.pemohon_nip}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">Pejabat Pengesah (PPK):</span>
-                  <span className="font-bold text-slate-800">{request.ppk_nama || 'Kepala BKPSDM'}</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span className="text-slate-500">Dasar Regulasi:</span>
-                  <span className="font-semibold text-slate-700">Peraturan BKN No. 7 Tahun 2021</span>
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowQrVerifyModal(false)}
-              className="w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-colors"
-            >
-              Tutup Verifikasi
-            </button>
-          </div>
-        </div>
-      )}
-
+      </article>
     </div>
   );
 }

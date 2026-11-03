@@ -1,10 +1,134 @@
 @import "tailwindcss";
 
+:root {
+  --color-navy: #173a5e;
+  --color-navy-light: #e3eaf1;
+  --color-canvas: #f4f5f3;
+  --color-surface: #ffffff;
+  --color-ink: #1c2530;
+  --color-ink-muted: #5a6472;
+  --color-line: #dcdfda;
+  --color-line-input: #b9bfb8;
+  --color-warning: #fbf3e2;
+  --color-warning-border: #e3cf9c;
+  --color-divider: #e8ebe6;
+}
+
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-800 antialiased font-sans;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #f4f5f3;
+    color: #1c2530;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
+}
+
+/* Design Tokens & Components (Panduan Desain LawetHub) */
+.lawet-card {
+  background: #ffffff;
+  border: 1px solid #dcdfda;
+  border-radius: 8px;
+}
+
+.lawet-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #173a5e;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.lawet-btn:hover {
+  background: #102942;
+}
+
+.lawet-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #b9bfb8;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #1c2530;
+  background: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.lawet-btn-secondary:hover {
+  background: #f4f5f3;
+}
+
+.lawet-input {
+  border: 1px solid #b9bfb8;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: #1c2530;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.lawet-input:focus {
+  border-color: #173a5e;
+}
+
+.lawet-label {
+  font-size: 12px;
+  color: #5a6472;
+}
+
+.lawet-badge-approved {
+  background: #e3eaf1;
+  color: #173a5e;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.lawet-badge-pending {
+  background: #fbf3e2;
+  color: #1c2530;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.lawet-badge-neutral {
+  background: #ecece8;
+  color: #3b4654;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.lawet-alert {
+  background: #fbf3e2;
+  border: 1px solid #e3cf9c;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #1c2530;
+  line-height: 1.5;
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace !important;
 }
 
 /* Custom scrollbar */

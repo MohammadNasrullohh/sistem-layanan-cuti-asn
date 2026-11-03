@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-  Building2, 
-  Lock, 
-  User, 
-  ArrowRight, 
-  AlertCircle, 
-  CheckCircle2, 
-  Sparkles,
-  ShieldCheck,
-  ChevronRight,
-  ArrowLeft
-} from 'lucide-react';
 
-export default function LoginPage({ onLoginSuccess, onBackToHome }) {
+export default function LoginPage({ onLoginSuccess }) {
   const { employees, loginWithNip, loginAsUser } = useAuth();
   const [nip, setNip] = useState('');
   const [password, setPassword] = useState('123456');
@@ -31,8 +19,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
     if (result.success) {
       onLoginSuccess();
     } else {
-      // Flowchart step: Login berhasil? -> Tidak: Tampil pesan error
-      setErrorMsg(result.message);
+      setErrorMsg(result.message || 'NIP atau kata sandi tidak cocok.');
     }
   };
 
@@ -42,157 +29,116 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        
-        {/* Left Information Card (5 cols) */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
-            <ShieldCheck className="w-4 h-4 text-blue-700" />
-            <span>Alur Resmi Diagram 2 LawetHub</span>
-          </div>
+    <div className="min-h-screen w-full bg-[#f4f5f3] flex flex-col md:grid md:grid-cols-2 text-[#1c2530] font-sans">
+      {/* Left Column: Navy Institutional Branding */}
+      <section className="bg-[#173a5e] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-between min-h-[320px] md:min-h-screen">
+        <div className="text-[14px] text-white/85">
+          Pemerintah Kabupaten Kebumen · BKPSDM
+        </div>
 
-          <div className="space-y-3">
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Masuk ke Layanan Cuti <span className="text-blue-700">LawetHub</span>
-            </h1>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Autentikasi akun aparatur sipil negara (PNS & PPPK) untuk mengakses rincian sisa cuti, permohonan izin cuti online, dan penerbitan formulir BKN.
-            </p>
-          </div>
+        <div className="my-8 md:my-0">
+          <h1 className="text-[32px] sm:text-[38px] font-semibold leading-[1.2] mb-4 tracking-tight">
+            Layanan Cuti ASN
+          </h1>
+          <p className="text-[15px] sm:text-[16px] leading-[1.6] max-w-[420px] text-white/90 font-normal">
+            Cek saldo, ajukan cuti, dan unduh formulir resmi sesuai Peraturan BKN No. 7 Tahun 2021.
+          </p>
+        </div>
 
-          {/* Quick Demo Login Section */}
-          <div className="p-4 rounded-3xl bg-white border border-slate-200/90 shadow-xs space-y-2.5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span className="text-[10px] uppercase font-extrabold tracking-wider text-slate-400">
-                1-Klik Akses Demo Role:
+        <div className="text-[13px] text-white/80">
+          Terintegrasi SIASN BKN
+        </div>
+      </section>
+
+      {/* Right Column: Clean White Form */}
+      <section className="flex-1 flex items-center justify-center p-6 sm:p-12">
+        <div className="w-full max-w-[360px] flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4.5">
+            <h2 className="text-[22px] font-semibold text-[#1c2530] mb-1">
+              Masuk
+            </h2>
+
+            {errorMsg && (
+              <div className="bg-[#fbf3e2] border border-[#e3cf9c] text-[#1c2530] text-[13px] rounded-[6px] p-3">
+                {errorMsg}
+              </div>
+            )}
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-medium text-[#1c2530]">
+                NIP
+              </label>
+              <input
+                type="text"
+                value={nip}
+                onChange={(e) => setNip(e.target.value)}
+                placeholder="18 digit NIP"
+                className="w-full border border-[#b9bfb8] rounded-[6px] px-3 py-2.5 text-[14px] font-normal bg-white outline-none focus:border-[#173a5e] mono"
+                required
+              />
+              <span className="text-[12px] text-[#5a6472]">
+                Gunakan NIP yang terdaftar di SIMPEG.
               </span>
-              <span className="text-[10px] text-blue-700 font-bold">Simulasi Instan</span>
             </div>
 
-            <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
-              {employees.slice(0, 5).map((emp) => (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[13px] font-medium text-[#1c2530]">
+                Kata sandi
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-[#b9bfb8] rounded-[6px] px-3 py-2.5 text-[14px] bg-white outline-none focus:border-[#173a5e]"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full text-center bg-[#173a5e] hover:bg-[#102942] text-white rounded-[6px] py-3 text-[14px] font-medium transition-colors cursor-pointer"
+            >
+              {loading ? 'Memverifikasi...' : 'Masuk'}
+            </button>
+
+            <a
+              href="#bantuan"
+              onClick={(e) => {
+                e.preventDefault();
+                alert('Untuk bantuan akun SIMPEG atau reset kata sandi, silakan hubungi Subbag Kepegawaian BKPSDM Kebumen di Gedung Setda Lantai 2.');
+              }}
+              className="text-[13px] text-[#173a5e] hover:underline"
+            >
+              Lupa kata sandi? Hubungi admin BKPSDM
+            </a>
+          </form>
+
+          {/* Quick Demo Switchers */}
+          <div className="pt-5 border-t border-[#e8ebe6]">
+            <div className="text-[12px] text-[#5a6472] mb-2.5">
+              Akses cepat pengujian (1-klik):
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {employees && employees.slice(0, 4).map((emp) => (
                 <button
                   key={emp.id}
+                  type="button"
                   onClick={() => handleQuickLogin(emp)}
-                  className="w-full p-2.5 rounded-xl hover:bg-slate-50 border border-slate-100 hover:border-slate-300 transition-all text-left flex items-center justify-between group cursor-pointer"
+                  className="text-left p-2.5 border border-[#dcdfda] hover:border-[#173a5e] rounded-[6px] bg-white text-[12px] transition-colors"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <img
-                      src={emp.avatar}
-                      alt={emp.nama}
-                      className="w-7 h-7 rounded-lg object-cover ring-1 ring-slate-200 shrink-0"
-                    />
-                    <div className="min-w-0">
-                      <div className="text-xs font-bold text-slate-800 truncate group-hover:text-slate-900 transition-colors">
-                        {emp.nama.split(',')[0]}
-                      </div>
-                      <div className="text-[10px] text-slate-400 truncate">
-                        {emp.jenis_asn} • {emp.role.toUpperCase()}
-                      </div>
-                    </div>
+                  <div className="font-medium text-[#1c2530] truncate">
+                    {emp.nama.split(',')[0]}
                   </div>
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-slate-900 transition-transform group-hover:translate-x-0.5 shrink-0" />
+                  <div className="text-[11px] text-[#5a6472] uppercase">
+                    {emp.role}
+                  </div>
                 </button>
               ))}
             </div>
           </div>
-
-          <button
-            onClick={onBackToHome}
-            className="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Kembali ke Beranda Website
-          </button>
         </div>
-
-        {/* Right Form Card (7 cols) */}
-        <div className="lg:col-span-7">
-          <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-lg shadow-slate-200/50 space-y-6">
-            
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-bold shadow-md">
-                <Building2 className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">Formulir Masuk Pegawai</h2>
-                <p className="text-xs text-slate-400">Gunakan NIP resmi terdaftar pada SIMPEG BKPSDM</p>
-              </div>
-            </div>
-
-            {/* Error Alert Box (Flowchart: Login berhasil? -> Tidak) */}
-            {errorMsg && (
-              <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2.5 animate-in fade-in">
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-bold">Gagal Masuk:</div>
-                  <div className="text-[11px] mt-0.5">{errorMsg}</div>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Nomor Induk Pegawai (NIP):
-                </label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={nip}
-                    onChange={(e) => setNip(e.target.value)}
-                    placeholder="Contoh: 199208152018021003"
-                    required
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
-                  />
-                </div>
-                <div className="text-[10px] text-slate-400 mt-1">
-                  NIP Demo: <span className="font-mono font-semibold text-slate-600">199208152018021003</span> (PNS) atau <span className="font-mono font-semibold text-slate-600">199505122023212015</span> (PPPK)
-                </div>
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Kata Sandi:
-                </label>
-                <div className="relative">
-                  <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Kata sandi akun"
-                    required
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
-                  />
-                </div>
-                <div className="text-[10px] text-slate-400 mt-1">
-                  Kata sandi demo: <span className="font-mono font-semibold text-slate-600">123456</span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3.5 rounded-2xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs md:text-sm shadow-md active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <span>{loading ? 'Memverifikasi...' : 'Masuk ke Dashboard LawetHub'}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </form>
-
-            <div className="pt-4 border-t border-slate-100 text-center text-[11px] text-slate-400">
-              BKPSDM Kabupaten Kebumen • Terintegrasi SIASN BKN
-            </div>
-
-          </div>
-        </div>
-
-      </div>
+      </section>
     </div>
   );
 }

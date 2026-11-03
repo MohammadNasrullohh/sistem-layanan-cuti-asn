@@ -1,40 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-  X, 
-  Send, 
-  MessageSquare, 
-  Phone, 
-  MoreVertical, 
-  Paperclip, 
-  CheckCheck, 
-  Clock, 
-  ExternalLink, 
-  FileText,
-  Building2,
-  Sparkles
-} from 'lucide-react';
 
-export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, onSelectRequestForExport }) {
+export default function WhatsAppChatbotDrawer({
+  isOpen,
+  onClose,
+  setActiveTab,
+  onSelectRequestForExport
+}) {
   const { currentUser } = useAuth();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Initialize greeting message on first open
+  // Greet on first open
   useEffect(() => {
     if (isOpen && messages.length === 0 && currentUser) {
       setMessages([
         {
           id: 1,
           sender: 'bot',
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `👋 Halo *${currentUser.nama}*!\nSelamat datang di *Layanan Chatbot Cuti LawetHub* BKPSDM Kebumen (Peraturan BKN No. 7/2021).\n\nSilakan pilih menu layanan:\n*1.* 📊 Sisa Cuti\n*2.* 📝 Form Cuti\n*3.* ⚖️ Info Aturan Cuti BKN\n\n_Ketik angka 1 atau 2 untuk memulai._`,
+          text: `Halo, ${currentUser.nama || 'Ahmad Fauzi, S.Kom.'}. Silakan pilih layanan:\n1. Sisa cuti\n2. Form cuti\n3. Info aturan cuti BKN`,
           quickActions: [
-            { label: '📊 1. Cek Sisa Cuti', value: '1' },
-            { label: '📝 2. Form Cuti', value: '2' },
-            { label: '⚖️ 3. Aturan Cuti', value: '3' }
+            { label: '1. Sisa cuti', value: '1' },
+            { label: '2. Form cuti', value: '2' },
+            { label: '3. Aturan cuti', value: '3' }
           ]
         }
       ]);
@@ -52,7 +42,6 @@ export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, o
     const userMsg = {
       id: Date.now(),
       sender: 'user',
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       text: text.trim()
     };
 
@@ -71,11 +60,10 @@ export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, o
       });
 
       const data = await res.json();
-      
+
       const botMsg = {
         id: Date.now() + 1,
         sender: 'bot',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         text: data.reply,
         quickActions: data.quickActions,
         generatedLink: data.generatedLink
@@ -83,14 +71,13 @@ export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, o
 
       setMessages(prev => [...prev, botMsg]);
     } catch (err) {
-      console.error('Bot error:', err);
+      console.error('Chatbot error:', err);
       setMessages(prev => [
         ...prev,
         {
           id: Date.now() + 1,
           sender: 'bot',
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: 'Maaf, terjadi gangguan pada server chatbot LawetHub. Silakan coba kembali.'
+          text: 'Maaf, terjadi gangguan saat menghubungkan ke server chatbot BKPSDM.'
         }
       ]);
     } finally {
@@ -101,208 +88,132 @@ export default function WhatsAppChatbotDrawer({ isOpen, onClose, setActiveTab, o
   if (!isOpen) return null;
 
   return (
-    <>
-      {/* Backdrop overlay */}
-      <div 
+    <div className="fixed inset-0 z-50 flex justify-end">
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/40 transition-opacity"
         onClick={onClose}
-        className="fixed inset-0 z-50 bg-slate-900/40 transition-opacity animate-in fade-in cursor-pointer"
-        title="Klik di luar untuk menutup chatbot"
       />
-      
-      {/* Drawer Panel */}
-      <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-96 md:w-[420px] bg-white shadow-2xl flex flex-col border-l border-slate-200 animate-in slide-in-from-right duration-200">
-      
-      {/* WhatsApp Header */}
-      <div className="bg-[#075E54] text-white p-3.5 flex items-center justify-between shadow-md">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-white text-base ring-2 ring-emerald-400">
-              LH
-            </div>
-            <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-emerald-800"></span>
-          </div>
 
+      {/* WhatsApp Phone Mockup Drawer (w: 390px) */}
+      <div className="relative w-full max-w-[390px] h-full bg-[#eceee9] text-[#1c2530] flex flex-col shadow-2xl z-10 font-sans">
+        {/* Header */}
+        <header className="bg-[#173a5e] text-white p-4 flex items-center justify-between shrink-0">
           <div>
-            <div className="font-bold text-sm tracking-tight flex items-center gap-1.5">
-              <span>LawetBot Layanan Cuti</span>
-              <span className="text-[10px] bg-emerald-800 px-1.5 py-0.2 rounded text-emerald-200 font-normal">Official</span>
+            <div className="font-semibold text-[16px] leading-tight">
+              LawetBot Layanan Cuti
             </div>
-            <div className="text-[11px] text-emerald-100 flex items-center gap-1">
-              <span>Online • BKN No. 7/2021</span>
+            <div className="text-[12px] opacity-85 mt-0.5">
+              Resmi · BKPSDM Kebumen
             </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-emerald-800/80 flex items-center justify-center transition-colors text-white"
+            className="text-white hover:text-white/70 p-1 text-[18px] leading-none bg-transparent border-0 cursor-pointer"
+            aria-label="Tutup"
           >
-            <X className="w-5 h-5" />
+            ✕
           </button>
-        </div>
-      </div>
+        </header>
 
-      {/* Sub-bar: Employee Identifier */}
-      <div className="bg-[#128C7E] px-4 py-1.5 text-white/90 text-[11px] flex items-center justify-between">
-        <span>Pengguna: <strong>{currentUser?.nama}</strong></span>
-        <span className="text-[10px] bg-white/20 px-1.5 rounded">{currentUser?.jenis_asn}</span>
-      </div>
+        {/* Message Log */}
+        <div className="flex-1 p-4 flex flex-col gap-2.5 overflow-y-auto">
+          {messages.map((m) => {
+            if (m.sender === 'user') {
+              return (
+                <div
+                  key={m.id}
+                  className="bg-[#d8e4ef] rounded-[10px] px-3.5 py-2.5 text-[14px] self-end max-w-[80%]"
+                >
+                  {m.text}
+                </div>
+              );
+            }
 
-      {/* WhatsApp Chat Body */}
-      <div 
-        className="flex-1 p-4 overflow-y-auto space-y-3 bg-[#EFEAE2]"
-        style={{
-          backgroundImage: 'radial-gradient(#d1d7db 1px, transparent 1px)',
-          backgroundSize: '16px 16px'
-        }}
-      >
-        <div className="text-center my-1">
-          <span className="bg-white/80 text-slate-500 text-[10px] font-semibold px-2.5 py-1 rounded-md shadow-2xs">
-            HARI INI (DIAGRAM 1 FLOWCHATBOT)
-          </span>
-        </div>
+            return (
+              <div key={m.id} className="flex flex-col gap-2 self-start max-w-[85%]">
+                <div
+                  className="bg-white rounded-[10px] px-3.5 py-3 text-[14px] leading-[1.5] shadow-xs whitespace-pre-line text-[#1c2530]"
+                  dangerouslySetInnerHTML={{
+                    __html: m.text
+                      .replace(/\*(.*?)\*/g, '<b>$1</b>')
+                      .replace(/\n/g, '<br/>')
+                  }}
+                />
 
-        {messages.map((msg) => {
-          const isUser = msg.sender === 'user';
-          return (
-            <div
-              key={msg.id}
-              className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} space-y-1.5`}
-            >
-              <div
-                className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed shadow-xs relative ${
-                  isUser
-                    ? 'bg-[#DCF8C6] text-slate-900 rounded-tr-xs'
-                    : 'bg-white text-slate-900 rounded-tl-xs'
-                }`}
-              >
-                {/* Formatted Message Content */}
-                <div className="whitespace-pre-wrap">{msg.text}</div>
-
-                {/* Direct Action Link if generated */}
-                {msg.generatedLink && (
-                  <div className="mt-2.5 pt-2 border-t border-slate-100 flex flex-col gap-1.5">
-                    {msg.generatedLink.includes('ajukan') ? (
+                {/* Quick reply pills */}
+                {m.quickActions && m.quickActions.length > 0 && (
+                  <div className="flex gap-2 flex-wrap">
+                    {m.quickActions.map((qa, i) => (
                       <button
-                        onClick={() => {
-                          setActiveTab('ajukan-cuti');
-                          onClose();
-                        }}
-                        className="px-3 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors"
+                        key={i}
+                        type="button"
+                        onClick={() => handleSendMessage(qa.value || qa.label)}
+                        className="border border-[#173a5e] text-[#173a5e] bg-white hover:bg-[#e3eaf1] rounded-[18px] px-3 py-1.5 text-[13px] transition-colors cursor-pointer"
                       >
-                        <FileText className="w-3.5 h-3.5" />
-                        Buka Formulir Pengajuan Cuti
+                        {qa.label}
                       </button>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          const reqId = msg.generatedLink.split('/').pop();
-                          onSelectRequestForExport(reqId);
-                          onClose();
-                        }}
-                        className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        Ekspor / Cetak Formulir BKN
-                      </button>
-                    )}
+                    ))}
                   </div>
                 )}
 
-                {/* Time & Read Receipts */}
-                <div className="flex items-center justify-end gap-1 text-[10px] text-slate-400 mt-1">
-                  <span>{msg.time}</span>
-                  {isUser && <CheckCheck className="w-3.5 h-3.5 text-blue-500" />}
-                </div>
+                {/* Generated deep link if any */}
+                {m.generatedLink && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (m.generatedLink === '/ajukan-cuti') {
+                        setActiveTab('ajukan-cuti');
+                        onClose();
+                      } else if (m.generatedLink === '/sisa-cuti') {
+                        setActiveTab('sisa-cuti');
+                        onClose();
+                      }
+                    }}
+                    className="text-left text-[12px] font-medium text-[#173a5e] hover:underline"
+                  >
+                    Buka tautan sistem &rarr;
+                  </button>
+                )}
               </div>
+            );
+          })}
 
-              {/* Bot Quick Reply Buttons (Flowchart 1: Pilihan Menu) */}
-              {!isUser && msg.quickActions && msg.quickActions.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 pl-1">
-                  {msg.quickActions.map((action, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        if (action.url) {
-                          setActiveTab('ajukan-cuti');
-                          onClose();
-                        } else {
-                          handleSendMessage(action.value);
-                        }
-                      }}
-                      className="px-2.5 py-1 rounded-full bg-white hover:bg-slate-100 border border-emerald-300 text-emerald-800 font-semibold text-[11px] shadow-2xs transition-all flex items-center gap-1"
-                    >
-                      <span>{action.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+          {loading && (
+            <div className="bg-white rounded-[10px] px-3.5 py-2 text-[13px] self-start text-[#5a6472] italic">
+              LawetBot sedang mengetik...
             </div>
-          );
-        })}
+          )}
 
-        {loading && (
-          <div className="flex items-center gap-2 bg-white rounded-xl p-2.5 text-slate-500 text-xs w-fit shadow-xs">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-            </span>
-            <span>LawetBot sedang mengetik...</span>
-          </div>
-        )}
+          <div ref={messagesEndRef} />
+        </div>
 
-        <div ref={messagesEndRef} />
+        {/* Input Bar */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
+          }}
+          className="bg-white border-t border-[#dcdfda] p-3 flex gap-2 shrink-0 items-center"
+        >
+          <input
+            type="text"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            aria-label="Pesan"
+            placeholder="Ketik 1, 2, atau 3"
+            className="flex-1 border border-[#b9bfb8] rounded-[20px] px-3.5 py-2.5 text-[14px] bg-white outline-none focus:border-[#173a5e]"
+          />
+          <button
+            type="submit"
+            className="bg-[#173a5e] hover:bg-[#102942] text-white rounded-[20px] px-4 py-2.5 text-[14px] font-medium transition-colors cursor-pointer"
+          >
+            Kirim
+          </button>
+        </form>
       </div>
-
-      {/* Preset Quick Chips */}
-      <div className="bg-slate-100/90 px-3 py-2 border-t border-slate-200 flex items-center gap-1.5 overflow-x-auto text-[11px]">
-        <span className="text-[10px] text-slate-400 font-bold shrink-0">Ketik Kilat:</span>
-        <button
-          onClick={() => handleSendMessage('1')}
-          className="shrink-0 px-2.5 py-1 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-medium border border-slate-200 transition-colors"
-        >
-          1. Sisa Cuti
-        </button>
-        <button
-          onClick={() => handleSendMessage('2')}
-          className="shrink-0 px-2.5 py-1 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-medium border border-slate-200 transition-colors"
-        >
-          2. Form Cuti
-        </button>
-        <button
-          onClick={() => handleSendMessage('AJUKAN#TAHUNAN#2026-11-20#3#Keperluan Keluarga Khusus')}
-          className="shrink-0 px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200 transition-colors"
-        >
-          Pengajuan Kilat WA
-        </button>
-      </div>
-
-      {/* WhatsApp Input Bar */}
-      <div className="p-3 bg-[#F0F2F5] flex items-center gap-2 border-t border-slate-200">
-        <input
-          type="text"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-          placeholder="Ketik '1' untuk Sisa Cuti, '2' untuk Form..."
-          className="flex-1 px-4 py-2.5 rounded-full bg-white border border-slate-200 text-xs focus:outline-hidden focus:ring-1 focus:ring-emerald-500 shadow-2xs"
-        />
-
-        <button
-          onClick={() => handleSendMessage()}
-          disabled={!inputText.trim() || loading}
-          className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-            inputText.trim() && !loading
-              ? 'bg-[#00A884] hover:bg-[#008f6f] text-white shadow-xs'
-              : 'bg-slate-300 text-slate-400 cursor-not-allowed'
-          }`}
-        >
-          <Send className="w-4 h-4" />
-        </button>
-      </div>
-
     </div>
-    </>
   );
 }

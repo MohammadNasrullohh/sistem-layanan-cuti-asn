@@ -56,8 +56,8 @@ const FALLBACK_EMPLOYEES = [
 
 export function AuthProvider({ children }) {
   const [employees, setEmployees] = useState(FALLBACK_EMPLOYEES);
-  const [currentUser, setCurrentUser] = useState(FALLBACK_EMPLOYEES[0]);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Fetch employees list
@@ -72,24 +72,32 @@ export function AuthProvider({ children }) {
       
       // Check saved login session
       const savedId = localStorage.getItem('lawethub_user_id');
+      const isLoggedIn = localStorage.getItem('lawethub_is_logged_in');
       
       let userToSet = null;
-      if (savedId) {
+      if (isLoggedIn === 'false') {
+        setCurrentUser(null);
+        setIsAuthenticated(false);
+      } else if (savedId) {
         userToSet = empList.find(e => e.id === savedId);
-      }
-      
-      // If no valid saved user or id not found, fallback to default demo user
-      if (!userToSet) {
+        if (userToSet) {
+          setCurrentUser(userToSet);
+          setIsAuthenticated(true);
+        } else {
+          userToSet = empList.find(e => e.id === 'emp-pns-1') || empList[0];
+          setCurrentUser(userToSet);
+          setIsAuthenticated(true);
+        }
+      } else {
+        // Default login for convenience on fresh start
         userToSet = empList.find(e => e.id === 'emp-pns-1') || empList[0];
+        setCurrentUser(userToSet);
+        setIsAuthenticated(true);
+        localStorage.setItem('lawethub_user_id', userToSet.id);
+        localStorage.setItem('lawethub_is_logged_in', 'true');
       }
-      
-      setCurrentUser(userToSet);
-      setIsAuthenticated(true);
-      localStorage.setItem('lawethub_user_id', userToSet.id);
-      localStorage.setItem('lawethub_is_logged_in', 'true');
     } catch (err) {
       console.warn('Failed to load employees from API, using resilient fallback:', err);
-      // Ensure we never stay in null state
       setCurrentUser(FALLBACK_EMPLOYEES[0]);
       setIsAuthenticated(true);
     } finally {
@@ -127,7 +135,9 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('lawethub_is_logged_in');
+    setCurrentUser(null);
+    localStorage.setItem('lawethub_is_logged_in', 'false');
+    localStorage.removeItem('lawethub_user_id');
   };
 
   const switchUser = (user) => {

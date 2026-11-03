@@ -10,7 +10,6 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
-// Artifact directory if present
 const artifactDir = path.resolve('C:\\Users\\meong\\.gemini\\antigravity\\brain\\6f01260d-9dce-4c20-b541-c7689cec1b54');
 
 async function sleep(ms) {
@@ -28,6 +27,15 @@ async function saveScreenshot(page, filename, fullPage = false) {
   }
 }
 
+async function clickSidebarItem(page, text) {
+  await page.evaluate((targetText) => {
+    const btns = Array.from(document.querySelectorAll('button, a'));
+    const btn = btns.find(b => b.textContent && b.textContent.trim().toLowerCase().includes(targetText.toLowerCase()));
+    if (btn) btn.click();
+  }, text);
+  await sleep(1000);
+}
+
 async function run() {
   console.log('Launching Chrome via puppeteer-core...');
   const browser = await puppeteer.launch({
@@ -39,158 +47,117 @@ async function run() {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 960, deviceScaleFactor: 1.5 });
 
-  // 1. Beranda (Landing Page)
-  console.log('1. Capturing Beranda...');
+  // 1. Login Page (Masuk)
+  console.log('1. Capturing Halaman Masuk (Login Split Screen)...');
   await page.goto(BASE_URL, { waitUntil: 'networkidle0' });
+  await page.evaluate(() => {
+    localStorage.setItem('lawethub_is_logged_in', 'false');
+    localStorage.removeItem('lawethub_user_id');
+  });
+  await page.reload({ waitUntil: 'networkidle0' });
   await sleep(1500);
+  await saveScreenshot(page, '12_halaman_login_simpeg.png', false);
 
-  // Take Hero screenshot
-  await saveScreenshot(page, '01_beranda_hero.png', false);
-
-  // Scroll to flow & comparison section
-  await page.evaluate(() => window.scrollBy(0, 950));
-  await sleep(800);
-  await saveScreenshot(page, '02_beranda_alur_dan_komparasi.png', false);
-
-  // 2. Dashboard
-  console.log('2. Capturing Dashboard...');
+  // Login as Ahmad Fauzi (Pegawai)
+  console.log('Logging in as Ahmad Fauzi (Pegawai)...');
   await page.evaluate(() => {
-    // Click on nav button with text "Dashboard"
-    const btns = Array.from(document.querySelectorAll('button'));
-    const dashBtn = btns.find(b => b.textContent && b.textContent.includes('Dashboard') && !b.textContent.includes('LawetHub'));
-    if (dashBtn) dashBtn.click();
-  });
-  await sleep(1500);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '03_dashboard_dayoff.png', false);
-
-  // 3. Sisa Cuti
-  console.log('3. Capturing Sisa Cuti...');
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Sisa Cuti'));
-    if (btn) btn.click();
-  });
-  await sleep(1500);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '04_sisa_cuti_matriks_bkn.png', false);
-
-  // 4. Formulir Pengajuan Cuti
-  console.log('4. Capturing Formulir Pengajuan Cuti...');
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Ajukan Cuti'));
-    if (btn) btn.click();
-  });
-  await sleep(1500);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '05_form_pengajuan_cuti.png', false);
-
-  // 5. Kalender Cuti Bersama
-  console.log('5. Capturing Kalender Cuti Bersama...');
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Kalender'));
-    if (btn) btn.click();
-  });
-  await sleep(1500);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '06_kalender_cuti_bersama.png', false);
-
-  // 6. Buku Saku BKN Modal
-  console.log('6. Capturing Buku Saku BKN...');
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Buku Saku'));
-    if (btn) btn.click();
-  });
-  await sleep(1500);
-  await saveScreenshot(page, '07_buku_saku_bkn_modal.png', false);
-
-  // Close Buku Saku modal if open
-  await page.evaluate(() => {
-    const closeBtns = Array.from(document.querySelectorAll('button'));
-    const closeBtn = closeBtns.find(b => b.title === 'Tutup' || (b.textContent && b.textContent.includes('Tutup')));
-    if (closeBtn) closeBtn.click();
-  });
-  await sleep(800);
-
-  // 7. Chatbot WhatsApp Drawer
-  console.log('7. Capturing Chatbot WhatsApp...');
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Chatbot WA'));
-    if (btn) btn.click();
-  });
-  await sleep(1500);
-  await saveScreenshot(page, '08_chatbot_whatsapp.png', false);
-
-  // Close WA drawer
-  await page.evaluate(() => {
-    const closeBtns = Array.from(document.querySelectorAll('button'));
-    const btn = closeBtns.find(b => b.querySelector('svg') && b.closest('[class*="fixed"]'));
-    if (btn) btn.click();
-  });
-  await sleep(800);
-
-  // 8. Persetujuan & Rekapitulasi (Switch to Admin Role)
-  console.log('8. Switching to Admin user for Persetujuan & Rekapitulasi...');
-  await page.evaluate(async () => {
-    const res = await fetch('/api/employees');
-    const employees = await res.json();
-    const admin = employees.find(e => e.role === 'admin') || employees[0];
-    localStorage.setItem('cuti_auth_user', JSON.stringify(admin));
+    localStorage.setItem('lawethub_user_id', '1');
+    localStorage.setItem('lawethub_is_logged_in', 'true');
   });
   await page.reload({ waitUntil: 'networkidle0' });
   await sleep(1500);
 
-  // Capture Persetujuan
-  console.log('9. Capturing Persetujuan Atasan/PPK...');
+  // 2. Dashboard (Ringkasan Cuti)
+  console.log('2. Capturing Dashboard Pegawai (Ringkasan Cuti)...');
+  await saveScreenshot(page, '03_dashboard_dayoff.png', false);
+
+  // 3. Saldo dan Hak Cuti
+  console.log('3. Capturing Saldo dan Hak Cuti...');
+  await clickSidebarItem(page, 'Saldo dan hak cuti');
+  await saveScreenshot(page, '04_sisa_cuti_matriks_bkn.png', false);
+
+  // 4. Ajukan Cuti
+  console.log('4. Capturing Formulir Pengajuan Cuti...');
+  await clickSidebarItem(page, 'Ajukan cuti');
+  await saveScreenshot(page, '05_form_pengajuan_cuti.png', false);
+
+  // 5. Riwayat Pengajuan
+  console.log('5. Capturing Riwayat Pengajuan...');
+  await clickSidebarItem(page, 'Riwayat pengajuan');
+  await saveScreenshot(page, '02_beranda_alur_dan_komparasi.png', false);
+
+  // 6. Kalender Unit
+  console.log('6. Capturing Kalender Unit...');
+  await clickSidebarItem(page, 'Kalender unit');
+  await saveScreenshot(page, '06_kalender_cuti_bersama.png', false);
+
+  // 7. Aturan Cuti (BKN) Buku Saku
+  console.log('7. Capturing Aturan Cuti (Buku Saku BKN)...');
+  await clickSidebarItem(page, 'Aturan cuti (BKN)');
+  await saveScreenshot(page, '07_buku_saku_bkn_modal.png', false);
+
+  // 8. Chatbot WhatsApp Drawer
+  console.log('8. Capturing WhatsApp Chatbot Drawer...');
+  await clickSidebarItem(page, 'Tanya via WhatsApp');
+  await sleep(1000);
+  await saveScreenshot(page, '08_chatbot_whatsapp.png', false);
+
+  // Close WhatsApp Drawer
   await page.evaluate(() => {
     const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Persetujuan'));
-    if (btn) btn.click();
+    const closeBtn = btns.find(b => b.getAttribute('aria-label') === 'Tutup');
+    if (closeBtn) closeBtn.click();
   });
-  await sleep(1500);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '09_persetujuan_atasan.png', false);
+  await sleep(600);
 
-  // Capture Rekapitulasi
-  console.log('10. Capturing Rekapitulasi Admin...');
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const btn = btns.find(b => b.textContent && b.textContent.includes('Rekapitulasi'));
-    if (btn) btn.click();
-  });
-  await sleep(1500);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '10_rekapitulasi_admin.png', false);
-
-  // 11. Formulir Lampiran II BKN (Export Print preview)
-  console.log('11. Capturing Formulir Lampiran II BKN...');
-  // Click first cetak button in Rekapitulasi or requests
-  await page.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll('button'));
-    const cetakBtn = btns.find(b => b.textContent && b.textContent.includes('Cetak') || b.title === 'Ekspor Dokumen Cuti BKN');
-    if (cetakBtn) cetakBtn.click();
-  });
-  await sleep(2000);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await sleep(500);
-  await saveScreenshot(page, '11_formulir_lampiran_ii_bkn.png', false);
-
-  // 12. Switch to standard user back
+  // 9. Pertimbangan Atasan (Switch to Atasan Role)
+  console.log('9. Switching to Atasan Role...');
   await page.evaluate(async () => {
     const res = await fetch('/api/employees');
     const employees = await res.json();
-    const pns = employees.find(e => e.role === 'pegawai') || employees[0];
-    localStorage.setItem('cuti_auth_user', JSON.stringify(pns));
+    const atasan = employees.find(e => e.role === 'atasan') || employees[1];
+    localStorage.setItem('lawethub_user_id', String(atasan.id));
+    localStorage.setItem('lawethub_is_logged_in', 'true');
+  });
+  await page.reload({ waitUntil: 'networkidle0' });
+  await sleep(1500);
+
+  console.log('10. Capturing Pertimbangan Atasan...');
+  await clickSidebarItem(page, 'Pertimbangan atasan');
+  await saveScreenshot(page, '09_persetujuan_atasan.png', false);
+
+  // 10. Rekap Pengajuan Admin (Switch to Admin Role)
+  console.log('11. Switching to Admin Role...');
+  await page.evaluate(async () => {
+    const res = await fetch('/api/employees');
+    const employees = await res.json();
+    const admin = employees.find(e => e.role === 'admin') || employees.find(e => e.role === 'ppk') || employees[0];
+    localStorage.setItem('lawethub_user_id', String(admin.id));
+    localStorage.setItem('lawethub_is_logged_in', 'true');
+  });
+  await page.reload({ waitUntil: 'networkidle0' });
+  await sleep(1500);
+
+  console.log('12. Capturing Rekap Pengajuan Admin...');
+  await clickSidebarItem(page, 'Rekap pengajuan');
+  await saveScreenshot(page, '10_rekapitulasi_admin.png', false);
+
+  // 11. Cetak Formulir Lampiran II BKN
+  console.log('13. Capturing Lampiran II BKN Print Preview...');
+  await clickSidebarItem(page, 'Riwayat pengajuan');
+  await sleep(600);
+  await page.evaluate(() => {
+    const btns = Array.from(document.querySelectorAll('button'));
+    const docBtn = btns.find(b => b.textContent && (b.textContent.includes('Lihat formulir') || b.textContent.includes('Unduh PDF')));
+    if (docBtn) docBtn.click();
+  });
+  await sleep(1200);
+  await saveScreenshot(page, '11_formulir_lampiran_ii_bkn.png', false);
+
+  // Reset to default pegawai
+  await page.evaluate(() => {
+    localStorage.setItem('lawethub_user_id', '1');
+    localStorage.setItem('lawethub_is_logged_in', 'true');
   });
 
   console.log('All screenshots captured successfully!');

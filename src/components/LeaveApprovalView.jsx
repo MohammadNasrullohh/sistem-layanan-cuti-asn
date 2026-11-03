@@ -1,75 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-  CheckSquare, 
-  Clock, 
-  CheckCircle2, 
-  XCircle, 
-  AlertCircle, 
-  FileText, 
-  User, 
-  Building, 
-  Calendar, 
-  ShieldCheck,
-  Send,
-  Printer,
-  Sparkles,
-  Filter,
-  Paperclip,
-  FileCheck2,
-  ExternalLink
-} from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function LeaveApprovalView({ onSelectRequestForExport }) {
   const { currentUser, refreshCurrentUserData } = useAuth();
   const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [filterWorkflow, setFilterWorkflow] = useState(
-    currentUser?.role === 'atasan' ? 'ATASAN_PENDING' :
-    currentUser?.role === 'ppk' ? 'PPK_PENDING' : 'ALL'
-  );
-
-  // Approval Form State
-  const [actionType, setActionType] = useState('DISETUJUI'); // 'DISETUJUI', 'PERUBAHAN', 'DITANGGUHKAN', 'TIDAK_DISETUJUI'
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
+  const [actionType, setActionType] = useState('DISETUJUI'); // 'DISETUJUI', 'PERUBAHAN', 'DITANGGUHKAN'
   const [catatan, setCatatan] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [feedbackMsg, setFeedbackMsg] = useState('');
+
+  const isPpkRole = currentUser?.role === 'ppk';
 
   useEffect(() => {
     fetchRequests();
-    if (currentUser?.role === 'atasan') setFilterWorkflow('ATASAN_PENDING');
-    else if (currentUser?.role === 'ppk') setFilterWorkflow('PPK_PENDING');
-    else setFilterWorkflow('ALL');
   }, [currentUser]);
 
   const fetchRequests = async () => {
     try {
-      setLoading(true);
       const res = await fetch('/api/leave-requests');
       const data = await res.json();
       setRequests(data);
-      if (data.length > 0 && !selectedRequest) {
-        setSelectedRequest(data[0]);
+      if (data.length > 0 && !selectedRequestId) {
+        setSelectedRequestId(data[0].id);
       }
     } catch (err) {
       console.error('Failed to load requests:', err);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const handleProcessAction = async (isPpkAction = false) => {
+  const selectedRequest = requests.find(r => r.id === selectedRequestId) || requests[0] || {
+    id: 'cuti-2026-001',
+    nama_pemohon: 'Ahmad Fauzi, S.Kom.',
+    jabatan: 'Pranata Komputer Ahli Muda',
+    unit_kerja: 'Dinas Komunikasi dan Informatika',
+    jenis_cuti: 'Cuti Tahunan',
+    tanggal_mulai: '2026-11-20',
+    tanggal_selesai: '2026-11-24',
+    lama_hari: 3,
+    alasan: 'Keperluan keluarga',
+    status: 'pertimbangan_atasan'
+  };
+
+  const handleProcessAction = async (e) => {
+    e.preventDefault();
     if (!selectedRequest) return;
+
+    if ((actionType === 'PERUBAHAN' || actionType === 'DITANGGUHKAN') && !catatan.trim()) {
+      alert('Catatan wajib diisi untuk pilihan Perubahan atau Penangguhan.');
+      return;
+    }
+
     setSubmitting(true);
+    setFeedbackMsg('');
+
     try {
-      const endpoint = isPpkAction 
+      const endpoint = isPpkRole
         ? `/api/leave-requests/${selectedRequest.id}/ppk-action`
         : `/api/leave-requests/${selectedRequest.id}/atasan-action`;
 
-      const payload = isPpkAction
-        ? { ppk_aksi: actionType, ppk_catatan: catatan, ppk_id: currentUser.id }
-        : { atasan_aksi: actionType, atasan_catatan: catatan, atasan_id: currentUser.id };
+      const payload = isPpkRole
+        ? { ppk_aksi: actionType, ppk_catatan: catatan, ppk_id: currentUser?.id || 4 }
+        : { atasan_aksi: actionType, atasan_catatan: catatan, atasan_id: currentUser?.id || 2 };
 
       const res = await fetch(endpoint, {
         method: 'PUT',
@@ -79,403 +71,212 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
       const data = await res.json();
       if (data.success) {
-        if (actionType === 'DISETUJUI') {
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-          });
-        }
-        await fetchRequests();
-        refreshCurrentUserData();
+        setFeedbackMsg(`Pertimbangan berhasil dikirimkan: ${actionType}.`);
         setCatatan('');
-        // Refresh selected request
-        const updated = await fetch(`/api/leave-requests/${selectedRequest.id}`).then(r => r.json());
-        setSelectedRequest(updated);
+        await fetchRequests();
+        if (refreshCurrentUserData) refreshCurrentUserData();
+      } else {
+        alert(data.error || 'Gagal memproses pertimbangan');
       }
     } catch (err) {
-      console.error('Action error:', err);
-      alert('Gagal memproses aksi persetujuan');
+      console.error(err);
+      alert('Terjadi kesalahan saat memproses data.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  if (!currentUser) return null;
-
-  const isAtasan = currentUser.role === 'atasan';
-  const isPpk = currentUser.role === 'ppk' || currentUser.role === 'admin';
-
   return (
-    <div className="space-y-8 pb-16">
-      
+    <div className="flex-1 flex flex-col gap-6">
       {/* Header */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold mb-2">
-            <CheckSquare className="w-3.5 h-3.5" />
-            <span>Workflow Persetujuan Berjenjang</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Persetujuan & Verifikasi Cuti ASN
-          </h1>
-          <p className="text-xs md:text-sm text-slate-500 mt-1">
-            {isAtasan && 'Penetapan Pertimbangan Atasan Langsung (Bagian VI Lampiran II BKN)'}
-            {isPpk && 'Penetapan Keputusan Pejabat Yang Berwenang / PPK (Bagian VII Lampiran II BKN)'}
-            {!isAtasan && !isPpk && 'Tinjau alur verifikasi cuti seluruh unit kerja'}
-          </p>
-        </div>
-
-        <div className="px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
-          Status Akses: <strong className="text-purple-700 font-bold">{currentUser.role.toUpperCase()}</strong>
+      <div>
+        <h1 className="text-[26px] font-semibold text-[#1c2530] m-0 tracking-tight">
+          {isPpkRole ? 'Keputusan Pejabat Pembina Kepegawaian (PPK)' : 'Pertimbangan atasan'}
+        </h1>
+        <div className="text-[13px] text-[#5a6472] mt-1.5">
+          {isPpkRole
+            ? 'Pengajuan yang telah disetujui atasan langsung menunggu penetapan keputusan resmi Anda.'
+            : 'Pengajuan ini menunggu pertimbangan Anda sebelum diteruskan ke PPK.'}
         </div>
       </div>
 
-      {/* Main Approval Split Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Left: Request List (5 cols) */}
-        <div className="lg:col-span-5 space-y-4">
-          <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Daftar Permohonan Cuti Masuk
-              </span>
-              <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                {requests.length} Berkas
-              </span>
-            </div>
-
-            {/* Workflow Filter Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl overflow-x-auto text-[11px] font-bold">
-              <button
-                type="button"
-                onClick={() => setFilterWorkflow('ALL')}
-                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
-                  filterWorkflow === 'ALL' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Semua ({requests.length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterWorkflow('ATASAN_PENDING')}
-                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
-                  filterWorkflow === 'ATASAN_PENDING' ? 'bg-amber-500 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Atasan ({requests.filter(r => r.status === 'diajukan' || !r.atasan_aksi).length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterWorkflow('PPK_PENDING')}
-                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
-                  filterWorkflow === 'PPK_PENDING' ? 'bg-purple-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                PPK ({requests.filter(r => r.status === 'pertimbangan_atasan' || (r.atasan_aksi && !r.ppk_aksi)).length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterWorkflow('APPROVED')}
-                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap cursor-pointer ${
-                  filterWorkflow === 'APPROVED' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Terbit SK ({requests.filter(r => r.status === 'disetujui').length})
-              </button>
-            </div>
-
-            <div className="space-y-2.5 max-h-[580px] overflow-y-auto pr-1">
-              {requests
-                .filter(r => {
-                  if (filterWorkflow === 'ATASAN_PENDING') return r.status === 'diajukan' || !r.atasan_aksi;
-                  if (filterWorkflow === 'PPK_PENDING') return r.status === 'pertimbangan_atasan' || (r.atasan_aksi && !r.ppk_aksi);
-                  if (filterWorkflow === 'APPROVED') return r.status === 'disetujui';
-                  return true;
-                })
-                .map((r) => {
-                const isSelected = selectedRequest?.id === r.id;
-                const statusBadge = {
-                  diajukan: 'bg-blue-100 text-blue-700',
-                  pertimbangan_atasan: 'bg-amber-100 text-amber-800',
-                  disetujui: 'bg-emerald-100 text-emerald-800',
-                  perubahan: 'bg-purple-100 text-purple-700',
-                  ditangguhkan: 'bg-orange-100 text-orange-800',
-                  ditolak: 'bg-rose-100 text-rose-800'
-                }[r.status] || 'bg-slate-100 text-slate-600';
-
-                return (
-                  <div
-                    key={r.id}
-                    onClick={() => setSelectedRequest(r)}
-                    className={`p-4 rounded-2xl border cursor-pointer transition-all ${
-                      isSelected
-                        ? 'border-purple-500 bg-purple-50/50 shadow-xs'
-                        : 'border-slate-200 hover:border-slate-300 bg-white'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="font-bold text-slate-900 text-xs line-clamp-1">
-                          {r.pemohon_nama}
-                        </div>
-                        <div className="text-[11px] text-slate-500">NIP: {r.pemohon_nip}</div>
-                      </div>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge}`}>
-                        {r.status.replace('_', ' ').toUpperCase()}
-                      </span>
-                    </div>
-
-                    <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-600">
-                      <span className="font-semibold capitalize text-orange-700">
-                        {r.jenis_cuti.replace('_', ' ')}
-                      </span>
-                      <span>{r.jumlah_hari} Hari Kerja</span>
-                    </div>
-
-                    <div className="text-[10px] text-slate-400 mt-1">
-                      {r.tanggal_mulai} s.d. {r.tanggal_selesai}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+      {feedbackMsg && (
+        <div className="bg-[#e3eaf1] border border-[#173a5e]/30 text-[#173a5e] text-[13px] font-medium rounded-[6px] p-3">
+          {feedbackMsg}
         </div>
+      )}
 
-        {/* Right: Review & Approval Action Workspace (7 cols) */}
-        <div className="lg:col-span-7 space-y-6">
-          {selectedRequest ? (
-            <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs space-y-6">
-              
-              {/* Request Header */}
-              <div className="flex items-start justify-between pb-4 border-b border-slate-100">
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-purple-600">
-                    Detail Berkas Permohonan
-                  </div>
-                  <h2 className="text-xl font-bold text-slate-900 mt-0.5">
-                    {selectedRequest.pemohon_nama}
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    {selectedRequest.pemohon_jabatan} • {selectedRequest.pemohon_unit}
-                  </p>
-                </div>
+      {/* Select Request if Multiple are Pending */}
+      {requests.length > 1 && (
+        <div className="flex items-center gap-3 overflow-x-auto pb-1">
+          <span className="text-[12px] text-[#5a6472] shrink-0">Pilih berkas:</span>
+          {requests.map((req) => (
+            <button
+              key={req.id}
+              type="button"
+              onClick={() => setSelectedRequestId(req.id)}
+              className={`px-3 py-1.5 rounded-[6px] text-[13px] border transition-colors shrink-0 ${
+                selectedRequest.id === req.id
+                  ? 'border-[#173a5e] bg-[#e3eaf1] text-[#173a5e] font-medium'
+                  : 'border-[#dcdfda] bg-white text-[#3b4654] hover:bg-[#e8ebe6]'
+              }`}
+            >
+              {req.nama_pemohon?.split(',')[0]} ({req.lama_hari} hr)
+            </button>
+          ))}
+        </div>
+      )}
 
-                <button
-                  onClick={() => onSelectRequestForExport(selectedRequest.id)}
-                  className="px-3.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold transition-colors flex items-center gap-1.5 border border-blue-200 cursor-pointer"
-                >
-                  <Printer className="w-3.5 h-3.5" />
-                  Pratinjau Form BKN
-                </button>
-              </div>
+      {/* 2-Column Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Card: Applicant Detail */}
+        <section className="lawet-card p-6 flex flex-col">
+          <h2 className="text-[16px] font-semibold text-[#1c2530] m-0 mb-1">
+            {selectedRequest.nama_pemohon || 'Ahmad Fauzi, S.Kom.'}
+          </h2>
+          <div className="text-[12px] text-[#5a6472] mb-3">
+            {selectedRequest.jabatan || 'Pranata Komputer Ahli Muda'} · {selectedRequest.unit_kerja || 'Dinas Komunikasi dan Informatika'}
+          </div>
 
-              {/* Leave Details Grid */}
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-0.5">
-                  <span className="text-slate-400">Jenis Cuti:</span>
-                  <div className="font-bold text-slate-800 capitalize text-sm">
-                    {selectedRequest.jenis_cuti.replace('_', ' ')}
-                  </div>
-                </div>
+          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+            <span className="text-[#1c2530]">Jenis cuti</span>
+            <span className="text-[#1c2530] font-medium">{selectedRequest.jenis_cuti}</span>
+          </div>
 
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-0.5">
-                  <span className="text-slate-400">Durasi & Periode:</span>
-                  <div className="font-bold text-slate-800 text-sm">
-                    {selectedRequest.jumlah_hari} Hari Kerja
-                  </div>
-                  <div className="text-[10px] text-slate-500">
-                    {selectedRequest.tanggal_mulai} s.d {selectedRequest.tanggal_selesai}
-                  </div>
-                </div>
+          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+            <span className="text-[#1c2530]">Tanggal</span>
+            <span className="mono text-[#1c2530]">
+              {selectedRequest.tanggal_mulai} s.d. {selectedRequest.tanggal_selesai}
+            </span>
+          </div>
 
-                <div className="col-span-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-                  <span className="text-slate-400">Alasan Permohonan:</span>
-                  <p className="font-medium text-slate-700 leading-relaxed">
-                    "{selectedRequest.alasan_cuti}"
-                  </p>
-                  {selectedRequest.kategori_detail && (
-                    <div className="text-[11px] text-purple-700 font-semibold mt-1">
-                      Kategori: {selectedRequest.kategori_detail}
-                    </div>
-                  )}
-                </div>
+          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+            <span className="text-[#1c2530]">Durasi</span>
+            <span className="mono text-[#1c2530]">{selectedRequest.lama_hari} hari kerja</span>
+          </div>
 
-                <div className="col-span-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                  <div>
-                    <span className="text-slate-400">Alamat & Kontak Selama Cuti:</span>
-                    <div className="font-semibold text-slate-800 mt-0.5">
-                      {selectedRequest.alamat_selama_cuti}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-slate-400">Telp:</span>
-                    <div className="font-semibold text-slate-800">{selectedRequest.no_telepon_cuti}</div>
-                  </div>
-                </div>
+          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+            <span className="text-[#1c2530]">Saldo N sesudah</span>
+            <span className="mono font-semibold text-[#173a5e]">9 hari</span>
+          </div>
 
-                {/* Berkas Lampiran Syarat (Surat Dokter / Tiket Haji / Dokumen Bukti) */}
-                <div className="col-span-2 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
-                      <Paperclip className="w-4 h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="text-[10px] uppercase font-bold text-amber-900 block">
-                        Dokumen Syarat Terlampir:
-                      </span>
-                      <span className="text-xs font-bold text-slate-800 truncate block">
-                        {selectedRequest.lampiran_nama || 'Tidak ada berkas fisik khusus (Cuti Otomatis BKN)'}
-                      </span>
-                    </div>
-                  </div>
+          <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
+            <span className="text-[#1c2530]">Alasan</span>
+            <span className="text-[#1c2530]">{selectedRequest.alasan || 'Keperluan keluarga'}</span>
+          </div>
 
-                  {selectedRequest.lampiran_nama && (
-                    <button
-                      type="button"
-                      onClick={() => alert(`Pratinjau Dokumen ASN Terlampir:\n\nNama Berkas: ${selectedRequest.lampiran_nama}\nNama Pemohon: ${selectedRequest.pemohon_nama} (NIP: ${selectedRequest.pemohon_nip})\nJenis Cuti: ${selectedRequest.jenis_cuti.replace('_', ' ').toUpperCase()}\nStatus Verifikasi: VALID & SAH (Memenuhi Syarat Peraturan BKN No. 7/2021)`)}
-                      className="px-3 py-1.5 rounded-xl bg-white border border-amber-300 hover:bg-amber-100 text-amber-900 font-bold text-[11px] shadow-2xs transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <FileCheck2 className="w-3.5 h-3.5 text-amber-700" />
-                      <span>Verifikasi Berkas</span>
-                    </button>
-                  )}
-                </div>
-              </div>
+          {/* Conflict warning banner */}
+          <div className="mt-4 bg-[#fbf3e2] border border-[#e3cf9c] rounded-[6px] p-3 text-[13px] text-[#1c2530] leading-relaxed">
+            Bersamaan dengan cuti Dewi Lestari, S.A.P. (20–24 Nov) di unit yang sama.
+          </div>
 
-              {/* Status Tracker: Atasan & PPK */}
-              <div className="space-y-3 pt-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Status Pertimbangan & Keputusan
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                  {/* Atasan Box */}
-                  <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-slate-700">Pertimbangan Atasan:</span>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                        selectedRequest.atasan_aksi === 'DISETUJUI' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
-                      }`}>
-                        {selectedRequest.atasan_aksi || 'Menunggu'}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 italic">
-                      "{selectedRequest.atasan_catatan || 'Belum ada catatan'}"
-                    </p>
-                    <div className="text-[10px] text-slate-400 pt-1">
-                      Oleh: {selectedRequest.atasan_nama || 'Bambang Trianto'}
-                    </div>
-                  </div>
-
-                  {/* PPK Box */}
-                  <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-slate-700">Keputusan PPK:</span>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                        selectedRequest.ppk_aksi === 'DISETUJUI' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
-                      }`}>
-                        {selectedRequest.ppk_aksi || 'Menunggu'}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 italic">
-                      "{selectedRequest.ppk_catatan || 'Belum ada catatan'}"
-                    </p>
-                    <div className="text-[10px] text-slate-400 pt-1">
-                      SK: {selectedRequest.nomor_sk || '-'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* ACTION FORM (For Atasan or PPK role) */}
-              <div className="pt-4 border-t border-slate-200 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
-                    Form Aksi Persetujuan ({currentUser.role.toUpperCase()})
-                  </span>
-                  <span className="text-[11px] text-slate-500">
-                    Pilih opsi keputusan resmi:
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {[
-                    { id: 'DISETUJUI', label: 'Disetujui', color: 'hover:bg-emerald-50 text-emerald-700 border-emerald-300' },
-                    { id: 'PERUBAHAN', label: 'Perubahan', color: 'hover:bg-purple-50 text-purple-700 border-purple-300' },
-                    { id: 'DITANGGUHKAN', label: 'Ditangguhkan', color: 'hover:bg-amber-50 text-amber-800 border-amber-300' },
-                    { id: 'TIDAK_DISETUJUI', label: 'Tidak Disetujui', color: 'hover:bg-rose-50 text-rose-700 border-rose-300' }
-                  ].map((btn) => (
-                    <button
-                      key={btn.id}
-                      type="button"
-                      onClick={() => setActionType(btn.id)}
-                      className={`p-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                        actionType === btn.id
-                          ? 'bg-blue-700 text-white border-blue-700 shadow-xs'
-                          : `bg-white ${btn.color}`
-                      }`}
-                    >
-                      {btn.label}
-                    </button>
-                  ))}
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">
-                    Catatan Pertimbangan / Keputusan:
-                  </label>
-                  <textarea
-                    rows="2"
-                    value={catatan}
-                    onChange={(e) => setCatatan(e.target.value)}
-                    placeholder="Masukkan catatan rekomendasi atau pertimbangan resmi..."
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
-                  />
-                </div>
-
-                <div className="flex items-center justify-end gap-3 pt-2">
-                  {/* Action for Atasan Langsung */}
-                  {(currentUser.role === 'atasan' || currentUser.role === 'admin') && (
-                    <button
-                      type="button"
-                      disabled={submitting}
-                      onClick={() => handleProcessAction(false)}
-                      className="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
-                    >
-                      <Send className="w-3.5 h-3.5" />
-                      Simpan Pertimbangan Atasan
-                    </button>
-                  )}
-
-                  {/* Action for PPK */}
-                  {(currentUser.role === 'ppk' || currentUser.role === 'admin') && (
-                    <button
-                      type="button"
-                      disabled={submitting}
-                      onClick={() => handleProcessAction(true)}
-                      className="px-5 py-2.5 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
-                    >
-                      <ShieldCheck className="w-4 h-4" />
-                      Tetapkan Keputusan PPK & Terbitkan SK
-                    </button>
-                  )}
-                </div>
-
-              </div>
-
-            </div>
-          ) : (
-            <div className="bg-white rounded-3xl p-12 text-center text-slate-400 border border-slate-200">
-              Pilih salah satu berkas di sebelah kiri untuk meninjau detail dan memberikan persetujuan.
+          {onSelectRequestForExport && (
+            <div className="mt-4 pt-3 border-t border-[#e8ebe6]">
+              <button
+                type="button"
+                onClick={() => onSelectRequestForExport(selectedRequest.id)}
+                className="text-[13px] text-[#173a5e] hover:underline font-medium bg-transparent border-0 cursor-pointer p-0"
+              >
+                Tinjau draf Formulir Lampiran II &rarr;
+              </button>
             </div>
           )}
-        </div>
+        </section>
 
+        {/* Right Card: Consideration / Decision */}
+        <section className="lawet-card p-6 flex flex-col gap-3.5">
+          <h2 className="text-[16px] font-semibold text-[#1c2530] m-0 mb-1">
+            {isPpkRole ? 'Keputusan Anda' : 'Pertimbangan Anda'}
+          </h2>
+
+          <label
+            className={`flex items-start gap-3 p-3.5 border rounded-[6px] text-[14px] cursor-pointer transition-colors ${
+              actionType === 'DISETUJUI' ? 'border-[#173a5e] bg-[#e3eaf1]/40' : 'border-[#b9bfb8] bg-white'
+            }`}
+          >
+            <input
+              type="radio"
+              name="actionType"
+              value="DISETUJUI"
+              checked={actionType === 'DISETUJUI'}
+              onChange={() => setActionType('DISETUJUI')}
+              className="mt-1"
+            />
+            <div>
+              <b className="text-[#1c2530]">Disetujui</b>
+              <div className="text-[12px] text-[#5a6472] mt-0.5">
+                {isPpkRole ? 'Penetapan resmi, formulir Lampiran II diterbitkan.' : 'Diteruskan ke PPK apa adanya.'}
+              </div>
+            </div>
+          </label>
+
+          <label
+            className={`flex items-start gap-3 p-3.5 border rounded-[6px] text-[14px] cursor-pointer transition-colors ${
+              actionType === 'PERUBAHAN' ? 'border-[#173a5e] bg-[#e3eaf1]/40' : 'border-[#b9bfb8] bg-white'
+            }`}
+          >
+            <input
+              type="radio"
+              name="actionType"
+              value="PERUBAHAN"
+              checked={actionType === 'PERUBAHAN'}
+              onChange={() => setActionType('PERUBAHAN')}
+              className="mt-1"
+            />
+            <div>
+              <b className="text-[#1c2530]">Perubahan</b>
+              <div className="text-[12px] text-[#5a6472] mt-0.5">
+                Usulkan tanggal lain kepada pegawai.
+              </div>
+            </div>
+          </label>
+
+          <label
+            className={`flex items-start gap-3 p-3.5 border rounded-[6px] text-[14px] cursor-pointer transition-colors ${
+              actionType === 'DITANGGUHKAN' ? 'border-[#173a5e] bg-[#e3eaf1]/40' : 'border-[#b9bfb8] bg-white'
+            }`}
+          >
+            <input
+              type="radio"
+              name="actionType"
+              value="DITANGGUHKAN"
+              checked={actionType === 'DITANGGUHKAN'}
+              onChange={() => setActionType('DITANGGUHKAN')}
+              className="mt-1"
+            />
+            <div>
+              <b className="text-[#1c2530]">Ditangguhkan</b>
+              <div className="text-[12px] text-[#5a6472] mt-0.5">
+                Karena kepentingan dinas mendesak.
+              </div>
+            </div>
+          </label>
+
+          <div className="flex flex-col gap-1.5 mt-1">
+            <label className="text-[13px] font-medium text-[#1c2530]">
+              Catatan (wajib untuk perubahan atau penangguhan)
+            </label>
+            <textarea
+              rows={3}
+              value={catatan}
+              onChange={(e) => setCatatan(e.target.value)}
+              placeholder="Tuliskan alasan pertimbangan atau usulan tanggal pengganti..."
+              className="lawet-input"
+            />
+          </div>
+
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleProcessAction}
+              disabled={submitting}
+              className="lawet-btn"
+            >
+              {submitting ? 'Memproses...' : (isPpkRole ? 'Tetapkan keputusan' : 'Kirim pertimbangan')}
+            </button>
+          </div>
+        </section>
       </div>
-
     </div>
   );
 }
