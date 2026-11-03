@@ -23,7 +23,7 @@ export default function BknHandbookModal({ setActiveTab }) {
       subtitle: 'Halaman 1 - 4 Buku Saku BKN 2024',
       content: (
         <div className="space-y-4 text-xs text-slate-700 leading-relaxed">
-          <div className="p-4 rounded-2xl bg-orange-50 border border-orange-200 text-orange-950">
+          <div className="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200 text-slate-900">
             <h4 className="font-bold text-sm mb-1">Peraturan BKN Nomor 7 Tahun 2021</h4>
             <p>
               Merupakan Perubahan atas Peraturan BKN Nomor 24 Tahun 2017 tentang Tata Cara Pemberian Cuti Pegawai Negeri Sipil. Diterbitkan oleh Direktorat Kompensasi Aparatur Sipil Negara, Badan Kepegawaian Negara.
@@ -268,7 +268,7 @@ export default function BknHandbookModal({ setActiveTab }) {
               onClick={() => setSelectedSection(sec.id)}
               className={`w-full p-4 rounded-2xl border text-left transition-all flex items-center justify-between ${
                 selectedSection === sec.id
-                  ? 'border-orange-500 bg-orange-50/70 shadow-xs'
+                  ? 'border-slate-900 bg-slate-100 shadow-xs'
                   : 'border-slate-200 hover:border-slate-300 bg-white'
               }`}
             >

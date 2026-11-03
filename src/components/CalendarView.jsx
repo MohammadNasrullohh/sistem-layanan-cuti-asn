@@ -58,7 +58,7 @@ export default function CalendarView() {
       {/* Header */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold mb-2 border border-slate-700">
             <CalendarIcon className="w-3.5 h-3.5" />
             <span>Kalender Cuti Bersama & Cuti Pegawai</span>
           </div>
@@ -173,9 +173,9 @@ export default function CalendarView() {
                   {dayLeaves.map(leave => (
                     <div
                       key={leave.id}
-                      className="px-1.5 py-0.5 rounded-md text-[10px] bg-orange-100 text-orange-800 font-medium truncate flex items-center gap-1"
+                      className="px-1.5 py-0.5 rounded-md text-[10px] bg-blue-100 text-blue-900 font-semibold truncate flex items-center gap-1 border border-blue-200"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
                       <span className="truncate">{leave.employee_name} ({leave.jenis_cuti.replace('cuti_', '')})</span>
                     </div>
                   ))}
@@ -188,7 +188,7 @@ export default function CalendarView() {
         {/* Legend */}
         <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-6 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-orange-500"></span>
+            <span className="w-3 h-3 rounded-full bg-blue-600"></span>
             <span>Cuti Pegawai (Disetujui/Diajukan)</span>
           </div>
           <div className="flex items-center gap-2">

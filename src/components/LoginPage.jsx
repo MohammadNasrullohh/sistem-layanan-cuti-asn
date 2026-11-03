@@ -47,14 +47,14 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
         
         {/* Left Information Card (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold">
-            <ShieldCheck className="w-4 h-4 text-orange-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold border border-slate-700">
+            <ShieldCheck className="w-4 h-4 text-amber-400" />
             <span>Alur Resmi Diagram 2 LawetHub</span>
           </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Masuk ke Layanan Cuti <span className="text-orange-600">LawetHub</span>
+              Masuk ke Layanan Cuti <span className="text-slate-900 underline decoration-amber-400 underline-offset-4">LawetHub</span>
             </h1>
             <p className="text-xs text-slate-500 leading-relaxed">
               Autentikasi akun aparatur sipil negara (PNS & PPPK) untuk mengakses rincian sisa cuti, permohonan izin cuti online, dan penerbitan formulir BKN.
@@ -67,7 +67,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
               <span className="text-[10px] uppercase font-extrabold tracking-wider text-slate-400">
                 1-Klik Akses Demo Role:
               </span>
-              <span className="text-[10px] text-orange-600 font-bold">Simulasi Instan</span>
+              <span className="text-[10px] text-amber-600 font-bold">Simulasi Instan</span>
             </div>
 
             <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
@@ -75,7 +75,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                 <button
                   key={emp.id}
                   onClick={() => handleQuickLogin(emp)}
-                  className="w-full p-2.5 rounded-xl hover:bg-orange-50 border border-slate-100 hover:border-orange-200 transition-all text-left flex items-center justify-between group"
+                  className="w-full p-2.5 rounded-xl hover:bg-slate-50 border border-slate-100 hover:border-slate-300 transition-all text-left flex items-center justify-between group cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <img
@@ -84,7 +84,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                       className="w-7 h-7 rounded-lg object-cover ring-1 ring-slate-200 shrink-0"
                     />
                     <div className="min-w-0">
-                      <div className="text-xs font-bold text-slate-800 truncate group-hover:text-orange-600 transition-colors">
+                      <div className="text-xs font-bold text-slate-800 truncate group-hover:text-slate-900 transition-colors">
                         {emp.nama.split(',')[0]}
                       </div>
                       <div className="text-[10px] text-slate-400 truncate">
@@ -92,7 +92,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                       </div>
                     </div>
                   </div>
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-orange-600 transition-transform group-hover:translate-x-0.5 shrink-0" />
+                  <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-slate-900 transition-transform group-hover:translate-x-0.5 shrink-0" />
                 </button>
               ))}
             </div>
@@ -112,7 +112,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
           <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-lg shadow-slate-200/50 space-y-6">
             
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-orange-600 text-white flex items-center justify-center font-bold shadow-md shadow-orange-500/20">
+              <div className="w-10 h-10 rounded-2xl bg-slate-900 border border-amber-400/50 text-amber-400 flex items-center justify-center font-bold shadow-md">
                 <Building2 className="w-5 h-5" />
               </div>
               <div>
@@ -145,7 +145,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                     onChange={(e) => setNip(e.target.value)}
                     placeholder="Contoh: 199208152018021003"
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-slate-900 focus:border-slate-900"
                   />
                 </div>
                 <div className="text-[10px] text-slate-400 mt-1">
@@ -165,7 +165,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Kata sandi akun"
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-slate-900 focus:border-slate-900"
                   />
                 </div>
                 <div className="text-[10px] text-slate-400 mt-1">
@@ -177,7 +177,7 @@ export default function LoginPage({ onLoginSuccess, onBackToHome }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs md:text-sm shadow-md shadow-orange-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs md:text-sm shadow-md active:scale-[0.99] transition-all flex items-center justify-center gap-2 border border-slate-700 cursor-pointer"
                 >
                   <span>{loading ? 'Memverifikasi...' : 'Masuk ke Dashboard LawetHub'}</span>
                   <ArrowRight className="w-4 h-4" />

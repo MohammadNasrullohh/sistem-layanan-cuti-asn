@@ -265,7 +265,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
                 <button
                   onClick={() => onSelectRequestForExport(selectedRequest.id)}
-                  className="px-3.5 py-1.5 rounded-xl bg-orange-100 hover:bg-orange-200 text-orange-800 text-xs font-bold transition-colors flex items-center gap-1.5"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 text-xs font-bold transition-colors flex items-center gap-1.5 border border-slate-700 cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   Pratinjau Form BKN
@@ -405,7 +405,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
                   {[
                     { id: 'DISETUJUI', label: 'Disetujui', color: 'hover:bg-emerald-50 text-emerald-700 border-emerald-300' },
                     { id: 'PERUBAHAN', label: 'Perubahan', color: 'hover:bg-purple-50 text-purple-700 border-purple-300' },
-                    { id: 'DITANGGUHKAN', label: 'Ditangguhkan', color: 'hover:bg-orange-50 text-orange-700 border-orange-300' },
+                    { id: 'DITANGGUHKAN', label: 'Ditangguhkan', color: 'hover:bg-amber-50 text-amber-800 border-amber-300' },
                     { id: 'TIDAK_DISETUJUI', label: 'Tidak Disetujui', color: 'hover:bg-rose-50 text-rose-700 border-rose-300' }
                   ].map((btn) => (
                     <button

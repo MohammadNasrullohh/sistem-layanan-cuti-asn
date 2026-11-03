@@ -271,7 +271,7 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
                 <td className="py-3.5 text-right">
                   <button
                     onClick={() => onSelectRequestForExport(r.id)}
-                    className="px-2.5 py-1.5 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold text-[11px] transition-colors inline-flex items-center gap-1"
+                    className="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-[11px] transition-colors inline-flex items-center gap-1 border border-slate-700 cursor-pointer"
                   >
                     <Printer className="w-3.5 h-3.5" />
                     Lampiran II

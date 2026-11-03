@@ -37,8 +37,24 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
       {/* 1. HERO SECTION: STATE EXECUTIVE GOVERNMENT PORTAL (TEGAS & RESMI PEMERINTAH) */}
       <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#0c192e] via-[#112444] to-[#18325a] text-white p-8 md:p-12 lg:p-14 shadow-2xl shadow-slate-950/30 border-2 border-amber-400/30">
         
-        {/* Subtle Architectural Grid Texture (No blur, crisp official watermark pattern) */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none"></div>
+        {/* Smooth Architectural Government Wave & Geometric Shapes (Resmi, Elegan & Presisi) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Subtle Grid overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+
+          {/* Smooth Ambient Light Orbs */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl"></div>
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-blue-600/15 blur-3xl"></div>
+
+          {/* Smooth Topographic Contour Lines SVG */}
+          <svg className="absolute inset-0 w-full h-full opacity-25" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 600">
+            <path d="M-100,200 C300,100 500,450 900,250 C1100,150 1250,300 1400,200" fill="none" stroke="rgba(251, 191, 36, 0.45)" strokeWidth="1.5" />
+            <path d="M-100,280 C250,180 550,520 950,320 C1150,220 1280,380 1400,280" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1" />
+            <path d="M-100,360 C200,260 600,590 1000,390 C1200,290 1310,460 1400,360" fill="none" stroke="rgba(251, 191, 36, 0.3)" strokeWidth="1.2" />
+            <circle cx="950" cy="180" r="160" fill="none" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1" strokeDasharray="6 6" />
+            <circle cx="950" cy="180" r="240" fill="none" stroke="rgba(251, 191, 36, 0.15)" strokeWidth="1" />
+          </svg>
+        </div>
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
@@ -209,7 +225,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 </div>
                 <button
                   onClick={() => setActiveTab('dashboard')}
-                  className="px-3 py-1.5 rounded-xl bg-orange-600 text-white font-bold text-[11px] shadow-xs hover:bg-orange-700 transition-all shrink-0 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-slate-900 text-amber-400 font-bold text-[11px] shadow-xs hover:bg-slate-800 transition-all shrink-0 cursor-pointer border border-slate-700"
                 >
                   Detail &rarr;
                 </button>
@@ -218,7 +234,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
               {/* Direct Link to Dashboard (Solid dark) */}
               <button
                 onClick={() => setActiveTab('dashboard')}
-                className="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-orange-600 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm hover:shadow-md"
+                className="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-extrabold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm hover:shadow-md border border-slate-700"
               >
                 <span>Buka Dashboard & Dayoff Tracker</span>
                 <ChevronRight className="w-4 h-4" />
@@ -233,7 +249,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
       {/* 2. PROCESS FLOW: 4 STEPS AESTHETIC BLUEPRINT */}
       <section className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-xs space-y-8">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-extrabold mb-2 border border-orange-200/80">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-extrabold mb-2 border border-slate-700">
             <span>Alur Proses Terstandarisasi BKN</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -247,9 +263,9 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
           
           {/* STEP 1 */}
-          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-orange-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
+          <div className="group p-6 rounded-3xl bg-slate-50/80 hover:bg-white border border-slate-200 hover:border-slate-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
             <div>
-              <div className="w-10 h-10 rounded-2xl bg-orange-500 text-white flex items-center justify-center font-black text-sm mb-4 shadow-sm shadow-orange-500/30">
+              <div className="w-10 h-10 rounded-2xl bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center font-black text-sm mb-4 shadow-sm font-mono">
                 1
               </div>
               <h3 className="font-extrabold text-slate-900 text-base">Akses & Pilih Menu</h3>
@@ -257,7 +273,7 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
                 Akses web LawetHub atau kirim pesan WhatsApp. Pilih menu <strong>Lihat Sisa Cuti</strong> atau <strong>Ajukan Cuti</strong>.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-orange-600">
+            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-slate-900">
               <span>Web Portal & WA Bot</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
@@ -428,20 +444,20 @@ export default function LandingPage({ setActiveTab, onOpenWhatsApp }) {
         
         <div 
           onClick={() => setActiveTab('sisa-cuti')}
-          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-orange-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
+          className="bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-slate-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
         >
           <div>
-            <div className="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-slate-900 text-amber-400 border border-slate-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <Clock className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-orange-600 transition-colors">
+            <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-slate-800 transition-colors">
               Cek Kuota & Sisa Cuti
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
               Periksa rincian sisa cuti tahunan N-2, N-1, N berjalan, kelayakan cuti besar, dan simulasi penghasilan saat cuti.
             </p>
           </div>
-          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-extrabold text-orange-600">
+          <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-black text-slate-900">
             <span>Buka Rincian Sisa Cuti</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
           </div>

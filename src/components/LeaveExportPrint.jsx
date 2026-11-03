@@ -84,7 +84,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
         <div className="flex items-center gap-2">
           <button
             onClick={handlePrint}
-            className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs shadow-md transition-all flex items-center gap-2 border border-slate-700 cursor-pointer"
           >
             <Printer className="w-4 h-4" />
             Cetak / Simpan PDF
@@ -374,13 +374,13 @@ export default function LeaveExportPrint({ requestId, onBack }) {
           {/* Interactive QR Code Verification Stamp */}
           <div 
             onClick={() => setShowQrVerifyModal(true)}
-            className="cursor-pointer p-2 rounded-xl border border-slate-300 hover:border-orange-500 bg-slate-50 hover:bg-orange-50 transition-all text-center shrink-0 group no-print"
+            className="cursor-pointer p-2 rounded-xl border border-slate-300 hover:border-slate-800 bg-slate-50 hover:bg-slate-100 transition-all text-center shrink-0 group no-print"
             title="Klik untuk memverifikasi keabsahan tanda tangan elektronik"
           >
             <div className="w-14 h-14 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-1 mx-auto shadow-2xs group-hover:scale-105 transition-transform">
               <QrCode className="w-full h-full text-slate-800" />
             </div>
-            <span className="text-[7pt] font-bold text-orange-600 block mt-1">
+            <span className="text-[7pt] font-black text-slate-900 block mt-1">
               Verifikasi TTE
             </span>
           </div>

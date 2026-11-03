@@ -202,8 +202,8 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                             switchUser(emp);
                             setShowRoleMenu(false);
                           }}
-                          className={`w-full px-4 py-2 text-left flex items-center gap-3 hover:bg-slate-50 transition-colors ${
-                            isSelected ? 'bg-orange-50/70' : ''
+                          className={`w-full px-4 py-2 text-left flex items-center gap-3 hover:bg-slate-50 transition-colors cursor-pointer ${
+                            isSelected ? 'bg-slate-100 font-bold border-l-4 border-slate-900' : ''
                           }`}
                         >
                           <img
@@ -226,7 +226,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                             <div className="text-[11px] text-slate-500 truncate">{emp.jabatan}</div>
                             <div className="text-[10px] text-slate-400">NIP: {emp.nip}</div>
                           </div>
-                          {isSelected && <Check className="w-4 h-4 text-orange-600 shrink-0" />}
+                          {isSelected && <Check className="w-4 h-4 text-slate-900 shrink-0" />}
                         </button>
                       );
                     })}
@@ -235,7 +235,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenWhatsApp, pendin
                   <div className="px-4 py-2 border-t border-slate-100 bg-slate-50/70 rounded-b-2xl space-y-2">
                     <div className="flex items-center justify-between text-xs text-slate-500">
                       <span>Masa Kerja: {currentUser.masa_kerja_tahun} Thn {currentUser.masa_kerja_bulan} Bln</span>
-                      <span className="font-semibold text-orange-600">Aktif</span>
+                      <span className="font-bold text-emerald-700">Aktif</span>
                     </div>
 
                     <button

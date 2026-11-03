@@ -109,7 +109,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
       {/* Header */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold mb-2 border border-slate-700">
             <Clock className="w-3.5 h-3.5" />
             <span>Layanan Mandiri Cuti ASN (Menu 1)</span>
           </div>
@@ -123,7 +123,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
 
         <button
           onClick={() => setActiveTab('ajukan-cuti')}
-          className="px-6 py-3 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-xs md:text-sm shadow-md shadow-orange-500/20 transition-all flex items-center gap-2"
+          className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs md:text-sm shadow-md transition-all flex items-center gap-2 border border-slate-700 cursor-pointer"
         >
           <FileText className="w-4 h-4" />
           Ajukan Cuti Sekarang
@@ -145,7 +145,7 @@ export default function LeaveBalanceView({ setActiveTab }) {
           </div>
           <div className="text-right">
             <div className="text-xs text-slate-400 font-medium">Total Sisa Cuti Tahunan</div>
-            <div className="text-3xl font-extrabold text-orange-600">
+            <div className="text-3xl font-black text-slate-900">
               {totalSisaTahunan} <span className="text-sm font-semibold text-slate-600">Hari Kerja</span>
             </div>
           </div>
@@ -154,10 +154,10 @@ export default function LeaveBalanceView({ setActiveTab }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           
           {/* Tahun N (2026) */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200/90 shadow-2xs space-y-3">
+          <div className="p-5 rounded-2xl bg-slate-50 border-2 border-slate-200 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black uppercase tracking-wider text-orange-900">Tahun N (2026)</span>
-              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-orange-200/90 text-orange-900 font-extrabold border border-orange-300">
+              <span className="text-xs font-black uppercase tracking-wider text-slate-900">Tahun N (2026)</span>
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-900 text-white font-extrabold border border-slate-800">
                 Tahun Berjalan
               </span>
             </div>
@@ -170,9 +170,9 @@ export default function LeaveBalanceView({ setActiveTab }) {
             </div>
 
             {/* Progress track */}
-            <div className="w-full bg-orange-200/70 rounded-full h-2 overflow-hidden">
+            <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
               <div 
-                className="bg-gradient-to-r from-orange-500 to-amber-500 h-2 rounded-full"
+                className="bg-slate-900 h-2 rounded-full"
                 style={{ width: `${Math.min(100, ((currentUser.sisa_cuti_n || 12) / 12) * 100)}%` }}
               />
             </div>
@@ -375,8 +375,8 @@ export default function LeaveBalanceView({ setActiveTab }) {
               {salaryMatrixData.map((item) => (
                 <tr 
                   key={item.id} 
-                  className={`hover:bg-orange-50/40 transition-colors ${
-                    selectedLeaveSim === item.id ? 'bg-orange-50/60 font-semibold' : ''
+                  className={`hover:bg-slate-50 transition-colors cursor-pointer ${
+                    selectedLeaveSim === item.id ? 'bg-slate-100 font-bold border-l-4 border-slate-900' : ''
                   }`}
                   onClick={() => setSelectedLeaveSim(item.id)}
                 >
