@@ -36,6 +36,15 @@ const upload = multer({ storage });
 
 app.use(cors());
 app.use(express.json());
+
+// Security headers middleware (nosniff, frameguard, XSS protection)
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
 app.use('/uploads', express.static(uploadsDir));
 
 // ==========================================
@@ -257,6 +266,15 @@ app.post('/api/leave-requests', (req, res) => {
       return res.status(404).json({ error: 'Data pegawai pemohon tidak ditemukan' });
     }
 
+    // Defensive input bounds validation
+    const parsedDays = parseInt(jumlah_hari, 10);
+    if (isNaN(parsedDays) || parsedDays <= 0) {
+      return res.status(400).json({ error: 'Durasi hari cuti tidak valid (harus lebih besar dari 0)' });
+    }
+    if (tanggal_mulai && tanggal_selesai && new Date(tanggal_selesai) < new Date(tanggal_mulai)) {
+      return res.status(400).json({ error: 'Tanggal selesai tidak boleh mendahului tanggal mulai' });
+    }
+
     // Step: "Sesuai ketentuan?" Validation against BKN rules
     const validation = validateLeaveRequest(employee, {
       jenis_cuti,
@@ -331,7 +349,18 @@ app.post('/api/leave-requests', (req, res) => {
 app.put('/api/leave-requests/:id/atasan-action', (req, res) => {
   try {
     const { atasan_aksi, atasan_catatan, atasan_id } = req.body;
-    // atasan_aksi: 'DISETUJUI', 'PERUBAHAN', 'DITANGGUHKAN', 'TIDAK_DISETUJUI'
+    
+    // Security check: Whitelist valid actions
+    const validActions = ['DISETUJUI', 'PERUBAHAN', 'DITANGGUHKAN', 'TIDAK_DISETUJUI'];
+    if (!validActions.includes(atasan_aksi)) {
+      return res.status(400).json({ error: 'Aksi pertimbangan atasan tidak valid' });
+    }
+
+    const existing = db.prepare('SELECT id FROM leave_requests WHERE id = ?').get(req.params.id);
+    if (!existing) {
+      return res.status(404).json({ error: 'Berkas permohonan tidak ditemukan' });
+    }
+
     const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
     const stmt = db.prepare(`
@@ -354,6 +383,18 @@ app.put('/api/leave-requests/:id/atasan-action', (req, res) => {
 app.put('/api/leave-requests/:id/ppk-action', (req, res) => {
   try {
     const { ppk_aksi, ppk_catatan, ppk_id } = req.body;
+    
+    // Security check: Whitelist valid actions
+    const validActions = ['DISETUJUI', 'PERUBAHAN', 'DITANGGUHKAN', 'TIDAK_DISETUJUI'];
+    if (!validActions.includes(ppk_aksi)) {
+      return res.status(400).json({ error: 'Aksi keputusan PPK tidak valid' });
+    }
+
+    const existing = db.prepare('SELECT id FROM leave_requests WHERE id = ?').get(req.params.id);
+    if (!existing) {
+      return res.status(404).json({ error: 'Berkas permohonan tidak ditemukan' });
+    }
+
     const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
     
     // Status resolution
