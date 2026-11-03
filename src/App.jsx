@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import ErrorBoundary from './components/ErrorBoundary';
 import Navbar from './components/Navbar';
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
@@ -100,7 +101,7 @@ function MainApp() {
         )}
 
         {activeTab === 'persetujuan' && (
-          (currentUser.role === 'atasan' || currentUser.role === 'ppk' || currentUser.role === 'admin') ? (
+          (currentUser?.role === 'atasan' || currentUser?.role === 'ppk' || currentUser?.role === 'admin') ? (
             <LeaveApprovalView
               onSelectRequestForExport={handleSelectRequestForExport}
             />
@@ -113,7 +114,7 @@ function MainApp() {
         )}
 
         {activeTab === 'rekapitulasi' && (
-          (currentUser.role === 'ppk' || currentUser.role === 'admin') ? (
+          (currentUser?.role === 'ppk' || currentUser?.role === 'admin') ? (
             <AdminRecapView
               onSelectRequestForExport={handleSelectRequestForExport}
             />
@@ -194,8 +195,10 @@ function MainApp() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <MainApp />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <MainApp />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
