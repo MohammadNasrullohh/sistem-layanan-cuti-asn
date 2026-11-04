@@ -57,6 +57,30 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
     status: 'pertimbangan_atasan'
   };
 
+  // Dynamic Saldo N calculation following BKN FIFO rules
+  const currentSisaN = selectedRequest.sisa_cuti_n !== undefined && selectedRequest.sisa_cuti_n !== null ? Number(selectedRequest.sisa_cuti_n) : 12;
+  const durasiHari = Number(selectedRequest.jumlah_hari || selectedRequest.lama_hari || 1);
+  const sisaN1 = Number(selectedRequest.sisa_cuti_n1 || 0);
+  const sisaN2 = Number(selectedRequest.sisa_cuti_n2 || 0);
+
+  let remDays = durasiHari;
+  const potongN2 = Math.min(sisaN2, remDays); remDays -= potongN2;
+  const potongN1 = Math.min(sisaN1, remDays); remDays -= potongN1;
+  const potongN = Math.min(currentSisaN, remDays); remDays -= potongN;
+  const saldoNSesudah = Math.max(0, currentSisaN - potongN);
+
+  // Dynamic real-time schedule conflict detection with other colleagues in same unit
+  const conflictingRequest = requests.find(r => 
+    r.id !== selectedRequest.id &&
+    r.employee_id !== selectedRequest.employee_id &&
+    (r.pemohon_unit === selectedRequest.pemohon_unit || r.unit_kerja === selectedRequest.unit_kerja) &&
+    r.status !== 'ditolak' &&
+    !(
+      r.tanggal_selesai < selectedRequest.tanggal_mulai ||
+      r.tanggal_mulai > selectedRequest.tanggal_selesai
+    )
+  );
+
   const handleProcessAction = async (e) => {
     e.preventDefault();
     if (!selectedRequest) return;
@@ -188,7 +212,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
             <span className="text-[#1c2530]">Saldo N sesudah</span>
-            <span className="mono font-semibold text-[#173a5e]">9 hari</span>
+            <span className="mono font-semibold text-[#173a5e]">{saldoNSesudah} hari</span>
           </div>
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
@@ -196,10 +220,17 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
             <span className="text-[#1c2530]">{selectedRequest.alasan_cuti || selectedRequest.alasan || 'Keperluan keluarga'}</span>
           </div>
 
-          {/* Conflict warning banner */}
-          <div className="mt-4 bg-[#fbf3e2] border border-[#e3cf9c] rounded-[6px] p-3 text-[13px] text-[#1c2530] leading-relaxed">
-            Bersamaan dengan cuti Dewi Lestari, S.A.P. (20–24 Nov) di unit yang sama.
-          </div>
+          {/* Dynamic Conflict detection banner */}
+          {conflictingRequest ? (
+            <div className="mt-4 bg-[#fbf3e2] border border-[#e3cf9c] rounded-[6px] p-3 text-[13px] text-[#1c2530] leading-relaxed">
+              <span className="font-semibold text-[#8c6d1f]">Peringatan Bentrok Jadwal:</span> Bersamaan dengan cuti <b>{conflictingRequest.pemohon_nama?.split(',')[0] || conflictingRequest.nama_pemohon}</b> ({conflictingRequest.tanggal_mulai} s.d. {conflictingRequest.tanggal_selesai}) di unit kerja yang sama. Pertimbangkan pembagian tugas sebelum menyetujui.
+            </div>
+          ) : (
+            <div className="mt-4 bg-[#f4f7f4] border border-[#cfdfd2] rounded-[6px] p-3 text-[13px] text-[#2d5f38] flex items-center gap-2">
+              <span className="font-bold text-[14px]">✓</span>
+              <span>Tidak ada bentrok jadwal dengan pegawai lain di {selectedRequest.pemohon_unit || selectedRequest.unit_kerja || 'unit kerja'}.</span>
+            </div>
+          )}
 
           {onSelectRequestForExport && (
             <div className="mt-4 pt-3 border-t border-[#e8ebe6]">

@@ -4,9 +4,9 @@ import { useAuth } from '../context/AuthContext';
 export default function LeaveBalanceView({ setActiveTab }) {
   const { currentUser } = useAuth();
 
-  const cutiN = currentUser?.cuti_n ?? 12;
-  const cutiN1 = currentUser?.cuti_n1 ?? 6;
-  const cutiN2 = currentUser?.cuti_n2 ?? 0;
+  const cutiN = currentUser?.sisa_cuti_n ?? currentUser?.cuti_n ?? 12;
+  const cutiN1 = currentUser?.sisa_cuti_n1 ?? currentUser?.cuti_n1 ?? 6;
+  const cutiN2 = currentUser?.sisa_cuti_n2 ?? currentUser?.cuti_n2 ?? 0;
   const masaKerjaTahun = currentUser?.masa_kerja_tahun ?? 8;
   const masaKerjaBulan = currentUser?.masa_kerja_bulan ?? 9;
   const eligibleCutiBesar = masaKerjaTahun >= 5;

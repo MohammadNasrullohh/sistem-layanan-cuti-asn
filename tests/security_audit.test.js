@@ -136,6 +136,9 @@ describe('Security Audit & Defensive Testing', () => {
     const getRes = await fetch(`${BASE_URL}/api/leave-requests/${data.requestId}`);
     const created = await getRes.json();
     assert.equal(created.alasan_cuti, xssString, 'Payload tersimpan murni sebagai string data, tanpa evaluasi kode');
+
+    // Clean up test audit record so database stays pristine
+    await fetch(`${BASE_URL}/api/leave-requests/${data.requestId}`, { method: 'DELETE' });
   });
 
   it('8. Security Headers: Header perlindungan browser terpasang', async () => {

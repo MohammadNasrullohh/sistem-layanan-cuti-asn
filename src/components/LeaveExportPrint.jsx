@@ -40,6 +40,17 @@ export default function LeaveExportPrint({ requestId, onBack }) {
     status: 'pertimbangan_atasan'
   };
 
+  const sisaN = req.sisa_cuti_n !== undefined && req.sisa_cuti_n !== null ? Number(req.sisa_cuti_n) : 12;
+  const sisaN1 = req.sisa_cuti_n1 !== undefined && req.sisa_cuti_n1 !== null ? Number(req.sisa_cuti_n1) : 6;
+  const sisaN2 = req.sisa_cuti_n2 !== undefined && req.sisa_cuti_n2 !== null ? Number(req.sisa_cuti_n2) : 0;
+  const durasi = Number(req.jumlah_hari || req.lama_hari || 1);
+
+  let rem = durasi;
+  const potongN2 = Math.min(sisaN2, rem); rem -= potongN2;
+  const potongN1 = Math.min(sisaN1, rem); rem -= potongN1;
+  const potongN = Math.min(sisaN, rem); rem -= potongN;
+  const sisaNSesudah = Math.max(0, sisaN - potongN);
+
   return (
     <div className="flex-1 flex flex-col items-center gap-4 py-2">
       {/* Top Action Bar (hidden when printing) */}
@@ -186,7 +197,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
                 Cuti tahun N (2026)
               </td>
               <td className="border border-[#1c2530] p-2 text-[13px]">
-                12 hari, diambil 3, sisa 9 hari
+                {sisaN} hari{potongN > 0 ? `, diambil ${potongN}, sisa ${sisaNSesudah} hari` : ' (utuh)'}
               </td>
             </tr>
             <tr>
@@ -194,7 +205,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
                 Cuti tahun N-1 (2025)
               </td>
               <td className="border border-[#1c2530] p-2 text-[13px]">
-                6 hari
+                {sisaN1} hari{potongN1 > 0 ? `, diambil ${potongN1}` : ''}
               </td>
             </tr>
             <tr>
@@ -202,7 +213,7 @@ export default function LeaveExportPrint({ requestId, onBack }) {
                 Cuti tahun N-2 (2024)
               </td>
               <td className="border border-[#1c2530] p-2 text-[13px]">
-                0 hari
+                {sisaN2} hari{potongN2 > 0 ? `, diambil ${potongN2}` : ''}
               </td>
             </tr>
           </tbody>

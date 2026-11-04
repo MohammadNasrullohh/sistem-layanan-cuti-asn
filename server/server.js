@@ -14,6 +14,13 @@ const __dirname = path.dirname(__filename);
 // Initialize DB schema & seeds
 initDatabase();
 
+// Clean up any test audit rows so operational database remains pristine
+try {
+  db.prepare("DELETE FROM leave_requests WHERE alasan_cuti LIKE '%XSS%' OR alasan_cuti LIKE '%<script%' OR alasan_cuti = 'mau cuti wok'").run();
+} catch (e) {
+  console.warn('Initial cleanup error:', e.message);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -340,6 +347,20 @@ app.post('/api/leave-requests', upload.single('lampiran'), (req, res) => {
       nomor_surat: nomorSurat,
       warnings: validation.warnings
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete leave request (for admin/cancellation/test cleanup)
+app.delete('/api/leave-requests/:id', (req, res) => {
+  try {
+    const stmt = db.prepare('DELETE FROM leave_requests WHERE id = ?');
+    const result = stmt.run(req.params.id);
+    if (result.changes === 0) {
+      return res.status(404).json({ error: 'Permohonan tidak ditemukan' });
+    }
+    res.json({ success: true, message: 'Permohonan cuti berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

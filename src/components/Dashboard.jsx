@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
+function formatJenisCuti(val) {
+  if (!val) return 'Cuti Tahunan';
+  const map = {
+    cuti_tahunan: 'Cuti Tahunan',
+    cuti_besar: 'Cuti Besar',
+    cuti_sakit: 'Cuti Sakit',
+    cuti_melahirkan: 'Cuti Melahirkan',
+    cuti_alasan_penting: 'Cuti Karena Alasan Penting',
+    cuti_di_luar_tanggungan: 'Cuti di Luar Tanggungan Negara'
+  };
+  return map[val] || val;
+}
+
 export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
   const { currentUser } = useAuth();
   const [requests, setRequests] = useState([]);
@@ -24,9 +37,9 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
     }
   };
 
-  const cutiN = currentUser?.cuti_n ?? 12;
-  const cutiN1 = currentUser?.cuti_n1 ?? 6;
-  const cutiN2 = currentUser?.cuti_n2 ?? 0;
+  const cutiN = currentUser?.sisa_cuti_n ?? currentUser?.cuti_n ?? 12;
+  const cutiN1 = currentUser?.sisa_cuti_n1 ?? currentUser?.cuti_n1 ?? 6;
+  const cutiN2 = currentUser?.sisa_cuti_n2 ?? currentUser?.cuti_n2 ?? 0;
   const totalTersedia = cutiN + cutiN1 + cutiN2;
 
   const latestRequest = requests && requests.length > 0 ? requests[0] : {
@@ -199,7 +212,7 @@ export default function Dashboard({ setActiveTab, onSelectRequestForExport }) {
               Pengajuan terakhir
             </h2>
             <div className="text-[14px] font-medium text-[#1c2530]">
-              {latestRequest.jenis_cuti} · {latestRequest.lama_hari} hari kerja
+              {formatJenisCuti(latestRequest.jenis_cuti)} · {latestRequest.jumlah_hari || latestRequest.lama_hari || 1} hari kerja
             </div>
             <div className="text-[12px] text-[#5a6472] mono my-1 mb-3.5">
               {latestRequest.nomor_surat || '800/CUTI-THN/227/XI/2026'}
