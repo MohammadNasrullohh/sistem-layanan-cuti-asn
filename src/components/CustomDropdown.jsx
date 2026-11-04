@@ -57,7 +57,7 @@ export default function CustomDropdown({
           <span>{selectedOption ? selectedOption.label : placeholder}</span>
           <svg
             className={`w-3 h-3 text-[#173a5e] transition-transform duration-150 ${
-              isOpen ? (direction === 'top' ? 'rotate-0' : 'rotate-180') : (direction === 'top' ? 'rotate-180' : 'rotate-0')
+              isOpen ? 'rotate-180' : 'rotate-0'
             }`}
             fill="none"
             viewBox="0 0 24 24"
@@ -120,7 +120,7 @@ export default function CustomDropdown({
         </span>
         <svg
           className={`w-4 h-4 text-[#5a6472] transition-transform duration-150 shrink-0 ml-2 ${
-            isOpen ? (direction === 'top' ? 'rotate-0' : 'rotate-180') : (direction === 'top' ? 'rotate-180' : 'rotate-0')
+            isOpen ? 'rotate-180' : 'rotate-0'
           }`}
           fill="none"
           viewBox="0 0 24 24"
