@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CustomDropdown from './CustomDropdown';
 
 export default function AdminRecapView({ onSelectRequestForExport }) {
   const [requests, setRequests] = useState([]);
@@ -133,41 +134,44 @@ export default function AdminRecapView({ onSelectRequestForExport }) {
           className="lawet-input w-full sm:w-[260px]"
         />
 
-        <select
+        <CustomDropdown
           value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-          className="lawet-select"
-        >
-          <option value="ALL">Semua status</option>
-          <option value="pertimbangan_atasan">Menunggu atasan</option>
-          <option value="disetujui_atasan">Menunggu PPK</option>
-          <option value="disetujui">Disetujui</option>
-          <option value="perubahan">Perubahan</option>
-          <option value="ditangguhkan">Ditangguhkan</option>
-        </select>
+          onChange={(val) => setFilterStatus(val)}
+          options={[
+            { value: 'ALL', label: 'Semua status' },
+            { value: 'pertimbangan_atasan', label: 'Menunggu atasan' },
+            { value: 'disetujui_atasan', label: 'Menunggu PPK' },
+            { value: 'disetujui', label: 'Disetujui' },
+            { value: 'perubahan', label: 'Perubahan' },
+            { value: 'ditangguhkan', label: 'Ditangguhkan' }
+          ]}
+          className="w-full sm:w-[180px]"
+        />
 
-        <select
+        <CustomDropdown
           value={filterJenis}
-          onChange={(e) => setFilterJenis(e.target.value)}
-          className="lawet-select"
-        >
-          <option value="ALL">Semua jenis cuti</option>
-          <option value="Cuti Tahunan">Cuti Tahunan</option>
-          <option value="Cuti Besar">Cuti Besar</option>
-          <option value="Cuti Sakit">Cuti Sakit</option>
-          <option value="Cuti Melahirkan">Cuti Melahirkan</option>
-          <option value="Cuti Alasan Penting">Cuti Karena Alasan Penting</option>
-        </select>
+          onChange={(val) => setFilterJenis(val)}
+          options={[
+            { value: 'ALL', label: 'Semua jenis cuti' },
+            { value: 'Cuti Tahunan', label: 'Cuti Tahunan' },
+            { value: 'Cuti Besar', label: 'Cuti Besar' },
+            { value: 'Cuti Sakit', label: 'Cuti Sakit' },
+            { value: 'Cuti Melahirkan', label: 'Cuti Melahirkan' },
+            { value: 'Cuti Alasan Penting', label: 'Cuti Karena Alasan Penting' }
+          ]}
+          className="w-full sm:w-[220px]"
+        />
 
-        <select
+        <CustomDropdown
           value={filterMonth}
-          onChange={(e) => setFilterMonth(e.target.value)}
-          className="lawet-select"
-        >
-          <option value="2026-11">November 2026</option>
-          <option value="2026-12">Desember 2026</option>
-          <option value="2027-01">Januari 2027</option>
-        </select>
+          onChange={(val) => setFilterMonth(val)}
+          options={[
+            { value: '2026-11', label: 'November 2026' },
+            { value: '2026-12', label: 'Desember 2026' },
+            { value: '2027-01', label: 'Januari 2027' }
+          ]}
+          className="w-full sm:w-[170px]"
+        />
       </div>
 
       {/* Clean Table */}

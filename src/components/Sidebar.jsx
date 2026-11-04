@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import CustomDropdown from './CustomDropdown';
 
 export default function Sidebar({
   activeTab,
@@ -43,8 +44,15 @@ export default function Sidebar({
     setIsMobileOpen(false);
   };
 
-  const handleRoleSwitch = (e) => {
-    const role = e.target.value;
+  const roleOptions = [
+    { value: 'pegawai', label: 'Pegawai' },
+    { value: 'atasan', label: 'Atasan' },
+    { value: 'ppk', label: 'PPK' },
+    { value: 'admin', label: 'Admin BKPSDM' }
+  ];
+
+  const handleRoleSwitch = (eOrValue) => {
+    const role = typeof eOrValue === 'string' ? eOrValue : eOrValue?.target?.value;
     if (role === 'pegawai') {
       setCurrentUser({
         id: 1,
@@ -188,17 +196,13 @@ export default function Sidebar({
           <div className="pt-2 flex flex-col gap-2">
             <div className="flex items-center justify-between text-[11px] text-[#5a6472]">
               <span>Peran aktif:</span>
-              <select
+              <CustomDropdown
                 value={currentUser?.role || 'pegawai'}
                 onChange={handleRoleSwitch}
-                className="bg-transparent text-[11px] font-medium text-[#173a5e] border-0 outline-none cursor-pointer p-0"
-                title="Ganti peran pengujian"
-              >
-                <option value="pegawai">Pegawai</option>
-                <option value="atasan">Atasan</option>
-                <option value="ppk">PPK</option>
-                <option value="admin">Admin BKPSDM</option>
-              </select>
+                options={roleOptions}
+                variant="inline"
+                direction="top"
+              />
             </div>
 
             <button

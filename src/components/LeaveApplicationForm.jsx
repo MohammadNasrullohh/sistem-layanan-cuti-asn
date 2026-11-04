@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import CustomDropdown from './CustomDropdown';
 
 export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForExport }) {
   const { currentUser, refreshCurrentUserData } = useAuth();
@@ -207,18 +208,19 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
             <label className="text-[13px] font-medium text-[#1c2530]">
               Jenis cuti
             </label>
-            <select
+            <CustomDropdown
               value={jenisCuti}
-              onChange={(e) => setJenisCuti(e.target.value)}
-              className="lawet-select"
-            >
-              <option value="cuti_tahunan">Cuti Tahunan — sisa {totalSisa} hari kerja</option>
-              <option value="cuti_besar">Cuti Besar</option>
-              <option value="cuti_sakit">Cuti Sakit</option>
-              <option value="cuti_melahirkan">Cuti Melahirkan</option>
-              <option value="cuti_alasan_penting">Cuti Karena Alasan Penting</option>
-              <option value="cuti_di_luar_tanggungan">Cuti di Luar Tanggungan Negara</option>
-            </select>
+              onChange={(val) => setJenisCuti(val)}
+              options={[
+                { value: 'cuti_tahunan', label: 'Cuti Tahunan', sublabel: `Sisa ${totalSisa} hari kerja (N-2, N-1, N)` },
+                { value: 'cuti_besar', label: 'Cuti Besar', sublabel: 'Masa kerja minimal 5 tahun terus-menerus' },
+                { value: 'cuti_sakit', label: 'Cuti Sakit', sublabel: 'Wajib lampiran surat dokter' },
+                { value: 'cuti_melahirkan', label: 'Cuti Melahirkan', sublabel: 'Kelahiran anak ke-1 s.d. ke-3' },
+                { value: 'cuti_alasan_penting', label: 'Cuti Karena Alasan Penting', sublabel: 'Keluarga dekat sakit keras/meninggal' },
+                { value: 'cuti_di_luar_tanggungan', label: 'Cuti di Luar Tanggungan Negara', sublabel: 'Masa kerja minimal 5 tahun (dihentikan penghasilan)' }
+              ]}
+              variant="input"
+            />
           </div>
 
           {/* Mulai & Selesai Row */}
