@@ -10,9 +10,10 @@ export default function Sidebar({
   isMobileOpen = false,
   setIsMobileOpen = () => {}
 }) {
-  const { currentUser, setCurrentUser, logout } = useAuth();
+  const { currentUser, employees, switchUser, setCurrentUser, logout } = useAuth();
 
-  const isAtasan = currentUser?.role === 'atasan' || currentUser?.role === 'ppk' || currentUser?.role === 'admin';
+  const isPpk = currentUser?.role === 'ppk';
+  const isAtasan = currentUser?.role === 'atasan' || isPpk || currentUser?.role === 'admin';
   const isAdmin = currentUser?.role === 'admin';
 
   const navItems = [
@@ -27,7 +28,7 @@ export default function Sidebar({
   if (isAtasan) {
     navItems.push({
       id: 'persetujuan',
-      label: 'Pertimbangan atasan',
+      label: isPpk ? 'Keputusan PPK' : 'Pertimbangan atasan',
       badge: pendingApprovalCount > 0 ? pendingApprovalCount : null
     });
   }
@@ -53,9 +54,12 @@ export default function Sidebar({
 
   const handleRoleSwitch = (eOrValue) => {
     const role = typeof eOrValue === 'string' ? eOrValue : eOrValue?.target?.value;
-    if (role === 'pegawai') {
+    const target = employees?.find(e => e.role === role);
+    if (target && switchUser) {
+      switchUser(target);
+    } else if (role === 'pegawai') {
       setCurrentUser({
-        id: 1,
+        id: 'emp-pns-1',
         nip: '199208152018021003',
         nama: 'Ahmad Fauzi, S.Kom.',
         jabatan: 'Pranata Komputer Ahli Muda',
@@ -70,23 +74,23 @@ export default function Sidebar({
       });
     } else if (role === 'atasan') {
       setCurrentUser({
-        id: 2,
-        nip: '198005122005011002',
-        nama: 'Bambang Trianto, M.T.',
-        jabatan: 'Kepala Bidang Informatika',
+        id: 'emp-atasan-1',
+        nip: '197904122005011006',
+        nama: 'Bambang Trianto, S.T., M.Eng.',
+        jabatan: 'Kepala Bidang Aplikasi dan Informatika',
         unit_kerja: 'Dinas Komunikasi dan Informatika',
         role: 'atasan',
         jenis_asn: 'PNS',
         golongan: 'IV/a',
         masa_kerja_tahun: 21,
-        masa_kerja_bulan: 2,
+        masa_kerja_bulan: 10,
         jenis_kelamin: 'L',
-        no_hp: '081298765432'
+        no_hp: '081328901122'
       });
     } else if (role === 'ppk') {
       setCurrentUser({
-        id: 4,
-        nip: '197502111998031001',
+        id: 'emp-ppk-1',
+        nip: '197009181996031002',
         nama: 'Drs. H. Sukamto, M.Si.',
         jabatan: 'Kepala BKPSDM Kabupaten Kebumen',
         unit_kerja: 'Badan Kepegawaian dan Pengembangan SDM',
@@ -100,19 +104,26 @@ export default function Sidebar({
       });
     } else if (role === 'admin') {
       setCurrentUser({
-        id: 5,
-        nip: '199501012020121001',
-        nama: 'Admin BKPSDM Kebumen',
-        jabatan: 'Analis Kepegawaian Muda',
-        unit_kerja: 'BKPSDM Kabupaten Kebumen',
+        id: 'emp-admin-1',
+        nip: '198811052010012011',
+        nama: 'Dewi Lestari, S.A.P.',
+        jabatan: 'Analis Kepegawaian Ahli Muda',
+        unit_kerja: 'Bidang Mutasi dan Status Kepegawaian BKPSDM',
         role: 'admin',
         jenis_asn: 'PNS',
-        golongan: 'III/b',
-        masa_kerja_tahun: 5,
-        masa_kerja_bulan: 11,
-        jenis_kelamin: 'L',
+        golongan: 'III/c',
+        masa_kerja_tahun: 14,
+        masa_kerja_bulan: 2,
+        jenis_kelamin: 'P',
         no_hp: '089988776655'
       });
+    }
+
+    // Defensive tab redirection if current tab not allowed on new role
+    if (role === 'pegawai' && (activeTab === 'persetujuan' || activeTab === 'rekap-admin')) {
+      setActiveTab('dashboard');
+    } else if ((role === 'atasan' || role === 'ppk') && activeTab === 'rekap-admin') {
+      setActiveTab('dashboard');
     }
   };
 

@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Modal from './Modal';
 
+function formatJenisCuti(val) {
+  if (!val) return 'Cuti Tahunan';
+  const map = {
+    cuti_tahunan: 'Cuti Tahunan',
+    cuti_besar: 'Cuti Besar',
+    cuti_sakit: 'Cuti Sakit',
+    cuti_melahirkan: 'Cuti Melahirkan',
+    cuti_alasan_penting: 'Cuti Karena Alasan Penting',
+    cuti_di_luar_tanggungan: 'Cuti di Luar Tanggungan Negara'
+  };
+  return map[val] || val;
+}
+
 export default function LeaveApprovalView({ onSelectRequestForExport }) {
   const { currentUser, refreshCurrentUserData } = useAuth();
   const [requests, setRequests] = useState([]);
@@ -124,20 +137,24 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
       {requests.length > 1 && (
         <div className="flex items-center gap-3 overflow-x-auto pb-1">
           <span className="text-[12px] text-[#5a6472] shrink-0">Pilih berkas:</span>
-          {requests.map((req) => (
-            <button
-              key={req.id}
-              type="button"
-              onClick={() => setSelectedRequestId(req.id)}
-              className={`px-3 py-1.5 rounded-[6px] text-[13px] border transition-colors shrink-0 ${
-                selectedRequest.id === req.id
-                  ? 'border-[#173a5e] bg-[#e3eaf1] text-[#173a5e] font-medium'
-                  : 'border-[#dcdfda] bg-white text-[#3b4654] hover:bg-[#e8ebe6]'
-              }`}
-            >
-              {req.nama_pemohon?.split(',')[0]} ({req.lama_hari} hr)
-            </button>
-          ))}
+          {requests.map((req) => {
+            const name = (req.pemohon_nama || req.nama_pemohon || 'Pemohon').split(',')[0];
+            const days = req.jumlah_hari || req.lama_hari || 1;
+            return (
+              <button
+                key={req.id}
+                type="button"
+                onClick={() => setSelectedRequestId(req.id)}
+                className={`px-3 py-1.5 rounded-[6px] text-[13px] border transition-colors shrink-0 ${
+                  selectedRequest.id === req.id
+                    ? 'border-[#173a5e] bg-[#e3eaf1] text-[#173a5e] font-medium'
+                    : 'border-[#dcdfda] bg-white text-[#3b4654] hover:bg-[#e8ebe6]'
+                }`}
+              >
+                {name} ({days} hari)
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -146,15 +163,15 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
         {/* Left Card: Applicant Detail */}
         <section className="lawet-card p-6 flex flex-col">
           <h2 className="text-[16px] font-semibold text-[#1c2530] m-0 mb-1">
-            {selectedRequest.nama_pemohon || 'Ahmad Fauzi, S.Kom.'}
+            {selectedRequest.pemohon_nama || selectedRequest.nama_pemohon || 'Ahmad Fauzi, S.Kom.'}
           </h2>
           <div className="text-[12px] text-[#5a6472] mb-3">
-            {selectedRequest.jabatan || 'Pranata Komputer Ahli Muda'} · {selectedRequest.unit_kerja || 'Dinas Komunikasi dan Informatika'}
+            {selectedRequest.pemohon_jabatan || selectedRequest.jabatan || 'Pranata Komputer Ahli Muda'} · {selectedRequest.pemohon_unit || selectedRequest.unit_kerja || 'Dinas Komunikasi dan Informatika'}
           </div>
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
             <span className="text-[#1c2530]">Jenis cuti</span>
-            <span className="text-[#1c2530] font-medium">{selectedRequest.jenis_cuti}</span>
+            <span className="text-[#1c2530] font-medium">{formatJenisCuti(selectedRequest.jenis_cuti)}</span>
           </div>
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
@@ -166,7 +183,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
             <span className="text-[#1c2530]">Durasi</span>
-            <span className="mono text-[#1c2530]">{selectedRequest.lama_hari} hari kerja</span>
+            <span className="mono text-[#1c2530]">{selectedRequest.jumlah_hari || selectedRequest.lama_hari || 1} hari kerja</span>
           </div>
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
@@ -176,7 +193,7 @@ export default function LeaveApprovalView({ onSelectRequestForExport }) {
 
           <div className="flex justify-between items-center py-2.5 border-b border-[#e8ebe6] text-[14px]">
             <span className="text-[#1c2530]">Alasan</span>
-            <span className="text-[#1c2530]">{selectedRequest.alasan || 'Keperluan keluarga'}</span>
+            <span className="text-[#1c2530]">{selectedRequest.alasan_cuti || selectedRequest.alasan || 'Keperluan keluarga'}</span>
           </div>
 
           {/* Conflict warning banner */}

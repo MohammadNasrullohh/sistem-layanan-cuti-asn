@@ -31,7 +31,14 @@ function MainApp() {
       const res = await fetch('/api/leave-requests');
       if (res.ok) {
         const data = await res.json();
-        const count = data.filter(d => d.status === 'diajukan' || d.status === 'pertimbangan_atasan').length;
+        let count = 0;
+        if (currentUser?.role === 'ppk') {
+          count = data.filter(d => d.atasan_aksi === 'DISETUJUI' && !d.ppk_aksi).length;
+        } else if (currentUser?.role === 'atasan') {
+          count = data.filter(d => !d.atasan_aksi && (d.status === 'diajukan' || d.status === 'pertimbangan_atasan')).length;
+        } else if (currentUser?.role === 'admin') {
+          count = data.filter(d => d.status !== 'disetujui' && d.status !== 'ditolak').length;
+        }
         setPendingApprovalCount(count);
       }
     } catch (err) {
