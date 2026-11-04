@@ -101,13 +101,16 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
 
     try {
       const formData = new FormData();
-      formData.append('employee_id', currentUser?.id || 1);
+      formData.append('employee_id', currentUser?.id || 'emp-pns-1');
       formData.append('jenis_cuti', jenisCuti);
+      formData.append('alasan_cuti', alasanCuti);
       formData.append('alasan', alasanCuti);
       formData.append('tanggal_mulai', tanggalMulai);
       formData.append('tanggal_selesai', tanggalSelesai);
+      formData.append('jumlah_hari', jumlahHari);
       formData.append('lama_hari', jumlahHari);
       formData.append('alamat_selama_cuti', alamatSelamaCuti);
+      formData.append('no_telepon_cuti', noTelepon);
       formData.append('no_telepon', noTelepon);
 
       if (attachment) {
@@ -122,10 +125,14 @@ export default function LeaveApplicationForm({ setActiveTab, onSelectRequestForE
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Gagal mengirimkan permohonan cuti');
+        let msg = data.error || data.message || 'Gagal mengirimkan permohonan cuti';
+        if (Array.isArray(data.errors) && data.errors.length > 0) {
+          msg = data.errors.join(' · ');
+        }
+        throw new Error(msg);
       }
 
-      setSubmittedRequest(data.request);
+      setSubmittedRequest(data.request || data);
       if (refreshCurrentUserData) {
         refreshCurrentUserData();
       }

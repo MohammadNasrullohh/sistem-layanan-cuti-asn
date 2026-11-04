@@ -36,6 +36,7 @@ const upload = multer({ storage });
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Security headers middleware (nosniff, frameguard, XSS protection)
 app.use((req, res, next) => {
@@ -243,22 +244,21 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 });
 
 // Submit leave request (Flow: Isi Form -> Sesuai Ketentuan? -> Simpan Pengajuan)
-app.post('/api/leave-requests', (req, res) => {
+app.post('/api/leave-requests', upload.single('lampiran'), (req, res) => {
   try {
-    const {
-      employee_id,
-      jenis_cuti,
-      alasan_cuti,
-      kategori_detail,
-      anak_ke,
-      tanggal_mulai,
-      tanggal_selesai,
-      jumlah_hari,
-      alamat_selama_cuti,
-      no_telepon_cuti,
-      lampiran_nama,
-      lampiran_url
-    } = req.body;
+    const body = req.body || {};
+    const employee_id = body.employee_id || 'emp-pns-1';
+    const jenis_cuti = body.jenis_cuti;
+    const alasan_cuti = body.alasan_cuti || body.alasan || '';
+    const kategori_detail = body.kategori_detail || null;
+    const anak_ke = body.anak_ke || null;
+    const tanggal_mulai = body.tanggal_mulai;
+    const tanggal_selesai = body.tanggal_selesai;
+    const jumlah_hari = body.jumlah_hari || body.lama_hari;
+    const alamat_selama_cuti = body.alamat_selama_cuti || '';
+    const no_telepon_cuti = body.no_telepon_cuti || body.no_telepon || '';
+    const lampiran_nama = req.file ? req.file.originalname : (body.lampiran_nama || null);
+    const lampiran_url = req.file ? `/uploads/${req.file.filename}` : (body.lampiran_url || null);
 
     // Fetch employee
     const employee = db.prepare('SELECT * FROM employees WHERE id = ?').get(employee_id);
